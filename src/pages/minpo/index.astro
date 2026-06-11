@@ -1,0 +1,59 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { CURRICULUM, SUBJECT, TOPIC_ORDER } from "../../data/curriculum";
+
+const entries = await getCollection("minpo");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = TOPIC_ORDER.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="民法" description={SUBJECT.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 民法</div>
+
+  <h1>民法</h1>
+  <p>{SUBJECT.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 学習の進め方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      上から順に読み進めるのがおすすめです。まずは各トピックの<strong>基礎編</strong>だけを通読して全体像をつかみ、
+      2周目で<span class="tag-ouyou">応用編</span>に挑戦すると無理なく予備試験レベルまで到達できます。
+      現在 <strong>{publishedCount} / {TOPIC_ORDER.length}</strong> トピック公開中。
+    </p>
+  </div>
+
+  {
+    CURRICULUM.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <li>
+                <span class="num">{globalNum}.</span>
+                {basicExists ? (
+                  <a href={`/minpo/${topic.slug}/`}>{topic.title}</a>
+                ) : (
+                  <span class="coming">{topic.title}</span>
+                )}
+                {topic.hasAdvanced &&
+                  (advancedExists ? (
+                    <a class="tag-ouyou" href={`/minpo/${topic.slug}-ouyou/`}>応用編</a>
+                  ) : (
+                    <span class="tag-ouyou" style="opacity: 0.5;">応用編（準備中）</span>
+                  ))}
+                {!basicExists && <span class="tag-soon">準備中</span>}
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>

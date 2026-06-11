@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SUBJECT, TOPIC_ORDER } from "../data/curriculum";
+---
+
+<BaseLayout title="トピカ">
+  <div class="hero">
+    <h1>トピカ</h1>
+    <p>1トピック1ページで学ぶ、資格試験のための法律学習サイト。</p>
+    <p>
+      法律をはじめて学ぶ人でも読める「基礎編」から、<br />
+      予備試験の論述に対応する「応用編」まで、段階的にステップアップ。
+    </p>
+  </div>
+
+  <h2 style="font-size: 1.2rem;">科目一覧</h2>
+  <a href="/minpo/" class="subject-card">
+    <h2>{SUBJECT.name}</h2>
+    <p>{SUBJECT.description}</p>
+    <p style="margin-top: 0.5rem;">全{TOPIC_ORDER.length}トピック →</p>
+  </a>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+    ※ 今後、他の司法試験科目・他資格の科目も順次追加予定です。
+  </p>
+
+  <h2 style="font-size: 1.2rem; margin-top: 2.5rem;">このサイトの使い方</h2>
+  <ul style="font-size: 0.95rem;">
+    <li><strong>基礎編</strong>：専門用語をかみくだいた解説と日常的な具体例で、ゼロから理解できます。</li>
+    <li><strong>応用編</strong>：重要判例・学説の対立・論述対策まで。予備試験論文レベルに対応します。</li>
+    <li><strong>確認問題</strong>：各ページ末尾の○×問題で理解度をチェックできます。</li>
+    <li><strong>AIと一緒に学ぶ</strong>：各ページの質問テンプレートをコピーしてAIに貼り付ければ、わからない箇所の解説やテスト作成を頼めます。</li>
+  </ul>
+</BaseLayout>
