@@ -10,12 +10,43 @@
 ## オープン事項（未解決・判断待ち）
 
 - [ ] Claude Design / Canva 連携の実現性を確認する（§2.1 参照）
-- [ ] Google Search Console の登録状況を確認する（未登録なら登録）
+- [ ] Google Search Console の登録状況を確認する（未登録なら登録）。※`sitemap-index.xml` を配信済みになったので、登録後に送信する
 - [ ] Google AdSense の申請タイミングを検討する（トラフィック次第）
 
 ---
 
 ## 直近セッションログ
+
+### 2026-07-04 [Code] — SEOメタ情報の実装（Chat指示書ベース）
+
+**フォーカス**: `topica_code_tasks.md`（Chatで作成した改修指示書）の High／Medium 優先度を実装
+
+**完了（High）**:
+- **OGP / Twitter Card**：`BaseLayout.astro` にページ単位の `og:title/description/url/type/site_name/locale/image` と `twitter:card=summary_large_image` ほかを出力。`ogType` prop で記事は `article`、それ以外は `website`
+- **canonical**：`BaseLayout` で `Astro.url` + `Astro.site` から絶対URLを生成して出力
+- **デフォルトOGP画像**：`public/ogp-default.png`（1200x630・ブランド青／PILで生成）。`image` prop で差し替え可能な設計
+- **robots.txt**：`public/robots.txt` を新規作成（`Sitemap: .../sitemap-index.xml`）
+- **sitemap**：`@astrojs/sitemap` を導入（`astro.config.mjs`）。管理ページ `/kanri-*` は `filter` で除外。出力は `sitemap-index.xml` → `sitemap-0.xml`
+
+**完了（Medium）**:
+- **JSON-LD**：`src/lib/jsonld.ts` にヘルパー（`articleLd` / `breadcrumbLd` / `abs` / `ymd`）を作成。minpo・hasan・column の記事に `Article` + `BreadcrumbList`、トップに `WebSite` を埋め込み。※FAQPage は Google ガイドライン適合リスク（○×問題は本来のFAQでない）を避けて**あえて未実装**
+- **更新日・準拠条文の版**：`content.config.ts` に `published` / `updated` / `lawVersion`（いずれも任意）を追加。記事下部に「最終更新: YYYY-MM-DD ・ 〈版〉」を表示（`.page-meta`）。`updated` は JSON-LD `dateModified` と連動
+- サンプルとして `sakugo.md` にのみ実データ（git作成日 2026-06-12・令和2年債権法改正対応）を投入して動作確認済み
+
+**検証**:
+- `npm run build` 成功（110ページ）。`dist/` で canonical・OGP・JSON-LD・robots・sitemap（admin除外）・page-metaの出力を grep 確認。dev プレビューで `.page-meta` の表示も確認。console エラーなし
+
+**決定事項**:
+- FAQPage 構造化データは当面見送り（ガイドラインリスク回避）
+- 日付は捏造しない。`updated`/`published` は各記事で個別に入れる方針（一括バックフィルは未実施）
+
+**次セッションで最初にやること／持ち越し**:
+1. **未コミット**：本セッションの変更はまだコミットしていない（ユーザー判断待ち）。デプロイは Cloudflare Pages に push で反映
+2. `updated`/`published`/`lawVersion` を他記事へ展開するか判断（git日付からの一括投入も可能）
+3. Low優先度：用語集ページ（#6）／Lighthouse 仕上げ（#7）は未着手
+4. デプロイ後、Google リッチリザルトテスト・OGP確認ツール・`/robots.txt`・`/sitemap-index.xml` を本番URLで確認
+
+---
 
 ### 2026-06-28 [Code] — 共有フォルダ運用の確立
 

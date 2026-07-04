@@ -2,6 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findTopic, prevNext, TOPIC_ORDER } from "../../data/curriculum";
+import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
 
 export async function getStaticPaths() {
   const entries = await getCollection("minpo");
@@ -34,9 +35,33 @@ const relatedLinks = entry.data.related
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica.pages.dev").href;
 const aiTemplate = `以下の法律学習ページの内容について質問があります。\nページ：${entry.data.title}（${isAdvanced ? "応用編" : "基礎編"}）\nURL：${pageUrl}\n\nこのページの内容について、理解度を確認するテストを作ってください。`;
+
+const headline = `${entry.data.title}${isAdvanced ? "（応用編）" : ""}`;
+const jsonLd = [
+  articleLd({
+    title: headline,
+    description: entry.data.description,
+    url: pageUrl,
+    published: entry.data.published,
+    updated: entry.data.updated,
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "民法", url: abs("/minpo/") },
+    ...(topicInfo
+      ? [{ name: `第${topicInfo.partNumber}編 ${topicInfo.partName}` }]
+      : []),
+    { name: headline, url: pageUrl },
+  ]),
+];
 ---
 
-<BaseLayout title={`${entry.data.title}${isAdvanced ? "（応用編）" : ""}`} description={entry.data.description}>
+<BaseLayout
+  title={headline}
+  description={entry.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
   <div class="breadcrumb">
     <a href="/">トップ</a> › <a href="/minpo/">民法</a>
     {topicInfo && ` › 第${topicInfo.partNumber}編 ${topicInfo.partName}`}
@@ -72,6 +97,20 @@ const aiTemplate = `以下の法律学習ページの内容について質問が
   </article>
 
   {
+    (entry.data.updated || entry.data.lawVersion) && (
+      <p class="page-meta">
+        {entry.data.updated && (
+          <span>
+            最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time>
+          </span>
+        )}
+        {entry.data.updated && entry.data.lawVersion && " ・ "}
+        {entry.data.lawVersion && <span>{entry.data.lawVersion}</span>}
+      </p>
+    )
+  }
+
+  {
     !isAdvanced && advancedExists && (
       <div class="related-box">
         <span class="label">🚀 さらに学ぶ</span>
@@ -101,18 +140,33 @@ const aiTemplate = `以下の法律学習ページの内容について質問が
         <a href={`/minpo/${nav.prev.slug}/`} class="prev">
           <span class="dir">← 前のトピック</span>
           <br />
-          {nav.prev.title}
+          {nav.prev.number}. {nav.prev.title}
         </a>
       ) : (
         <span />
       )
     }
     {
+      isAdvanced && topicInfo && existingIds.has(baseSlug) ? (
+        <a href={`/minpo/${baseSlug}/`} class="branch">
+          <span class="dir">基礎編に戻る</span>
+          <br />
+          {topicInfo.number}. {topicInfo.title}
+        </a>
+      ) : !isAdvanced && advancedExists && topicInfo ? (
+        <a href={`/minpo/${baseSlug}-ouyou/`} class="branch">
+          <span class="dir">└ 応用編へ</span>
+          <br />
+          {topicInfo.number}-1. {topicInfo.title}（応用編）
+        </a>
+      ) : null
+    }
+    {
       nav.next ? (
         <a href={`/minpo/${nav.next.slug}/`} class="next">
           <span class="dir">次のトピック →</span>
           <br />
-          {nav.next.title}
+          {nav.next.number}. {nav.next.title}
         </a>
       ) : (
         <span />

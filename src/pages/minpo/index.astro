@@ -7,6 +7,10 @@ const entries = await getCollection("minpo");
 const existing = new Set(entries.map((e) => e.id));
 const publishedCount = TOPIC_ORDER.filter((t) => existing.has(t.slug)).length;
 
+// 各編の末尾に表示するコラム
+const columns = (await getCollection("column")).sort((a, b) => a.data.order - b.data.order);
+const columnsByPart = (partNumber: number) => columns.filter((c) => c.data.part === partNumber);
+
 let globalNum = 0;
 ---
 
@@ -35,23 +39,38 @@ let globalNum = 0;
             const basicExists = existing.has(topic.slug);
             const advancedExists = existing.has(`${topic.slug}-ouyou`);
             return (
-              <li>
-                <span class="num">{globalNum}.</span>
-                {basicExists ? (
-                  <a href={`/minpo/${topic.slug}/`}>{topic.title}</a>
-                ) : (
-                  <span class="coming">{topic.title}</span>
-                )}
-                {topic.hasAdvanced &&
-                  (advancedExists ? (
-                    <a class="tag-ouyou" href={`/minpo/${topic.slug}-ouyou/`}>応用編</a>
+              <>
+                <li>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/minpo/${topic.slug}/`}>{topic.title}</a>
                   ) : (
-                    <span class="tag-ouyou" style="opacity: 0.5;">応用編（準備中）</span>
-                  ))}
-                {!basicExists && <span class="tag-soon">準備中</span>}
-              </li>
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch">
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/minpo/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
             );
           })}
+          {columnsByPart(part.number).map((col) => (
+            <li class="topic-branch column-item">
+              <span class="num">📖</span>
+              <a href={`/column/${col.id}/`}>{col.data.title}</a>
+              <span class="tag-column">コラム</span>
+            </li>
+          ))}
         </ol>
       </section>
     ))

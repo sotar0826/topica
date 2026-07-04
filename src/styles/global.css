@@ -213,6 +213,14 @@ main {
   padding-left: 1.4rem;
 }
 
+/* ===== 更新日・準拠条文の版 ===== */
+.page-meta {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
 /* ===== 前後ナビ ===== */
 .topic-nav {
   display: flex;
@@ -244,6 +252,13 @@ main {
 
 .topic-nav .next {
   text-align: right;
+}
+
+/* 応用編⇔基礎編の枝ジャンプ（前後ナビの中央） */
+.topic-nav .branch {
+  text-align: center;
+  background: #fff8f3;
+  border-color: #e8c4a8;
 }
 
 /* ===== AIに質問するセクション ===== */
@@ -333,6 +348,24 @@ main {
   color: var(--text-muted);
 }
 
+/* 応用編の枝表示（基礎編の下にぶら下げる） */
+.topic-list .topic-branch {
+  padding-left: 1.7rem;
+  position: relative;
+}
+
+.topic-list .topic-branch::before {
+  content: "└";
+  position: absolute;
+  left: 0.55rem;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.topic-list .topic-branch .num {
+  min-width: 2.4rem;
+}
+
 .tag-ouyou {
   font-size: 0.7rem;
   padding: 0.05rem 0.5rem;
@@ -345,6 +378,20 @@ main {
 .tag-soon {
   font-size: 0.7rem;
   color: var(--text-muted);
+}
+
+/* 編末尾のコラム行 */
+.topic-list .column-item::before {
+  content: "";
+}
+
+.tag-column {
+  font-size: 0.7rem;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  background: #e8f1e8;
+  color: #2e6b34;
+  text-decoration: none;
 }
 
 /* ===== トップページ ===== */

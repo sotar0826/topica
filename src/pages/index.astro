@@ -1,9 +1,26 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SUBJECT, TOPIC_ORDER } from "../data/curriculum";
+import { SUBJECTS, topicOrderOf } from "../data/curriculum";
+import { abs } from "../lib/jsonld";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "トピカ",
+  alternateName: "トピカ｜法律学習サイト",
+  url: abs("/"),
+  description: "資格試験を目指す初学者のための体系的な法律学習サイト",
+  inLanguage: "ja",
+  publisher: {
+    "@type": "Organization",
+    name: "トピカ",
+    url: abs("/"),
+    logo: { "@type": "ImageObject", url: abs("/ogp-default.png") },
+  },
+};
 ---
 
-<BaseLayout title="トピカ">
+<BaseLayout title="トピカ" jsonLd={jsonLd}>
   <div class="hero">
     <h1>トピカ</h1>
     <p>1トピック1ページで学ぶ、資格試験のための法律学習サイト。</p>
@@ -14,11 +31,15 @@ import { SUBJECT, TOPIC_ORDER } from "../data/curriculum";
   </div>
 
   <h2 style="font-size: 1.2rem;">科目一覧</h2>
-  <a href="/minpo/" class="subject-card">
-    <h2>{SUBJECT.name}</h2>
-    <p>{SUBJECT.description}</p>
-    <p style="margin-top: 0.5rem;">全{TOPIC_ORDER.length}トピック →</p>
-  </a>
+  {
+    SUBJECTS.map((subject) => (
+      <a href={`/${subject.slug}/`} class="subject-card">
+        <h2>{subject.name}</h2>
+        <p>{subject.description}</p>
+        <p style="margin-top: 0.5rem;">全{topicOrderOf(subject.slug).length}トピック →</p>
+      </a>
+    ))
+  }
   <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
     ※ 今後、他の司法試験科目・他資格の科目も順次追加予定です。
   </p>

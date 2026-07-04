@@ -17,6 +17,13 @@ export interface PartDef {
   topics: TopicDef[];
 }
 
+export interface SubjectDef {
+  slug: string;
+  name: string;
+  description: string;
+  parts: PartDef[];
+}
+
 export const SUBJECT = {
   slug: "minpo",
   name: "民法",
@@ -113,17 +120,135 @@ export const CURRICULUM: PartDef[] = [
   },
 ];
 
-/** 基礎編トピックを学習順に平坦化したリスト */
-export const TOPIC_ORDER: { slug: string; title: string; partNumber: number; partName: string; hasAdvanced: boolean }[] =
+// ===== 破産法 =====
+// 申立代理人が自己破産事件（自然人・法人）を進める時系列ベースの構成。
+// 対象読者は実務家。基礎編でも民法より水準を高く設定する。
+
+export const HASAN_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "総論・受任まで",
+    slug: "soron",
+    topics: [
+      { slug: "hasan-zentaizo", title: "破産制度の全体像と債務整理手段の選択", hasAdvanced: false },
+      { slug: "junin-handan", title: "法律相談と受任判断", hasAdvanced: true },
+      { slug: "junin-tsuchi", title: "受任通知と弁護士介入の効果", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 2,
+    name: "自然人の自己破産",
+    slug: "shizenjin",
+    topics: [
+      { slug: "zaisan-chosa", title: "申立準備①——財産調査と家計の整理", hasAdvanced: false },
+      { slug: "moshitate-kian", title: "申立準備②——申立書・陳述書の起案", hasAdvanced: false },
+      { slug: "doji-haishi-kanzai", title: "同時廃止と管財事件の振り分け", hasAdvanced: true },
+      { slug: "jiyu-zaisan", title: "自由財産と自由財産拡張", hasAdvanced: true },
+      { slug: "menseki", title: "免責手続と免責不許可事由", hasAdvanced: true },
+      { slug: "himenseki-saiken", title: "非免責債権", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 3,
+    name: "法人の自己破産",
+    slug: "hojin",
+    topics: [
+      { slug: "hojin-shodo", title: "法人破産の受任と初動", hasAdvanced: true },
+      { slug: "hojin-junbi", title: "法人申立ての準備", hasAdvanced: false },
+      { slug: "hojin-daihyosha", title: "法人と代表者の同時申立て", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "破産手続の進行",
+    slug: "shinko",
+    topics: [
+      { slug: "kaishi-kettei", title: "破産手続開始決定の効果", hasAdvanced: false },
+      { slug: "kanzainin-taio", title: "管財人の職務と申立代理人の協力義務", hasAdvanced: false },
+      { slug: "hinin-ken", title: "否認権", hasAdvanced: true },
+      { slug: "sosai-kinshi", title: "相殺と相殺禁止", hasAdvanced: true },
+      { slug: "torimodoshi-betsujo", title: "取戻権・別除権・財団債権", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 5,
+    name: "周辺論点",
+    slug: "shuhen",
+    topics: [
+      { slug: "kojin-saisei-hikaku", title: "個人再生との比較・選択", hasAdvanced: false },
+      { slug: "kazoku-hoshonin", title: "破産と家族・保証人への影響", hasAdvanced: false },
+    ],
+  },
+];
+
+/** 全科目の定義。ナビ・トップページはここを基準にする */
+export const SUBJECTS: SubjectDef[] = [
+  {
+    slug: "minpo",
+    name: "民法",
+    description: SUBJECT.description,
+    parts: CURRICULUM,
+  },
+  {
+    slug: "hasan",
+    name: "破産法",
+    description:
+      "申立代理人の視点から、自然人・法人の自己破産を受任から免責まで時系列で扱います。実務マニュアルとしても使える実務家向けの内容です。",
+    parts: HASAN_CURRICULUM,
+  },
+];
+
+export function findSubject(slug: string) {
+  return SUBJECTS.find((s) => s.slug === slug) ?? null;
+}
+
+/** 科目ごとの基礎編トピックを学習順に平坦化したリスト */
+export function topicOrderOf(subjectSlug: string) {
+  const subject = findSubject(subjectSlug);
+  if (!subject) return [];
+  return subject.parts
+    .flatMap((part) =>
+      part.topics.map((t) => ({
+        slug: t.slug,
+        title: t.title,
+        number: 0,
+        partNumber: part.number,
+        partName: part.name,
+        hasAdvanced: t.hasAdvanced,
+      })),
+    )
+    .map((t, i) => ({ ...t, number: i + 1 }));
+}
+
+export function findTopicOf(subjectSlug: string, slug: string) {
+  const base = slug.replace(/-ouyou$/, "");
+  const order = topicOrderOf(subjectSlug);
+  const idx = order.findIndex((t) => t.slug === base);
+  return idx === -1 ? null : { ...order[idx], index: idx };
+}
+
+export function prevNextOf(subjectSlug: string, slug: string) {
+  const t = findTopicOf(subjectSlug, slug);
+  if (!t) return { prev: null, next: null };
+  const order = topicOrderOf(subjectSlug);
+  return {
+    prev: t.index > 0 ? order[t.index - 1] : null,
+    next: t.index < order.length - 1 ? order[t.index + 1] : null,
+  };
+}
+
+/** 基礎編トピックを学習順に平坦化したリスト（number は一覧の整数ナンバリングと一致） */
+export const TOPIC_ORDER: { slug: string; title: string; number: number; partNumber: number; partName: string; hasAdvanced: boolean }[] =
   CURRICULUM.flatMap((part) =>
     part.topics.map((t) => ({
       slug: t.slug,
       title: t.title,
+      number: 0, // 直後に通し番号を振る
       partNumber: part.number,
       partName: part.name,
       hasAdvanced: t.hasAdvanced,
     })),
-  );
+  ).map((t, i) => ({ ...t, number: i + 1 }));
 
 export function findTopic(slug: string) {
   const base = slug.replace(/-ouyou$/, "");

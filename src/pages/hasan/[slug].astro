@@ -1,0 +1,186 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findTopicOf, prevNextOf, topicOrderOf } from "../../data/curriculum";
+import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("hasan");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const isAdvanced = entry.data.level === "advanced";
+const baseSlug = entry.id.replace(/-ouyou$/, "");
+const topicInfo = findTopicOf("hasan", baseSlug);
+const nav = prevNextOf("hasan", baseSlug);
+const order = topicOrderOf("hasan");
+
+const allEntries = await getCollection("hasan");
+const existingIds = new Set(allEntries.map((e) => e.id));
+const advancedExists = existingIds.has(`${baseSlug}-ouyou`);
+
+const relatedLinks = entry.data.related
+  .map((slug) => {
+    const t = order.find((x) => x.slug === slug);
+    return t ? { slug, title: t.title, exists: existingIds.has(slug) } : null;
+  })
+  .filter((x) => x !== null);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica.pages.dev").href;
+const aiTemplate = `以下の法律学習ページの内容について質問があります。\nページ：${entry.data.title}（破産法・${isAdvanced ? "応用編" : "基礎編"}）\nURL：${pageUrl}\n\nこのページの内容について、理解度を確認するテストを作ってください。`;
+
+const headline = `${entry.data.title}${isAdvanced ? "（応用編）" : ""}`;
+const jsonLd = [
+  articleLd({
+    title: headline,
+    description: entry.data.description,
+    url: pageUrl,
+    published: entry.data.published,
+    updated: entry.data.updated,
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "破産法", url: abs("/hasan/") },
+    ...(topicInfo
+      ? [{ name: `第${topicInfo.partNumber}編 ${topicInfo.partName}` }]
+      : []),
+    { name: headline, url: pageUrl },
+  ]),
+];
+---
+
+<BaseLayout
+  title={headline}
+  description={entry.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb">
+    <a href="/">トップ</a> › <a href="/hasan/">破産法</a>
+    {topicInfo && ` › 第${topicInfo.partNumber}編 ${topicInfo.partName}`}
+  </div>
+
+  <div class="topic-header">
+    <span class={`level-badge${isAdvanced ? " advanced" : ""}`}>
+      {isAdvanced ? "応用編（実務深掘り）" : "基礎編"}
+    </span>
+    <h1>{entry.data.title}</h1>
+  </div>
+
+  {
+    (relatedLinks.length > 0 || (isAdvanced && existingIds.has(baseSlug))) && (
+      <div class="related-box">
+        <span class="label">📚 先に読んでおきたいページ</span>
+        <ul>
+          {isAdvanced && existingIds.has(baseSlug) && (
+            <li>
+              <a href={`/hasan/${baseSlug}/`}>{topicInfo?.title}（基礎編）</a> — このページの前提です
+            </li>
+          )}
+          {relatedLinks.map((r) => (
+            <li>{r.exists ? <a href={`/hasan/${r.slug}/`}>{r.title}</a> : `${r.title}（準備中）`}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <article class="topic-body">
+    <Content />
+  </article>
+
+  {
+    (entry.data.updated || entry.data.lawVersion) && (
+      <p class="page-meta">
+        {entry.data.updated && (
+          <span>
+            最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time>
+          </span>
+        )}
+        {entry.data.updated && entry.data.lawVersion && " ・ "}
+        {entry.data.lawVersion && <span>{entry.data.lawVersion}</span>}
+      </p>
+    )
+  }
+
+  {
+    !isAdvanced && advancedExists && (
+      <div class="related-box">
+        <span class="label">🚀 さらに学ぶ</span>
+        <ul>
+          <li>
+            <a href={`/hasan/${baseSlug}-ouyou/`}>{entry.data.title}（応用編）</a> — 判例・実務の落とし穴へ
+          </li>
+        </ul>
+      </div>
+    )
+  }
+
+  <section class="ask-ai">
+    <h2>🤖 このページについてAIに質問する</h2>
+    <p>
+      わからないことがあれば、下のテンプレートをコピーして
+      <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>
+      などのAIに貼り付けて質問できます。テストを作ってもらうのもおすすめです。
+    </p>
+    <textarea id="ai-template" rows="5" readonly>{aiTemplate}</textarea>
+    <button id="copy-btn" type="button">テンプレートをコピー</button>
+  </section>
+
+  <nav class="topic-nav">
+    {
+      nav.prev ? (
+        <a href={`/hasan/${nav.prev.slug}/`} class="prev">
+          <span class="dir">← 前のトピック</span>
+          <br />
+          {nav.prev.number}. {nav.prev.title}
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      isAdvanced && topicInfo && existingIds.has(baseSlug) ? (
+        <a href={`/hasan/${baseSlug}/`} class="branch">
+          <span class="dir">基礎編に戻る</span>
+          <br />
+          {topicInfo.number}. {topicInfo.title}
+        </a>
+      ) : !isAdvanced && advancedExists && topicInfo ? (
+        <a href={`/hasan/${baseSlug}-ouyou/`} class="branch">
+          <span class="dir">└ 応用編へ</span>
+          <br />
+          {topicInfo.number}-1. {topicInfo.title}（応用編）
+        </a>
+      ) : null
+    }
+    {
+      nav.next ? (
+        <a href={`/hasan/${nav.next.slug}/`} class="next">
+          <span class="dir">次のトピック →</span>
+          <br />
+          {nav.next.number}. {nav.next.title}
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+</BaseLayout>
+
+<script>
+  const btn = document.getElementById("copy-btn");
+  const ta = document.getElementById("ai-template") as HTMLTextAreaElement | null;
+  btn?.addEventListener("click", async () => {
+    if (!ta) return;
+    await navigator.clipboard.writeText(ta.value);
+    btn.textContent = "コピーしました ✓";
+    setTimeout(() => (btn.textContent = "テンプレートをコピー"), 2000);
+  });
+</script>

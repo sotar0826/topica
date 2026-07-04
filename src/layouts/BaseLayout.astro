@@ -4,10 +4,37 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description?: string;
+  /** true なら検索エンジンにインデックスさせない（非公開ページ用） */
+  noindex?: boolean;
+  /** OGP のタイプ。トップ・一覧は website、記事は article */
+  ogType?: "website" | "article";
+  /** OGP画像（サイトルート基準のパス）。省略時はデフォルト画像 */
+  image?: string;
+  /** 構造化データ（JSON-LD）。単一オブジェクトまたは配列 */
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
-const { title, description = "資格試験を目指す初学者のための体系的な法律学習サイト" } = Astro.props;
+const {
+  title,
+  description = "資格試験を目指す初学者のための体系的な法律学習サイト",
+  noindex = false,
+  ogType = "website",
+  image = "/ogp-default.png",
+  jsonLd,
+} = Astro.props;
 const fullTitle = title === "トピカ" ? "トピカ｜法律学習サイト" : `${title}｜トピカ`;
+
+// canonical / OGP 用の絶対URL。site 未設定でもフォールバックで壊れないようにする。
+const site = Astro.site ?? new URL("https://topica.pages.dev");
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(image, site).href;
+
+const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+// Cloudflare Web Analytics のトークン。Cloudflare ダッシュボード
+// （Analytics & Logs → Web Analytics）でサイトを追加して発行されるトークンを貼る。
+// 空のままならビーコンは出力しない（ビルドは壊れない）。
+const CF_ANALYTICS_TOKEN = "c7cd2df2924841e28234f03cdd033f9e";
 ---
 
 <!doctype html>
@@ -16,7 +43,40 @@ const fullTitle = title === "トピカ" ? "トピカ｜法律学習サイト" : 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonical} />
     <title>{fullTitle}</title>
+
+    {/* OGP (Open Graph) */}
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="トピカ" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:image" content={ogImage} />
+
+    {/* Twitter Card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {/* 構造化データ (JSON-LD) */}
+    {
+      jsonLdList.map((obj) => (
+        <script type="application/ld+json" set:html={JSON.stringify(obj)} />
+      ))
+    }
+    {
+      CF_ANALYTICS_TOKEN && (
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${CF_ANALYTICS_TOKEN}"}`}
+        />
+      )
+    }
   </head>
   <body>
     <header class="site-header">
@@ -24,6 +84,8 @@ const fullTitle = title === "トピカ" ? "トピカ｜法律学習サイト" : 
         <a href="/" class="site-logo">トピカ<span>法律学習サイト</span></a>
         <nav class="header-nav">
           <a href="/minpo/">民法</a>
+          <a href="/hasan/">破産法</a>
+          <a href="/column/">コラム</a>
         </nav>
       </div>
     </header>

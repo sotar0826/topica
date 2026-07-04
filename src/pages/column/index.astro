@@ -1,0 +1,33 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const entries = (await getCollection("column")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="コラム"
+  description="単元の枠を越えた横断テーマや重要判例を、司法試験レベルで深掘りする読み物です。"
+>
+  <div class="breadcrumb"><a href="/">トップ</a> › コラム</div>
+
+  <h1>コラム</h1>
+  <p>
+    単元の枠を越えた横断テーマ（重要判例の射程、頻出の類推適用など）を、司法試験レベルで深掘りする読み物です。
+    各トピックの基礎編・応用編を読んだうえで挑戦すると効果的です。
+  </p>
+
+  <ol class="topic-list">
+    {
+      entries.map((entry, i) => (
+        <li>
+          <span class="num">{i + 1}.</span>
+          <a href={`/column/${entry.id}/`}>{entry.data.title}</a>
+        </li>
+      ))
+    }
+  </ol>
+  {entries.length === 0 && <p>コラムは準備中です。</p>}
+</BaseLayout>

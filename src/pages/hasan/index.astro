@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+
+const subject = findSubject("hasan")!;
+const order = topicOrderOf("hasan");
+
+const entries = await getCollection("hasan");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = order.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="破産法" description={subject.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 破産法</div>
+
+  <h1>破産法</h1>
+  <p>{subject.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 この科目の読み方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      民法と異なり、<strong>実務家（申立代理人）向け</strong>の水準で書かれています。
+      受任から免責までの時系列で並んでいるので、受任中の事件の局面に応じて該当トピックを参照する使い方もできます。
+      管財運用は<strong>東京地裁の運用を基準</strong>とし、地域差がある箇所は注記しています。
+      現在 <strong>{publishedCount} / {order.length}</strong> トピック公開中。
+    </p>
+  </div>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <>
+                <li>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/hasan/${topic.slug}/`}>{topic.title}</a>
+                  ) : (
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch">
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/hasan/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>

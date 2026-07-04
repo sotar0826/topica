@@ -1,0 +1,386 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// --- コンテンツ件数の自動集計（ビルド時に計算） ---
+const minpo = await getCollection("minpo");
+const hasan = await getCollection("hasan");
+const column = await getCollection("column");
+
+const countOf = (
+  entries: { id: string }[],
+) => ({
+  basic: entries.filter((e) => !e.id.endsWith("-ouyou")).length,
+  advanced: entries.filter((e) => e.id.endsWith("-ouyou")).length,
+});
+const minpoCount = countOf(minpo);
+const hasanCount = countOf(hasan);
+
+const stats = [
+  { label: "民法", value: `基礎 ${minpoCount.basic} / 応用 ${minpoCount.advanced}` },
+  { label: "破産法", value: `基礎 ${hasanCount.basic} / 応用 ${hasanCount.advanced}` },
+  { label: "コラム", value: `${column.length} 本` },
+  { label: "総ページ数", value: `${minpo.length + hasan.length + column.length} 枚` },
+];
+
+// 記事パス → 日本語タイトルの対応表（PV表示でパスを読みやすくする）
+const pathTitle: Record<string, string> = {
+  "/": "トップ",
+  "/minpo/": "民法 一覧",
+  "/hasan/": "破産法 一覧",
+  "/column/": "コラム 一覧",
+  "/about/": "このサイトについて",
+  "/privacy/": "プライバシーポリシー",
+  "/disclaimer/": "免責事項",
+  "/kanri-m70231sok5rp/": "管理ダッシュボード",
+};
+for (const e of minpo) pathTitle[`/minpo/${e.id}/`] = e.data.title + (e.id.endsWith("-ouyou") ? "（応用）" : "");
+for (const e of hasan) pathTitle[`/hasan/${e.id}/`] = e.data.title + (e.id.endsWith("-ouyou") ? "（応用）" : "");
+for (const e of column) pathTitle[`/column/${e.id}/`] = e.data.title;
+
+// --- パッチノート（devlog）を新しい順に ---
+const logs = (await getCollection("devlog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const rendered = await Promise.all(
+  logs.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`;
+
+// やることリスト（HANDOFF の「次にやれること」より）
+const todos = [
+  "民法 第5編（親族・相続）の応用編を追加",
+  "民法 第4編の応用編未作成分（契約総論・同時履行・請負委任・典型契約・不法行為基礎）",
+  "新科目の追加（憲法・民訴・会社法など）",
+  "コラムの増設（横断テーマ・重要判例の深掘り）",
+  "GitHub 自動デプロイ連携（現状は手動 wrangler）",
+];
+---
+
+<BaseLayout title="管理ダッシュボード" noindex={true}>
+  <div class="dash">
+    <header class="dash-head">
+      <h1>🛠 管理ダッシュボード</h1>
+      <p class="note">非公開ページ（noindex・ナビ非掲載）。このURLは他人に共有しないこと。</p>
+    </header>
+
+    <section class="card">
+      <h2>📊 アクセス解析</h2>
+      <p>
+        訪問数・PV・参照元は Cloudflare Web Analytics で確認します。
+        まだ未設定の場合は下のダッシュボードでサイトを追加し、発行されたトークンを
+        <code>src/layouts/BaseLayout.astro</code> の <code>CF_ANALYTICS_TOKEN</code> に貼ってください。
+      </p>
+      <div class="links">
+        <a href="https://dash.cloudflare.com/?to=/:account/web-analytics" target="_blank" rel="noopener">
+          → Web Analytics ダッシュボード
+        </a>
+        <a href="https://dash.cloudflare.com/?to=/:account/pages/view/topica" target="_blank" rel="noopener">
+          → Cloudflare Pages（topica）
+        </a>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-head">
+        <h2>📈 アクセス（PV）</h2>
+        <div class="range-switch" id="range-switch">
+          <button type="button" data-days="7">7日</button>
+          <button type="button" data-days="14" class="active">14日</button>
+          <button type="button" data-days="30">30日</button>
+        </div>
+      </div>
+
+      <div id="pv-summary" class="pv-summary">
+        <div class="stat"><span class="stat-value" id="sum-pv">—</span><span class="stat-label">PV（期間合計）</span></div>
+        <div class="stat"><span class="stat-value" id="sum-visits">—</span><span class="stat-label">訪問数（期間合計）</span></div>
+        <div class="stat"><span class="stat-value" id="sum-today">—</span><span class="stat-label">本日のPV</span></div>
+      </div>
+
+      <h3 class="sub">日別PV</h3>
+      <div id="pv-chart" class="pv-chart"><p class="muted">読み込み中…</p></div>
+
+      <h3 class="sub">記事別PV（期間内）</h3>
+      <div id="pv-table-wrap">
+        <p class="muted">読み込み中…</p>
+      </div>
+      <p class="updated" id="pv-updated"></p>
+    </section>
+
+    <section class="card">
+      <h2>📚 コンテンツ件数</h2>
+      <div class="stat-grid">
+        {
+          stats.map((s) => (
+            <div class="stat">
+              <span class="stat-value">{s.value}</span>
+              <span class="stat-label">{s.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>✅ やることリスト</h2>
+      <ul class="todo">
+        {todos.map((t) => <li>{t}</li>)}
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>📝 パッチノート</h2>
+      <p class="note">
+        追記方法：<code>src/content/devlog/</code> に <code>YYYY-MM-DD-xxx.md</code> を作成
+        （frontmatter に <code>title</code> / <code>date</code> / 任意で <code>tag</code>）。
+      </p>
+      <div class="log-list">
+        {
+          rendered.map(({ entry, Content }) => (
+            <article class="log">
+              <div class="log-meta">
+                <time>{fmt(entry.data.date)}</time>
+                {entry.data.tag && <span class="log-tag">{entry.data.tag}</span>}
+                <strong>{entry.data.title}</strong>
+              </div>
+              <div class="log-body">
+                <Content />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .dash {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 1.5rem 1rem 4rem;
+  }
+  .dash-head h1 {
+    margin: 0 0 0.25rem;
+  }
+  .note {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin: 0.25rem 0 0;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.25rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  }
+  .card h2 {
+    margin: 0 0 0.75rem;
+    font-size: 1.15rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .links a {
+    display: inline-block;
+    padding: 0.5rem 0.9rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    color: #1d4ed8;
+    text-decoration: none;
+    font-size: 0.92rem;
+  }
+  .links a:hover {
+    background: #dbeafe;
+  }
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.9rem 1rem;
+    background: #f8fafc;
+    border-radius: 10px;
+  }
+  .stat-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+  .todo {
+    margin: 0;
+    padding-left: 1.2rem;
+    line-height: 1.9;
+  }
+  .log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .log {
+    border-left: 3px solid #93c5fd;
+    padding: 0.25rem 0 0.25rem 1rem;
+  }
+  .log-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+  .log-meta time {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .log-tag {
+    font-size: 0.75rem;
+    background: #e0e7ff;
+    color: #4338ca;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+  }
+  .log-body {
+    font-size: 0.93rem;
+    color: #334155;
+  }
+  .log-body :global(ul) {
+    margin: 0.4rem 0;
+    padding-left: 1.2rem;
+  }
+  code {
+    background: #f1f5f9;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+  }
+</style>
+
+<!-- PV セクションは JS で動的に組むため is:global で装飾（.dash 配下に限定） -->
+<style is:global>
+  .dash .card-head { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; }
+  .dash .card-head h2 { margin: 0; }
+  .dash .range-switch { display: inline-flex; gap: 0.25rem; }
+  .dash .range-switch button { font-size: 0.8rem; padding: 0.25rem 0.6rem; border: 1px solid #cbd5e1; background: #fff; border-radius: 6px; cursor: pointer; color: #475569; }
+  .dash .range-switch button.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+  .dash .pv-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+  .dash h3.sub { font-size: 0.95rem; margin: 1.25rem 0 0.5rem; color: #334155; }
+  .dash .muted { color: #94a3b8; font-size: 0.9rem; }
+  .dash .pv-chart { display: flex; flex-direction: column; gap: 0.3rem; }
+  .dash .bar-row { display: grid; grid-template-columns: 48px 1fr 56px; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+  .dash .bar-row .d { color: #64748b; font-variant-numeric: tabular-nums; }
+  .dash .bar-track { background: #f1f5f9; border-radius: 4px; height: 16px; overflow: hidden; }
+  .dash .bar-fill { background: #60a5fa; height: 100%; border-radius: 4px; min-width: 2px; }
+  .dash .bar-row.today .bar-fill { background: #2563eb; }
+  .dash .bar-row .v { text-align: right; font-variant-numeric: tabular-nums; color: #0f172a; }
+  .dash table.pv-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .dash table.pv-table th, .dash table.pv-table td { text-align: left; padding: 0.4rem 0.5rem; border-bottom: 1px solid #eef2f7; }
+  .dash table.pv-table td.path { font-size: 0.76rem; }
+  .dash table.pv-table td.num, .dash table.pv-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .dash table.pv-table tbody tr:hover { background: #f8fafc; }
+  .dash .updated { color: #94a3b8; font-size: 0.78rem; margin-top: 0.75rem; }
+  .dash .err { color: #b91c1c; font-size: 0.88rem; }
+</style>
+
+<script define:vars={{ pathTitle }}>
+  const titleMap = pathTitle;
+  const fmt = (n) => Number(n || 0).toLocaleString("ja-JP");
+  const $ = (id) => document.getElementById(id);
+
+  function titleOf(p) {
+    if (titleMap[p]) return titleMap[p];
+    if (!p.endsWith("/") && titleMap[p + "/"]) return titleMap[p + "/"];
+    if (p.endsWith("/") && titleMap[p.slice(0, -1)]) return titleMap[p.slice(0, -1)];
+    return p;
+  }
+
+  function rangeDates(start, end) {
+    const out = [];
+    const d = new Date(start + "T00:00:00Z");
+    const e = new Date(end + "T00:00:00Z");
+    while (d <= e) { out.push(d.toISOString().slice(0, 10)); d.setUTCDate(d.getUTCDate() + 1); }
+    return out;
+  }
+
+  function renderChart(data) {
+    const wrap = $("pv-chart");
+    if (data.totals.pv === 0) {
+      wrap.innerHTML = '<p class="muted">まだPVデータがありません。解析を有効化した直後か、訪問がまだない状態です。サイトを開いて数分〜数時間後に反映されます。</p>';
+      return;
+    }
+    const map = {};
+    data.daily.forEach((x) => (map[x.date] = x));
+    const dates = rangeDates(data.range.start, data.range.end);
+    const max = Math.max(1, ...dates.map((dt) => (map[dt] ? map[dt].pv : 0)));
+    wrap.innerHTML = dates
+      .map((dt) => {
+        const pv = map[dt] ? map[dt].pv : 0;
+        const w = Math.round((pv / max) * 100);
+        const md = dt.slice(5).replace("-", "/");
+        const today = dt === data.range.end ? " today" : "";
+        return `<div class="bar-row${today}"><span class="d">${md}</span><span class="bar-track"><span class="bar-fill" style="width:${w}%"></span></span><span class="v">${fmt(pv)}</span></div>`;
+      })
+      .join("");
+  }
+
+  function renderTable(data) {
+    const wrap = $("pv-table-wrap");
+    if (!data.byPath.length) {
+      wrap.innerHTML = '<p class="muted">記事別データはまだありません。</p>';
+      return;
+    }
+    const rows = data.byPath
+      .map(
+        (r) =>
+          `<tr><td>${titleOf(r.path)}</td><td class="path muted">${r.path}</td><td class="num">${fmt(r.pv)}</td><td class="num">${fmt(r.visits)}</td></tr>`,
+      )
+      .join("");
+    wrap.innerHTML = `<table class="pv-table"><thead><tr><th>ページ</th><th>パス</th><th class="num">PV</th><th class="num">訪問</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+
+  async function load(days) {
+    document.querySelectorAll("#range-switch button").forEach((b) => b.classList.toggle("active", Number(b.dataset.days) === days));
+    $("pv-chart").innerHTML = '<p class="muted">読み込み中…</p>';
+    $("pv-table-wrap").innerHTML = '<p class="muted">読み込み中…</p>';
+    ["sum-pv", "sum-visits", "sum-today"].forEach((id) => ($(id).textContent = "…"));
+    try {
+      const res = await fetch(`/api/stats?days=${days}`);
+      const d = await res.json();
+      if (d.error) throw new Error(d.error);
+      $("sum-pv").textContent = fmt(d.totals.pv);
+      $("sum-visits").textContent = fmt(d.totals.visits);
+      const today = d.daily.find((x) => x.date === d.range.end);
+      $("sum-today").textContent = fmt(today ? today.pv : 0);
+      renderChart(d);
+      renderTable(d);
+      $("pv-updated").textContent = "最終更新: " + new Date(d.updated).toLocaleString("ja-JP");
+    } catch (e) {
+      $("pv-chart").innerHTML = `<p class="err">取得に失敗しました：${e.message}</p>`;
+      $("pv-table-wrap").innerHTML = "";
+      ["sum-pv", "sum-visits", "sum-today"].forEach((id) => ($(id).textContent = "—"));
+    }
+  }
+
+  $("range-switch").addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    load(Number(b.dataset.days));
+  });
+  load(14);
+</script>
