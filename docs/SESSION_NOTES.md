@@ -17,6 +17,26 @@
 
 ## 直近セッションログ
 
+### 2026-07-05 [Code] — SEO実装のコミット・push・本番デプロイ
+
+**フォーカス**: 前日実装分＋未コミットの全コンテンツをコミットし本番反映
+
+**完了**:
+- 未コミット全変更（115ファイル：SEO実装＋破産法26・コラム3・民法多数・functions/ 等）を1コミットにまとめた（`afc6a1b`）
+- **セキュリティ対応**：push が GitHub push protection にブロックされた。原因は `HANDOFF.md` に Cloudflare APIトークンが平文で記載されていたこと。トークンを `.secrets.ps1`（gitignore済み）へ退避し、HANDOFF.md §2 を「`. .\.secrets.ps1` で読み込む」手順に修正、コミットを amend して push 成功（トークンは履歴に残っていない）
+- `wrangler pages deploy` で本番デプロイ。本番URLで robots.txt（200）・sitemap-index.xml（200）・canonical・OGP・twitter:card・JSON-LD（Article/BreadcrumbList）・ogp-default.png（200）を確認済み
+
+**決定事項**:
+- APIトークン等の秘密情報は `.secrets.ps1` に置き、Markdownやコミットに直接書かない
+
+**次セッションで最初にやること／持ち越し**:
+1. **推奨**：Cloudflare APIトークンのローテーション（平文でリポジトリ内に置かれていた期間があるため。ダッシュボード → My Profile → API Tokens）。ローテ後は `.secrets.ps1` を更新
+2. Google Search Console 登録＋ sitemap-index.xml 送信、リッチリザルトテスト・OGP確認ツールでの外部検証
+3. `updated`/`published`/`lawVersion` の他記事への展開判断（現状 sakugo.md のみ）
+4. Low優先度：用語集ページ／Lighthouse 仕上げ
+
+---
+
 ### 2026-07-04 [Code] — SEOメタ情報の実装（Chat指示書ベース）
 
 **フォーカス**: `topica_code_tasks.md`（Chatで作成した改修指示書）の High／Medium 優先度を実装
