@@ -46,7 +46,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "shinri-ryuho", title: "意思表示総論・心裡留保", hasAdvanced: false },
       { slug: "kyogi-hyoji", title: "虚偽表示", hasAdvanced: true },
       { slug: "sakugo", title: "錯誤", hasAdvanced: true },
-      { slug: "sagi-kyohaku", title: "詐欺・強迫", hasAdvanced: false },
+      { slug: "sagi-kyohaku", title: "詐欺・強迫", hasAdvanced: true },
       { slug: "dairi-kiso", title: "代理（基礎）", hasAdvanced: false },
       { slug: "muken-dairi", title: "無権代理", hasAdvanced: true },
       { slug: "hyoken-dairi", title: "表見代理", hasAdvanced: true },
