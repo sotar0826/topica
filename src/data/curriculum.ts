@@ -100,7 +100,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "kaijo", title: "契約の解除", hasAdvanced: true },
       { slug: "baibai", title: "売買", hasAdvanced: true },
       { slug: "chintaishaku", title: "賃貸借", hasAdvanced: true },
-      { slug: "ukeoi-inin", title: "請負・委任", hasAdvanced: false },
+      { slug: "ukeoi-inin", title: "請負・委任", hasAdvanced: true },
       { slug: "sonota-keiyaku", title: "その他の典型契約", hasAdvanced: false },
       { slug: "futo-ritoku", title: "不当利得", hasAdvanced: true },
       { slug: "fuho-koi-kiso", title: "不法行為（基礎）", hasAdvanced: true },
