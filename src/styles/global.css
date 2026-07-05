@@ -261,51 +261,6 @@ main {
   border-color: #e8c4a8;
 }
 
-/* ===== AIに質問するセクション ===== */
-.ask-ai {
-  margin-top: 3rem;
-  padding: 1.2rem 1.4rem;
-  background: var(--accent-light);
-  border-radius: 10px;
-}
-
-.ask-ai h2 {
-  font-size: 1.05rem;
-  margin: 0 0 0.5rem;
-  color: var(--accent-dark);
-}
-
-.ask-ai p {
-  font-size: 0.88rem;
-  margin: 0.3rem 0;
-}
-
-.ask-ai textarea {
-  width: 100%;
-  font-size: 0.82rem;
-  font-family: inherit;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.6rem;
-  background: #fff;
-  resize: vertical;
-}
-
-.ask-ai button {
-  margin-top: 0.5rem;
-  padding: 0.45rem 1.2rem;
-  font-size: 0.88rem;
-  border: none;
-  border-radius: 6px;
-  background: var(--accent);
-  color: #fff;
-  cursor: pointer;
-}
-
-.ask-ai button:hover {
-  background: var(--accent-dark);
-}
-
 /* ===== カリキュラムツリー ===== */
 .part-section {
   margin-bottom: 2rem;

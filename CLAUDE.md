@@ -19,7 +19,7 @@ Node.js は `C:\Program Files\nodejs` にあるが、セッションのPATHに�
 
 - `src/data/curriculum.ts` — 全51トピックの定義。ナビ・ツリー表示・前後リンクの基準。トピック追加時はここを更新
 - `src/content/minpo/<slug>.md` — 基礎編。応用編は `<slug>-ouyou.md`
-- `src/pages/minpo/[slug].astro` — トピックページのレイアウト（関連リンク・AIテンプレ・前後ナビは自動生成）
+- `src/pages/minpo/[slug].astro` — トピックページのレイアウト（関連リンク・前後ナビは自動生成）。※AI質問テンプレは 2026-07-05 に削除（サイトのAI色を薄くする方針）
 - `src/content/column/<slug>.md` — コラム（単元横断の司法試験レベル読み物）。frontmatter に `order`（一覧の表示順）。ページは `src/pages/column/`
 - 一覧での応用編は基礎編の枝として「10-1.」形式のナンバリングで表示（`topic-branch` クラス）
 

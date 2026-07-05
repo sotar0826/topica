@@ -33,7 +33,6 @@ const relatedLinks = entry.data.related
   .filter((x) => x !== null);
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica.pages.dev").href;
-const aiTemplate = `以下の法律学習ページの内容について質問があります。\nページ：${entry.data.title}（破産法・${isAdvanced ? "応用編" : "基礎編"}）\nURL：${pageUrl}\n\nこのページの内容について、理解度を確認するテストを作ってください。`;
 
 const headline = `${entry.data.title}${isAdvanced ? "（応用編）" : ""}`;
 const jsonLd = [
@@ -122,17 +121,6 @@ const jsonLd = [
     )
   }
 
-  <section class="ask-ai">
-    <h2>🤖 このページについてAIに質問する</h2>
-    <p>
-      わからないことがあれば、下のテンプレートをコピーして
-      <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>
-      などのAIに貼り付けて質問できます。テストを作ってもらうのもおすすめです。
-    </p>
-    <textarea id="ai-template" rows="5" readonly>{aiTemplate}</textarea>
-    <button id="copy-btn" type="button">テンプレートをコピー</button>
-  </section>
-
   <nav class="topic-nav">
     {
       nav.prev ? (
@@ -173,14 +161,3 @@ const jsonLd = [
     }
   </nav>
 </BaseLayout>
-
-<script>
-  const btn = document.getElementById("copy-btn");
-  const ta = document.getElementById("ai-template") as HTMLTextAreaElement | null;
-  btn?.addEventListener("click", async () => {
-    if (!ta) return;
-    await navigator.clipboard.writeText(ta.value);
-    btn.textContent = "コピーしました ✓";
-    setTimeout(() => (btn.textContent = "テンプレートをコピー"), 2000);
-  });
-</script>
