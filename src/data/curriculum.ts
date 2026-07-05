@@ -52,7 +52,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "hyoken-dairi", title: "表見代理", hasAdvanced: true },
       { slug: "muko-torikeshi", title: "無効と取消し", hasAdvanced: false },
       { slug: "joken-kigen", title: "条件・期限", hasAdvanced: false },
-      { slug: "shutoku-jiko", title: "取得時効", hasAdvanced: false },
+      { slug: "shutoku-jiko", title: "取得時効", hasAdvanced: true },
       { slug: "shometsu-jiko", title: "消滅時効", hasAdvanced: true },
     ],
   },
