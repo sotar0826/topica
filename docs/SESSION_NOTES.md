@@ -17,6 +17,26 @@
 
 ## 直近セッションログ
 
+### 2026-07-05 [Code] — Google Search Console 所有権確認
+
+**フォーカス**: Search Console の所有権確認（Chatの指示書ベース、ファイル取得はユーザー・配置はCode）
+
+**完了**:
+- ユーザーがSearch Consoleから取得したファイル方式の確認ファイル（`googlec8f8a152e88811da.html`）を `public/` に配置しデプロイ → **失敗**：Cloudflare Pagesが `.html` 拡張子URLを拡張子なしパスへ308リダイレクトする仕様のため、Googleの「検証ファイルはリダイレクトしないこと」という要件に抵触
+- **HTMLタグ方式に切り替え**：ファイル名のトークン（`c8f8a152e88811da`）はファイル方式・タグ方式で共通のため、Search Consoleに戻らず `<meta name="google-site-verification" content="c8f8a152e88811da">` を `BaseLayout.astro` の `<head>` に追加。本番で200・リダイレクトなしを確認
+- 旧 `public/googlec8f8a152e88811da.html` は残置（害はないが今後は不要。所有権確認が通ったら削除して良い）
+
+**学び（他プロジェクトにも応用可）**:
+- **Cloudflare Pages は静的 `.html` ファイルへの直アクセスを拡張子なしURLへ308リダイレクトする**。ファイル内容の完全一致だけでなくURLのリダイレクトなし到達性が必要な検証（Google Search Console等）はこの挙動でファイル方式が使えない。HTMLタグ方式（レイアウトの`<head>`に埋め込み）の方がCloudflare Pagesでは確実
+
+**次セッションで最初にやること／持ち越し**:
+1. Search Console側で「確認」をクリックし、所有権確認が通るか確認（ユーザー側作業）
+2. 確認が通ったら sitemap-index.xml を送信、主要ページのインデックス登録リクエスト
+3. 確認が通ったら不要な `public/googlec8f8a152e88811da.html` を削除してよい
+4. Cloudflare APIトークンのローテーション（前回セッションからの持ち越し・未実施）
+
+---
+
 ### 2026-07-05 [Code] — SEO実装のコミット・push・本番デプロイ
 
 **フォーカス**: 前日実装分＋未コミットの全コンテンツをコミットし本番反映
