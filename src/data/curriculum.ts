@@ -86,7 +86,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "rentai-saimu", title: "連帯債務", hasAdvanced: false },
       { slug: "hosho", title: "保証", hasAdvanced: true },
       { slug: "saiken-joto", title: "債権譲渡", hasAdvanced: true },
-      { slug: "bensai", title: "弁済", hasAdvanced: false },
+      { slug: "bensai", title: "弁済", hasAdvanced: true },
       { slug: "sosai", title: "相殺", hasAdvanced: true },
     ],
   },
