@@ -117,7 +117,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "sozokunin", title: "相続人と相続分", hasAdvanced: true },
       { slug: "sozoku-shonin", title: "相続の承認・放棄・遺産分割", hasAdvanced: true },
       { slug: "yuigon", title: "遺言", hasAdvanced: true },
-      { slug: "iryubun", title: "遺留分", hasAdvanced: false },
+      { slug: "iryubun", title: "遺留分", hasAdvanced: true },
     ],
   },
 ];
