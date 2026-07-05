@@ -35,6 +35,12 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 // （Analytics & Logs → Web Analytics）でサイトを追加して発行されるトークンを貼る。
 // 空のままならビーコンは出力しない（ビルドは壊れない）。
 const CF_ANALYTICS_TOKEN = "c7cd2df2924841e28234f03cdd033f9e";
+
+// Google Search Console 所有権確認（HTMLタグ方式）。
+// public/googlec8f8a152e88811da.html（ファイル方式）は Cloudflare Pages が
+// .html を拡張子なしURLへ308リダイレクトしてしまい検証不可のため、
+// 同じトークンをHTMLタグ方式として埋め込んで確認する。
+const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
 ---
 
 <!doctype html>
@@ -44,6 +50,7 @@ const CF_ANALYTICS_TOKEN = "c7cd2df2924841e28234f03cdd033f9e";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
     <link rel="canonical" href={canonical} />
     <title>{fullTitle}</title>
 
