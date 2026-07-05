@@ -1,0 +1,29 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+// お問い合わせは Google フォームで受け付ける（サイト側にサーバー処理を持たない）
+const FORM_URL =
+  "https://docs.google.com/forms/d/e/1FAIpQLSdLE5KUu0u9QdqeKG0HuY5zzCKMragj64SHOobZ7pJ9rAuXjA/viewform";
+---
+
+<BaseLayout
+  title="お問い合わせ"
+  description="トピカへのお問い合わせはこちらのフォームからお願いします。誤りのご指摘・ご要望・その他のご連絡を受け付けています。"
+>
+  <h1>お問い合わせ</h1>
+  <p>
+    本サイトへのお問い合わせは、下記のフォームから受け付けています。
+    内容の誤りのご指摘、トピックのご要望、その他のご連絡など、お気軽にお寄せください。
+  </p>
+  <p>
+    <a href={FORM_URL} target="_blank" rel="noopener" class="contact-button">
+      お問い合わせフォームを開く（Googleフォーム）
+    </a>
+  </p>
+  <h2>ご注意</h2>
+  <ul>
+    <li>個別の法律相談にはお答えできません。具体的な事件・紛争については弁護士等の専門家にご相談ください。</li>
+    <li>ご入力いただいた情報の取り扱いは<a href="/privacy/">プライバシーポリシー</a>をご確認ください。</li>
+    <li>すべてのお問い合わせへの返信をお約束するものではありません。</li>
+  </ul>
+</BaseLayout>

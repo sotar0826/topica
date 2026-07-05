@@ -261,6 +261,21 @@ main {
   border-color: #e8c4a8;
 }
 
+/* ===== お問い合わせボタン ===== */
+.contact-button {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-button:hover {
+  background: var(--accent-dark);
+}
+
 /* ===== カリキュラムツリー ===== */
 .part-section {
   margin-bottom: 2rem;
