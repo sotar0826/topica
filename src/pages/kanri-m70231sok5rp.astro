@@ -124,6 +124,18 @@ const todos = [
     </section>
 
     <section class="card">
+      <h2>🗄 保管庫（お蔵入りコンテンツ）</h2>
+      <p class="note">
+        公開ナビ・sitemap から外し noindex にした科目。ページ自体は残っており、ここからのみアクセスできる。
+        復活させる場合は <code>src/data/curriculum.ts</code> の <code>archived: true</code> を外し、
+        各ページの <code>noindex</code> と <code>astro.config.mjs</code> の sitemap filter を戻す。
+      </p>
+      <div class="links">
+        <a href="/hasan/">→ 破産法（2026-07-05 お蔵入り）</a>
+      </div>
+    </section>
+
+    <section class="card">
       <h2>✅ やることリスト</h2>
       <ul class="todo">
         {todos.map((t) => <li>{t}</li>)}

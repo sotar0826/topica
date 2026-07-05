@@ -20,8 +20,17 @@ Node.js は `C:\Program Files\nodejs` にあるが、セッションのPATHに�
 - `src/data/curriculum.ts` — 全51トピックの定義。ナビ・ツリー表示・前後リンクの基準。トピック追加時はここを更新
 - `src/content/minpo/<slug>.md` — 基礎編。応用編は `<slug>-ouyou.md`
 - `src/pages/minpo/[slug].astro` — トピックページのレイアウト（関連リンク・前後ナビは自動生成）。※AI質問テンプレは 2026-07-05 に削除（サイトのAI色を薄くする方針）
-- `src/content/column/<slug>.md` — コラム（単元横断の司法試験レベル読み物）。frontmatter に `order`（一覧の表示順）。ページは `src/pages/column/`
+- `src/content/column/<slug>.md` — コラム（単元横断の発展的読み物）。frontmatter に `order`（一覧の表示順）。ページは `src/pages/column/`
+- `src/content/hasan/` — 破産法。**2026-07-05 お蔵入り**：`curriculum.ts` の `archived: true` によりトップ・ナビ・sitemapから除外、全ページ noindex。ページは削除せず、管理ダッシュボードの「保管庫」からのみ導線あり
+- `src/pages/yougo.astro` — 法律用語集（用語はページ内の `TERMS` 配列で管理）
 - 一覧での応用編は基礎編の枝として「10-1.」形式のナンバリングで表示（`topic-branch` クラス）
+
+## サイト運用ルール
+
+- **パッチノート必須**：デプロイを伴う変更（機能・コンテンツ・文言・構成）をしたら、必ず `src/content/devlog/YYYY-MM-DD-<slug>.md` を追加する（frontmatter: `title` / `date` / 任意で `tag`＝機能・コンテンツ・修正・運用）。管理ダッシュボードに新しい順で表示される
+- **試験名を画面に出さない**：サイトのUI文言・トップ・About・meta description 等に「司法試験」「予備試験」等の試験名を使わない。「シンプルな法律の学習サイト」として見せる（2026-07-05 ユーザー方針）。記事本文中の学習上の言及（短答・論文など）は可
+- **AI色を薄くする**：AI連携・AI質問などをUIに出さない（2026-07-05 ユーザー方針。AI質問テンプレは削除済み）
+- デプロイは push 連動ではなく手動：`npm run build` → `npx wrangler pages deploy dist --project-name topica --branch main --commit-dirty=true`（トークンは `.secrets.ps1`。詳細は HANDOFF.md §2）
 
 ## コンテンツ執筆方針（ユーザー確認済み）
 

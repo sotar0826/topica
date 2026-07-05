@@ -13,11 +13,14 @@ const publishedCount = order.filter((t) => existing.has(t.slug)).length;
 let globalNum = 0;
 ---
 
-<BaseLayout title="破産法" description={subject.description}>
+<BaseLayout title="破産法" description={subject.description} noindex={true}>
   <div class="breadcrumb"><a href="/">トップ</a> › 破産法</div>
 
   <h1>破産法</h1>
   <p>{subject.description}</p>
+  <p style="font-size: 0.85rem; color: var(--text-muted);">
+    ※ 本科目は現在、公開を休止しています（ナビ・検索エンジンの対象外。ページは参照用に残しています）。
+  </p>
 
   <div class="related-box">
     <span class="label">📖 この科目の読み方</span>

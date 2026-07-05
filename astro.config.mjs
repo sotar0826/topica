@@ -8,8 +8,8 @@ export default defineConfig({
   site: 'https://topica.pages.dev',
   integrations: [
     sitemap({
-      // 管理ページ（非公開）はサイトマップから除外する。
-      filter: (page) => !page.includes('/kanri-'),
+      // 管理ページ（非公開）とアーカイブ済み科目（破産法）はサイトマップから除外する。
+      filter: (page) => !page.includes('/kanri-') && !page.includes('/hasan/'),
     }),
   ],
 });

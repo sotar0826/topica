@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { SUBJECTS, topicOrderOf } from "../data/curriculum";
+import { PUBLIC_SUBJECTS, topicOrderOf } from "../data/curriculum";
 import { abs } from "../lib/jsonld";
 
 const jsonLd = {
@@ -9,7 +9,7 @@ const jsonLd = {
   name: "トピカ",
   alternateName: "トピカ｜法律学習サイト",
   url: abs("/"),
-  description: "資格試験を目指す初学者のための体系的な法律学習サイト",
+  description: "法律を体系的に学べるオンライン学習サイト。基礎から応用まで、1トピック1ページで解説します。",
   inLanguage: "ja",
   publisher: {
     "@type": "Organization",
@@ -23,16 +23,16 @@ const jsonLd = {
 <BaseLayout title="トピカ" jsonLd={jsonLd}>
   <div class="hero">
     <h1>トピカ</h1>
-    <p>1トピック1ページで学ぶ、資格試験のための法律学習サイト。</p>
+    <p>1トピック1ページで学ぶ、法律の学習サイト。</p>
     <p>
       法律をはじめて学ぶ人でも読める「基礎編」から、<br />
-      予備試験の論述に対応する「応用編」まで、段階的にステップアップ。
+      判例・学説まで踏み込む「応用編」へ、段階的にステップアップ。
     </p>
   </div>
 
   <h2 style="font-size: 1.2rem;">科目一覧</h2>
   {
-    SUBJECTS.map((subject) => (
+    PUBLIC_SUBJECTS.map((subject) => (
       <a href={`/${subject.slug}/`} class="subject-card">
         <h2>{subject.name}</h2>
         <p>{subject.description}</p>
@@ -41,13 +41,13 @@ const jsonLd = {
     ))
   }
   <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
-    ※ 今後、他の司法試験科目・他資格の科目も順次追加予定です。
+    ※ 科目は今後、順次追加予定です。
   </p>
 
   <h2 style="font-size: 1.2rem; margin-top: 2.5rem;">このサイトの使い方</h2>
   <ul style="font-size: 0.95rem;">
     <li><strong>基礎編</strong>：専門用語をかみくだいた解説と日常的な具体例で、ゼロから理解できます。</li>
-    <li><strong>応用編</strong>：重要判例・学説の対立・論述対策まで。予備試験論文レベルに対応します。</li>
+    <li><strong>応用編</strong>：重要判例・学説の対立から論述の書き方まで、一歩踏み込んで解説します。</li>
     <li><strong>確認問題</strong>：各ページ末尾の○×問題で理解度をチェックできます。</li>
   </ul>
 </BaseLayout>

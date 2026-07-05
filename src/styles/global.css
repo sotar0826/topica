@@ -261,6 +261,39 @@ main {
   border-color: #e8c4a8;
 }
 
+/* ===== 用語集 ===== */
+.glossary {
+  margin: 1.5rem 0 0;
+}
+
+.glossary-item {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.glossary dt {
+  font-weight: bold;
+  color: var(--accent-dark);
+  font-size: 1.02rem;
+}
+
+.glossary dt .reading {
+  font-weight: normal;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.glossary dd {
+  margin: 0.3rem 0 0;
+  font-size: 0.93rem;
+}
+
+.glossary-link {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+}
+
 /* ===== お問い合わせボタン ===== */
 .contact-button {
   display: inline-block;

@@ -22,13 +22,15 @@ export interface SubjectDef {
   name: string;
   description: string;
   parts: PartDef[];
+  /** true なら公開ナビ・トップ・sitemapに出さない（保管庫送り。ページ自体は残す） */
+  archived?: boolean;
 }
 
 export const SUBJECT = {
   slug: "minpo",
   name: "民法",
   description:
-    "司法試験・予備試験をはじめとする法律系資格の最重要科目。総則から親族・相続まで、全51トピックで体系的に学べます。",
+    "契約・所有・家族など、暮らしと取引の基本ルールを定める法律。総則から親族・相続まで、全51トピックで体系的に学べます。",
 } as const;
 
 export const CURRICULUM: PartDef[] = [
@@ -195,8 +197,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "申立代理人の視点から、自然人・法人の自己破産を受任から免責まで時系列で扱います。実務マニュアルとしても使える実務家向けの内容です。",
     parts: HASAN_CURRICULUM,
+    // 2026-07-05 お蔵入り。公開導線から外すがページは保持（管理ダッシュボードから閲覧可）
+    archived: true,
   },
 ];
+
+/** 公開ナビ・トップに出す科目のみ */
+export const PUBLIC_SUBJECTS = SUBJECTS.filter((s) => !s.archived);
 
 export function findSubject(slug: string) {
   return SUBJECTS.find((s) => s.slug === slug) ?? null;
