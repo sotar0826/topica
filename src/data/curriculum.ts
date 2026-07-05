@@ -96,7 +96,7 @@ export const CURRICULUM: PartDef[] = [
     slug: "saiken-kakuron",
     topics: [
       { slug: "keiyaku-soron", title: "契約総論・契約の成立", hasAdvanced: false },
-      { slug: "doji-riko", title: "同時履行の抗弁・危険負担", hasAdvanced: false },
+      { slug: "doji-riko", title: "同時履行の抗弁・危険負担", hasAdvanced: true },
       { slug: "kaijo", title: "契約の解除", hasAdvanced: true },
       { slug: "baibai", title: "売買", hasAdvanced: true },
       { slug: "chintaishaku", title: "賃貸借", hasAdvanced: true },
