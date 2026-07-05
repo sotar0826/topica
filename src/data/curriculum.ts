@@ -115,7 +115,7 @@ export const CURRICULUM: PartDef[] = [
       { slug: "konin-rikon", title: "婚姻・離婚", hasAdvanced: false },
       { slug: "oyako", title: "親子（実子・養子）", hasAdvanced: false },
       { slug: "sozokunin", title: "相続人と相続分", hasAdvanced: false },
-      { slug: "sozoku-shonin", title: "相続の承認・放棄・遺産分割", hasAdvanced: false },
+      { slug: "sozoku-shonin", title: "相続の承認・放棄・遺産分割", hasAdvanced: true },
       { slug: "yuigon", title: "遺言", hasAdvanced: false },
       { slug: "iryubun", title: "遺留分", hasAdvanced: false },
     ],

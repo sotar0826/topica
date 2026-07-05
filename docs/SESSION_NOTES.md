@@ -17,6 +17,30 @@
 
 ## 直近セッションログ
 
+### 2026-07-05 [Code] — 執筆規約・図解テンプレ・CONTENT_PLAN・応用編1本目公開
+
+**フォーカス**: 記事執筆の本格開始（Phase 1 → 承認 → Phase 2 → Phase 3 → Phase 4 を1本通した）
+
+**完了**:
+- `docs/ARTICLE_GUIDE.md` を収蔵（Chat作成分。AI質問セクション設置指示2箇所を削除済みの現状に合わせ修正、試験名の扱いを追記）。CLAUDE.md 執筆方針の冒頭から誘導
+- `docs/DIAGRAM_TEMPLATES.md` 新設：Design 3案から案①横並びフラットを採用しサイト配色に調整。Markdown直貼り用SVGテンプレ＋記入例
+- `docs/CONTENT_PLAN.md` 新設（Phase 1 完了）：応用編候補11本＋コラム3本を優先度付きで整理。ユーザー承認済みの優先順は Tier1=第5編応用編
+- **応用編1本目「相続の承認・放棄・遺産分割」公開**（`sozoku-shonin-ouyou`）：
+  - Phase 2: 条文7本（915/921/938/939/909/899の2/424）を e-Gov API v2 現行版で、判例5件を裁判所サイトで照合（民集出典・裁判要旨まで取得）
+  - Phase 3-4: 執筆→英単語チェック→ビルド→プレビューDOM検証（バッジ・SVG・related・前後ナビ・強調崩れなし）→デプロイ
+  - curriculum.ts の sozoku-shonin を hasAdvanced: true に
+
+**技術メモ（一次資料照合の再現手順）**:
+- 条文: e-Gov API v2 `https://laws.e-gov.go.jp/api/2/law_data/129AC0000000089`（民法全文JSON）から対象条を抽出
+- 判例: 裁判所の新検索は `courts.go.jp/hanrei/search2/index.html?courtCaseType=1&filter[judgeDateMode]=1&filter[judgeGengoFrom]=昭和&filter[judgeYearFrom]=NN&filter[judgeMonthFrom]=N&filter[judgeDayFrom]=NN#searched` のGET URLで直接検索可（SPA・要ブラウザ）。詳細ページは静的 `courts.go.jp/hanrei/{id}/detail2/index.html` で curl 可。旧 `/app/hanrei_jp/detail2?id=` は死んでいる
+
+**次セッションで最初にやること／持ち越し**:
+1. CONTENT_PLAN Tier1 の2本目「遺言（応用）」の骨子作成→承認→執筆（同じ手順）
+2. Search Console：インデックス登録リクエスト再試行（クォータ回復後）。新記事もリクエスト対象に
+3. 記事本文中の試験名言及（column2本・minpo2本）の扱いをユーザーに確認（未回答）
+
+---
+
 ### 2026-07-05 [Code] — 破産法お蔵入り・用語集・文言刷新・Lighthouse
 
 **フォーカス**: SEO残タスク（用語集・Lighthouse）＋破産法アーカイブ＋サイト文言の方針転換
