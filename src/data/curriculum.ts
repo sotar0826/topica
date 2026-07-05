@@ -184,12 +184,106 @@ export const HASAN_CURRICULUM: PartDef[] = [
 ];
 
 /** 全科目の定義。ナビ・トップページはここを基準にする */
+// 商法・会社法カリキュラム（2026-07-06 ユーザー承認：会社法中心の6編＋手形小切手）
+export const SHOHO_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "会社法の全体像と設立",
+    slug: "kaisha-soron",
+    topics: [
+      { slug: "shoho-zentaizo", title: "商法・会社法の全体像と学び方", hasAdvanced: false },
+      { slug: "kaisha-hojinkaku", title: "会社の法人格と株主の有限責任", hasAdvanced: true },
+      { slug: "kaisha-setsuritsu", title: "株式会社の設立", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 2,
+    name: "株式",
+    slug: "kabushiki",
+    topics: [
+      { slug: "kabushiki-soron", title: "株式と株主の権利・株主平等原則", hasAdvanced: false },
+      { slug: "kabushiki-joto", title: "株式の譲渡と譲渡制限", hasAdvanced: true },
+      { slug: "jiko-kabushiki", title: "自己株式・株式の併合と分割", hasAdvanced: false },
+      { slug: "shurui-kabushiki", title: "種類株式", hasAdvanced: false },
+      { slug: "kabunushi-meibo", title: "株主名簿と権利行使（基準日・名義書換）", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 3,
+    name: "機関",
+    slug: "kikan",
+    topics: [
+      { slug: "kikan-sekkei", title: "機関設計の全体像", hasAdvanced: false },
+      { slug: "kabunushi-sokai", title: "株主総会（招集・決議）", hasAdvanced: true },
+      { slug: "torishimariyaku", title: "取締役・取締役会・代表取締役", hasAdvanced: true },
+      { slug: "yakuin-gimu", title: "役員の義務（善管注意・競業・利益相反）", hasAdvanced: true },
+      { slug: "yakuin-sekinin", title: "役員の責任（会社・第三者に対する）", hasAdvanced: true },
+      { slug: "daihyo-sosho", title: "株主代表訴訟・違法行為の差止め", hasAdvanced: false },
+      { slug: "kansa-kikan", title: "監査役・委員会型の機関", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "資金調達・計算",
+    slug: "shikin-keisan",
+    topics: [
+      { slug: "boshu-kabushiki", title: "募集株式の発行", hasAdvanced: true },
+      { slug: "shinkabu-yoyakuken", title: "新株予約権", hasAdvanced: false },
+      { slug: "shasai", title: "社債", hasAdvanced: false },
+      { slug: "keisan-shihon", title: "計算・資本金と準備金", hasAdvanced: false },
+      { slug: "jouyokin-haito", title: "剰余金の配当と分配可能額", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 5,
+    name: "組織再編・解散",
+    slug: "soshiki-saihen",
+    topics: [
+      { slug: "jigyo-joto", title: "事業譲渡", hasAdvanced: false },
+      { slug: "gappei", title: "合併", hasAdvanced: false },
+      { slug: "kaisha-bunkatsu", title: "会社分割", hasAdvanced: true },
+      { slug: "kabushiki-kokan", title: "株式交換・株式移転・株式交付", hasAdvanced: false },
+      { slug: "kaisan-seisan", title: "解散・清算", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 6,
+    name: "商法総則・商行為",
+    slug: "shoho-soron",
+    topics: [
+      { slug: "shonin-shokoi", title: "商人と商行為の基礎", hasAdvanced: false },
+      { slug: "shogo-naitagashi", title: "商号・名板貸し", hasAdvanced: true },
+      { slug: "shogyo-toki", title: "商業登記の効力", hasAdvanced: false },
+      { slug: "eigyo-joto", title: "営業譲渡と商号続用", hasAdvanced: false },
+      { slug: "shoji-baibai", title: "商事売買・商行為の特則", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 7,
+    name: "手形・小切手",
+    slug: "tegata",
+    topics: [
+      { slug: "tegata-kiso", title: "約束手形の仕組みと手形行為", hasAdvanced: false },
+      { slug: "tegata-uragaki", title: "裏書と手形の譲渡", hasAdvanced: false },
+      { slug: "tegata-kojin-koben", title: "人的抗弁の切断・善意取得", hasAdvanced: true },
+      { slug: "tegata-giso", title: "手形の偽造・変造・白地手形", hasAdvanced: false },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
     name: "民法",
     description: SUBJECT.description,
     parts: CURRICULUM,
+  },
+  {
+    slug: "shoho",
+    name: "商法・会社法",
+    description:
+      "会社という仕組みを動かすルール。株式・機関・資金調達から組織再編、商法総則・手形小切手まで、会社法を中心に全34トピックで体系的に学べます。",
+    parts: SHOHO_CURRICULUM,
   },
   {
     slug: "hasan",

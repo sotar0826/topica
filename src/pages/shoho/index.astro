@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+
+const subject = findSubject("shoho")!;
+const order = topicOrderOf("shoho");
+
+const entries = await getCollection("shoho");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = order.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="商法・会社法" description={subject.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 商法・会社法</div>
+
+  <h1>商法・会社法</h1>
+  <p>{subject.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 学習の進め方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      出題・実務での比重が大きい<strong>会社法</strong>を主軸に、第1〜5編で会社法、第6編で商法総則・商行為、第7編で手形・小切手を扱います。
+      民法（特に総則・代理・債権）の知識を前提とする箇所があるため、民法既習の方はそのまま、未習の方は民法第1編と並行しての学習がおすすめです。
+      現在 <strong>{publishedCount} / {order.length}</strong> トピック公開中（順次追加します）。
+    </p>
+  </div>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <>
+                <li>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/shoho/${topic.slug}/`}>{topic.title}</a>
+                  ) : (
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch">
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/shoho/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>
