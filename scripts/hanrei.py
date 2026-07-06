@@ -8,6 +8,7 @@
 検索結果はSPAではなくサーバーサイドでHTMLに埋め込まれているため、GETのみで取得できる。
 詳細ページは静的 https://www.courts.go.jp/hanrei/{id}/detail2/index.html
 """
+import http.cookiejar
 import io
 import re
 import sys
@@ -17,10 +18,15 @@ import urllib.request
 UA = {"User-Agent": "Mozilla/5.0"}
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 
+# 検索はセッションCookieがないと結果がサーバーサイドレンダリングされないため、
+# CookieJar付きのopenerで先にトップページを踏んでから検索する。
+_jar = http.cookiejar.CookieJar()
+_opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(_jar))
+
 
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers=UA)
-    return urllib.request.urlopen(req).read().decode("utf-8", errors="ignore")
+    return _opener.open(req).read().decode("utf-8", errors="ignore")
 
 
 def strip_tags(html: str) -> list[str]:
@@ -31,6 +37,8 @@ def strip_tags(html: str) -> list[str]:
 
 
 def search(gengo: str, year: str, month: str, day: str) -> None:
+    # セッションCookie取得（これが無いと結果が埋め込まれない）
+    fetch("https://www.courts.go.jp/hanrei/search1/index.html")
     params = {
         "courtCaseType": "1",
         "filter[judgeDateMode]": "1",
@@ -41,24 +49,19 @@ def search(gengo: str, year: str, month: str, day: str) -> None:
     }
     url = "https://www.courts.go.jp/hanrei/search2/index.html?" + urllib.parse.urlencode(params)
     html = fetch(url)
-    # 結果リストの各項目: <a href="./../{id}/detail2/index.html"> と周辺テキスト
-    items = re.findall(
-        r'href="\./\.\./(\d+)/detail2/index\.html".{0,2000}?</li>', html, flags=re.S
-    )
-    # 周辺テキストごと取る（liブロック単位）
-    blocks = re.findall(r"<li[^>]*>(.*?)</li>", html, flags=re.S)
+    # 各結果は id へのリンクを含むブロック。id と周辺テキストを対で出す
     seen = set()
-    for b in blocks:
-        m = re.search(r'href="\./\.\./(\d+)/detail2/index\.html"', b)
-        if not m:
-            continue
+    for m in re.finditer(r'href="\./\.\./(\d+)/detail2/index\.html"', html):
         cid = m.group(1)
         if cid in seen:
             continue
         seen.add(cid)
-        text = re.sub(r"<[^>]+>", " ", b)
+        ctx = html[max(0, m.start() - 1200): m.start() + 1200]
+        text = re.sub(r"<[^>]+>", " ", ctx)
         text = re.sub(r"\s+", " ", text).strip()
-        print(f"[{cid}] {text[:120]}")
+        # 事件番号らしき箇所を切り出す
+        mm = re.search(r"(昭和|平成|令和)\d+\((あ|お|オ|受|許|行ツ|行ヒ|ク|し|テ)\)\d+[^未]{0,80}", text)
+        print(f"[{cid}] {(mm.group(0) if mm else text[:100])}")
     if not seen:
         print("(no results)")
 
