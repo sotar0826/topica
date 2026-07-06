@@ -73,6 +73,21 @@
 - 各記事とも broken 0・確認問題4問（○×3＋短答1）・英単語混入チェック済みで build→commit→push→デプロイ→prod:200 を確認
 - `docs/CONTENT_PLAN.md` を更新（第5編完了・次は第6編`shonin-shokoi`から。**第6編は商法典＝e-Gov lawId `132AC0000000048` を使う**）
 
+**【ワーカー報告・第6編】商法総則・商行為（基礎編5本・2026-07-07完了）**
+
+- 公開したslug（指示順・全5本）：`shonin-shokoi`／`shogo-naitagashi`／`shogyo-toki`／`eigyo-joto`／`shoji-baibai`
+- 照合済み判例（3件、事件番号・出典まで確認）：
+  - 最大判昭43.4.24（民集22巻4号1043頁・id 54012）商行為の代理・非顕名主義と相手方の選択権 → `shonin-shokoi`。指示書の候補どおり一発照合成功
+  - 最判昭41.1.27（民集20巻1号111頁・id 53862）名板貸人を営業主と誤認した相手方に重過失がある場合の免責 → `shogo-naitagashi`。指示書の候補どおり一発照合成功
+  - 最判平16.2.20（民集58巻2号367頁・id 57044）預託金会員制ゴルフクラブの名称続用への商号続用規定（当時26条1項・現行17条1項）類推適用 → `eigyo-joto`。指示書の候補どおり一発照合成功
+- 不採用判例：なし（指示書の3候補すべて照合成功）
+- 条文照合：商法典の e-Gov API v2 `law_data/132AC0000000048` を取得しscratchpadに`shohoten.json`として保存。会社法用ヘルパー`get_article2.py`をJSONパス引数化した`get_article3.py`（MainProvision限定探索は流用）を新設し、商法4・8〜18の2・21・501〜506・521・524〜528条を全て現行条文と照合。会社法条文（9・21〜23・908条）は既存の`get_article2.py`＋`kaishaho.json`で照合
+- `shogyo-toki`・`shoji-baibai`は指示書どおり条文中心構成とし判例照合は行っていない
+- `eigyo-joto`は指示どおり`jigyo-joto.md`（事業譲渡）から本記事へのクロスリンクを追加
+- ビルド時に`eigyo-joto`で強調`**`が「」に隣接してパース崩れ（broken 1件）を検出。該当箇所の強調を外して再ビルドしbroken 0を確認
+- 各記事とも broken 0・確認問題4問（○×3＋短答1）・英単語混入チェック済みで build→commit→push→デプロイ→prod:200 を確認
+- `docs/CONTENT_PLAN.md` を更新（第6編完了・次は第7編`tegata-kiso`から。手形法・小切手法の e-Gov lawId は law_search で要特定と明記）
+
 
 ### 2026-07-06 [Code・続] — 商法の連続執筆（第1・2編の基礎編完成）
 
