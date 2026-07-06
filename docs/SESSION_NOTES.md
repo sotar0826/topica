@@ -17,6 +17,26 @@
 
 ## 直近セッションログ
 
+### 2026-07-06 [Code・続] — 商法の連続執筆（第1・2編の基礎編完成）
+
+**フォーカス**: 商法カリキュラム順の自走執筆＋効率化
+
+**完了（全て公開済み・判例照合済み）**:
+- 第1編：`shoho-zentaizo`／`kaisha-hojinkaku`（法人格否認・最判昭44.2.27＋昭48.10.26）／`kaisha-setsuritsu`（見せ金・最判昭38.12.6）
+- 第2編：`kabushiki-soron`（ブルドック・最決平19.8.7）／`kabushiki-joto`（最判昭48.6.15）／`jiko-kabushiki`／`shurui-kabushiki`／`kabunushi-meibo`（最判昭30.10.20）
+- **商法計8本・照合済み判例7件**。会社法条文は毎回 e-Gov 現行版（kaishaho.json）で照合
+
+**効率化（ユーザー指示による）**:
+- `scripts/hanrei.py` 新設：判例詳細の照合が `py scripts/hanrei.py get <id>` の1コマンドに。**検索はSPAの制約によりブラウザ経由のまま**（検索URL直叩き→JSでid抽出→スクリプトで詳細取得、が最小コスト手順）
+- 判例ストック：最判昭38.12.6（無利息貸付と利益相反・民集17巻12号1664頁・id 53806）→ `yakuin-gimu` 用
+
+**次セッションで最初にやること**:
+1. 第3編（機関）：`kikan-sekkei` → `kabunushi-sokai` → `torishimariyaku` → `yakuin-gimu` → `yakuin-sekinin` → `daihyo-sosho` → `kansa-kikan` の順。機関は判例の宝庫（経営判断原則・429条大法廷ほか）なので照合を厚めに
+2. Search Console：インデックス登録リクエスト（新記事約20本・クォータ注意）
+3. 効率化の徹底：dist grep検証・1コマンドdeploy・確認問題の入れ忘れに注意（2回発生→executeの前にセクション数を数える）
+
+---
+
 ### 2026-07-06 [Code] — 応用編の連続執筆（Tier 1完了・Tier 2進行中）
 
 **フォーカス**: CONTENT_PLAN に沿った応用編の自走執筆（ユーザー包括承認済み・クレジット節約モード）
