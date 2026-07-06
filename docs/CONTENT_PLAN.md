@@ -54,7 +54,7 @@
 
 - 構成：会社法中心の6編＋手形小切手（全7編・34トピック）。定義は `curriculum.ts` の `SHOHO_CURRICULUM` が正
 - 執筆順序：カリキュラム順（第1編→第7編）。基礎編を先に通し、応用編は基礎編完成後にまとめて着手する方針
-- 進捗：第1編の基礎編3本（`shoho-zentaizo`・`kaisha-hojinkaku`・`kaisha-setsuritsu`）公開済み（2026-07-06）。`kabushiki-soron` も公開済み（ブルドック照合済み）。`kabushiki-joto`・`jiko-kabushiki` も公開済み。次は `shurui-kabushiki`（種類株式・108条中心）→`kabunushi-meibo`（株主名簿・基準日124条）で第2編完成。※照合済みストック：最判昭38.12.6（利益相反・無利息貸付＝民集17巻12号1664頁・id 53806）は yakuin-gimu 用
+- 進捗：第1編の基礎編3本（`shoho-zentaizo`・`kaisha-hojinkaku`・`kaisha-setsuritsu`）公開済み（2026-07-06）。`kabushiki-soron` も公開済み（ブルドック照合済み）。第2編（株式）基礎編5本すべて公開済み（joto・jiko・shurui・meibo）。次は第3編（機関）：`kikan-sekkei` から。判例ストック：最判昭38.12.6（無利息貸付と利益相反・民集17巻12号1664頁・id 53806）は yakuin-gimu 用。※照合済みストック：最判昭38.12.6（利益相反・無利息貸付＝民集17巻12号1664頁・id 53806）は yakuin-gimu 用
 - 条文照合：会社法は e-Gov API v2 `law_data/417AC0000000086`、商法典は `132AC0000000048`
 - 手形小切手（第7編）はユーザー指示により対象に含める
 
