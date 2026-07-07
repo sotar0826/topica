@@ -76,7 +76,9 @@
 - 執筆順序：カリキュラム順。基礎編を先に通し、応用編は基礎編完成後
 - 条文照合：民事訴訟法は e-Gov API v2 `law_data/408AC0000000109`（平成8年法律109号）。抽出は scratchpad の get_article3.py（MainProvision限定）
 - 判例照合：`py scripts/hanrei.py`（search は id と事件番号の対応がずれることがあるため、必ず get で中身を確認してから採用）
-- 進捗：**第1編（民訴の全体像と訴え）基礎編5本すべて公開済み**（2026-07-07。`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`）。次は第2編 `tojisha-noryoku` から
+- 進捗：**第1編（基礎編5本）・第2編（当事者・基礎編4本）すべて公開済み**（2026-07-07。第1編＝`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`／第2編＝`tojisha-noryoku`・`tojisha-kakutei`・`tojisha-tekikaku`・`soshou-dairi`）。次は第3編（審理）`benron-shugi` から
+- 第2編で照合済みの判例：権利能力なき社団の成立要件＝最判昭39.10.15（民集18巻8号1671頁・id 53694／`tojisha-noryoku`）、業務執行組合員の任意的訴訟信託＝最大判昭45.11.11（民集24巻12号1854頁・id 53166／`tojisha-tekikaku`）
+- 第2編での訂正：指示書は57条・58条をまとめて「代理権の不消滅」としていたが、57条は当事者による更正、58条が訴訟代理権の不消滅（e-Gov現行文言で確認）。`tojisha-kakutei`の氏名冒用・死者名義の古典判例は大審院判例のため裁判所DBで照合できず、指示どおり学説・処理枠組み中心で構成（判例引用なし）。訴訟代理権の書面証明は民訴規則23条1項をcourts.go.jpのPDF原文で照合（e-Govに民訴規則は未収録）
 - 第1編で照合済みの判例：遺言無効確認の訴えの適否＝最判昭47.2.15（民集26巻1号30頁・id 51924／`soshou-yoken`）
 - 第1編での訂正：指示書は訴え提起の方式を133条としていたが、令和4年IT化改正で133条は秘匿決定（住所・氏名の秘匿）に関する規定に差し替わっており、訴え提起の方式は134条であることを確認して訂正した（`uttae-ruikei`）
 - 第1編で不採用にした判例：`soshou-yoken`の`hanrei.py search`で同日付候補が2件返った（id 51924／61986）が、既知のid対応ずれのため両方を`get`で確認。id 61986は無関係の損害賠償請求事件（農地買収）と判明し不採用
