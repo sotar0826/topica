@@ -271,6 +271,80 @@ export const SHOHO_CURRICULUM: PartDef[] = [
   },
 ];
 
+// 民事訴訟法カリキュラム（2026-07-07 開始。訴訟の時系列＋主要論点の6編・28トピック）
+export const MINSO_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "民訴の全体像と訴え",
+    slug: "uttae",
+    topics: [
+      { slug: "minso-zentaizo", title: "民事訴訟の全体像と学び方", hasAdvanced: false },
+      { slug: "uttae-ruikei", title: "訴えの類型と訴訟物", hasAdvanced: true },
+      { slug: "shobun-shugi", title: "処分権主義", hasAdvanced: false },
+      { slug: "soshou-yoken", title: "訴訟要件・訴えの利益", hasAdvanced: true },
+      { slug: "kankatsu", title: "管轄・移送", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 2,
+    name: "当事者",
+    slug: "tojisha",
+    topics: [
+      { slug: "tojisha-noryoku", title: "当事者能力・訴訟能力", hasAdvanced: false },
+      { slug: "tojisha-kakutei", title: "当事者の確定", hasAdvanced: false },
+      { slug: "tojisha-tekikaku", title: "当事者適格・訴訟担当", hasAdvanced: true },
+      { slug: "soshou-dairi", title: "訴訟上の代理", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 3,
+    name: "審理（弁論・証拠）",
+    slug: "shinri",
+    topics: [
+      { slug: "benron-shugi", title: "弁論主義", hasAdvanced: true },
+      { slug: "shakumei", title: "釈明権・法的観点指摘義務", hasAdvanced: false },
+      { slug: "jihaku", title: "裁判上の自白", hasAdvanced: true },
+      { slug: "shomei-sekinin", title: "証明責任と証明度", hasAdvanced: true },
+      { slug: "shoko-shirabe", title: "証拠調べ・文書提出命令", hasAdvanced: false },
+      { slug: "soten-seiri", title: "争点整理と審理の進行", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "判決と効力",
+    slug: "hanketsu",
+    topics: [
+      { slug: "hanketsu-shurui", title: "判決の種類と確定", hasAdvanced: false },
+      { slug: "kihanryoku", title: "既判力の基礎", hasAdvanced: true },
+      { slug: "kihanryoku-hani", title: "既判力の範囲（時的・客観的・主観的）", hasAdvanced: true },
+      { slug: "ichibu-seikyu", title: "一部請求・相殺の抗弁", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 5,
+    name: "複雑訴訟",
+    slug: "fukuzatsu",
+    topics: [
+      { slug: "seikyu-heigo", title: "請求の併合・変更・反訴", hasAdvanced: false },
+      { slug: "kyodo-soshou", title: "共同訴訟", hasAdvanced: true },
+      { slug: "hojo-sanka", title: "補助参加・訴訟告知", hasAdvanced: false },
+      { slug: "dokuritsu-sanka", title: "独立当事者参加", hasAdvanced: false },
+      { slug: "soshou-shokei", title: "訴訟承継", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 6,
+    name: "終了と上訴",
+    slug: "shuryo",
+    topics: [
+      { slug: "soshou-shuryo", title: "訴えの取下げ・和解・放棄認諾", hasAdvanced: false },
+      { slug: "joso", title: "控訴・上告・抗告", hasAdvanced: false },
+      { slug: "saishin", title: "再審", hasAdvanced: false },
+      { slug: "kani-tetsuzuki", title: "簡易な手続（少額訴訟・支払督促・手形訴訟）", hasAdvanced: false },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
@@ -284,6 +358,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "会社という仕組みを動かすルール。株式・機関・資金調達から組織再編、商法総則・手形小切手まで、会社法を中心に全34トピックで体系的に学べます。",
     parts: SHOHO_CURRICULUM,
+  },
+  {
+    slug: "minso",
+    name: "民事訴訟法",
+    description:
+      "民事紛争を裁判で解決するための手続法。訴えの提起から審理・判決・上訴までの流れと、弁論主義・既判力などの基本原理を全28トピックで体系的に学べます。",
+    parts: MINSO_CURRICULUM,
   },
   {
     slug: "hasan",
