@@ -76,8 +76,10 @@
 - 執筆順序：カリキュラム順。基礎編を先に通し、応用編は基礎編完成後
 - 条文照合：民事訴訟法は e-Gov API v2 `law_data/408AC0000000109`（平成8年法律109号）。抽出は scratchpad の get_article3.py（MainProvision限定）
 - 判例照合：`py scripts/hanrei.py`（search は id と事件番号の対応がずれることがあるため、必ず get で中身を確認してから採用）
-- 進捗：**第1編（基礎編5本）・第2編（当事者・基礎編4本）すべて公開済み**（2026-07-07。第1編＝`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`／第2編＝`tojisha-noryoku`・`tojisha-kakutei`・`tojisha-tekikaku`・`soshou-dairi`）。次は第3編（審理）`benron-shugi` から
+- 進捗：**第1編（基礎編5本）・第2編（当事者・基礎編4本）・第3編（審理・基礎編6本）すべて公開済み**（2026-07-07。第1編＝`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`／第2編＝`tojisha-noryoku`・`tojisha-kakutei`・`tojisha-tekikaku`・`soshou-dairi`／第3編＝`benron-shugi`・`shakumei`・`jihaku`・`shomei-sekinin`・`shoko-shirabe`・`soten-seiri`）。次は第4編（判決と効力）`hanketsu-shurui` から
 - 第2編で照合済みの判例：権利能力なき社団の成立要件＝最判昭39.10.15（民集18巻8号1671頁・id 53694／`tojisha-noryoku`）、業務執行組合員の任意的訴訟信託＝最大判昭45.11.11（民集24巻12号1854頁・id 53166／`tojisha-tekikaku`）
+- 第3編で照合済みの判例：権利移転経過の認定に弁論主義違反があるとされた事例＝最判昭41.4.12（民集20巻4号548頁・id 57747／`benron-shugi`）、自己利用文書＝銀行の貸出稟議書＝最決平11.11.12（民集53巻8号1787頁・id 52281／`shoko-shirabe`）。証明責任・証明度（`shomei-sekinin`）はルンバール事件（最判昭50.10.24）を新規照合せず既照合済みの`/minpo/fuho-koi-kiso-ouyou/`へクロスリンクで対応
+- 第3編で判例照合なし（条文中心）とした記事：`shakumei`（釈明権・法的観点指摘義務）・`jihaku`（裁判上の自白。撤回関連の古典的先例は裁判所DBで一致確認できず不採用）・`soten-seiri`（争点整理と審理の進行）
 - 第2編での訂正：指示書は57条・58条をまとめて「代理権の不消滅」としていたが、57条は当事者による更正、58条が訴訟代理権の不消滅（e-Gov現行文言で確認）。`tojisha-kakutei`の氏名冒用・死者名義の古典判例は大審院判例のため裁判所DBで照合できず、指示どおり学説・処理枠組み中心で構成（判例引用なし）。訴訟代理権の書面証明は民訴規則23条1項をcourts.go.jpのPDF原文で照合（e-Govに民訴規則は未収録）
 - 第1編で照合済みの判例：遺言無効確認の訴えの適否＝最判昭47.2.15（民集26巻1号30頁・id 51924／`soshou-yoken`）
 - 第1編での訂正：指示書は訴え提起の方式を133条としていたが、令和4年IT化改正で133条は秘匿決定（住所・氏名の秘匿）に関する規定に差し替わっており、訴え提起の方式は134条であることを確認して訂正した（`uttae-ruikei`）
