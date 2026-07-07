@@ -54,7 +54,7 @@
 
 - 構成：会社法中心の6編＋手形小切手（全7編・34トピック）。定義は `curriculum.ts` の `SHOHO_CURRICULUM` が正
 - 執筆順序：カリキュラム順（第1編→第7編）。基礎編を先に通し、応用編は基礎編完成後にまとめて着手する方針
-- 進捗：第1編の基礎編3本（`shoho-zentaizo`・`kaisha-hojinkaku`・`kaisha-setsuritsu`）公開済み（2026-07-06）。`kabushiki-soron` も公開済み（ブルドック照合済み）。第2編（株式）基礎編5本すべて公開済み（joto・jiko・shurui・meibo）。第3編（機関）基礎編7本すべて公開済み（2026-07-06。`kikan-sekkei`・`kabunushi-sokai`・`torishimariyaku`・`yakuin-gimu`・`yakuin-sekinin`・`daihyo-sosho`・`kansa-kikan`）。**第4編（資金調達・計算）基礎編5本すべて公開済み**（2026-07-06。`boshu-kabushiki`・`shinkabu-yoyakuken`・`shasai`・`keisan-shihon`・`jouyokin-haito`）。**第5編（組織再編・解散）基礎編5本すべて公開済み**（2026-07-07。`jigyo-joto`・`gappei`・`kaisha-bunkatsu`・`kabushiki-kokan`・`kaisan-seisan`）。**第6編（商法総則・商行為）基礎編5本すべて公開済み**（2026-07-07。`shonin-shokoi`・`shogo-naitagashi`・`shogyo-toki`・`eigyo-joto`・`shoji-baibai`）。次は第7編（手形法・小切手法）：`tegata-kiso` から。**手形法・小切手法の e-Gov lawId は law_search で要特定**（会社法・商法典とは別法令）
+- 進捗：第1編の基礎編3本（`shoho-zentaizo`・`kaisha-hojinkaku`・`kaisha-setsuritsu`）公開済み（2026-07-06）。`kabushiki-soron` も公開済み（ブルドック照合済み）。第2編（株式）基礎編5本すべて公開済み（joto・jiko・shurui・meibo）。第3編（機関）基礎編7本すべて公開済み（2026-07-06。`kikan-sekkei`・`kabunushi-sokai`・`torishimariyaku`・`yakuin-gimu`・`yakuin-sekinin`・`daihyo-sosho`・`kansa-kikan`）。**第4編（資金調達・計算）基礎編5本すべて公開済み**（2026-07-06。`boshu-kabushiki`・`shinkabu-yoyakuken`・`shasai`・`keisan-shihon`・`jouyokin-haito`）。**第5編（組織再編・解散）基礎編5本すべて公開済み**（2026-07-07。`jigyo-joto`・`gappei`・`kaisha-bunkatsu`・`kabushiki-kokan`・`kaisan-seisan`）。**第6編（商法総則・商行為）基礎編5本すべて公開済み**（2026-07-07。`shonin-shokoi`・`shogo-naitagashi`・`shogyo-toki`・`eigyo-joto`・`shoji-baibai`）。**第7編（手形・小切手）基礎編4本すべて公開済み**（2026-07-07。`tegata-kiso`・`tegata-uragaki`・`tegata-kojin-koben`・`tegata-giso`）。**→ 第7編完了＝商法・会社法カリキュラム全34トピックの基礎編が完成**。次は民訴の科目設計（親が実施）
 - 第3編で照合済みの判例：株主総会決議取消と裁量棄却＝最判昭30.10.20（民集9巻11号1657頁・id 57402／kabunushi-sokai）／重要な財産の処分の判断基準＝最判平6.1.20（民集48巻1号1頁・id 52514／torishimariyaku）／無利息無担保貸付と利益相反取引該当性＝最判昭38.12.6（民集17巻12号1664頁・id 53806／yakuin-gimu）／経営判断原則＝最判平22.7.15アパマンショップ事件（集民234号225頁・id 80447／yakuin-gimu）／忠実義務の性質＝最大判昭45.6.24八幡製鉄事件（民集24巻6号625頁・**id 55040**＝当初メモの54960は誤りと判明・照合の上訂正／yakuin-gimu）
 - 第3編で不採用にした判例：全員出席総会＝最判昭60.12.20（裁判所DB当日付検索で該当判例なし）／429条の法的性質＝最大判昭44.11.26（同）。いずれも代替なしで条文中心の構成に変更
 - 第4編で照合済みの判例：通知公告を欠く新株発行の効力＝最判平9.1.28（民集51巻1号71頁・id 52512／boshu-kabushiki）／非公開会社で株主総会特別決議を欠く新株発行の効力＝最判平24.4.24（民集66巻6号2908頁・id 82215／boshu-kabushiki）。新株予約権（shinkabu-yoyakuken）は既照合のブルドックソース事件へのクロスリンクで対応し新規照合なし
@@ -66,6 +66,9 @@
 - 手形小切手（第7編）はユーザー指示により対象に含める
 - 第6編で照合済みの判例：商行為の代理・非顕名主義＝最大判昭43.4.24（民集22巻4号1043頁・id 54012／`shonin-shokoi`）／名板貸人の免責（相手方に重過失）＝最判昭41.1.27（民集20巻1号111頁・id 53862／`shogo-naitagashi`）／商号続用規定の名称続用への類推適用＝最判平16.2.20（民集58巻2号367頁・id 57044／`eigyo-joto`）。指示書の3候補すべて一発照合成功、不採用判例なし
 - 第6編で条文中心とした記事：`shogyo-toki`（商業登記の効力）・`shoji-baibai`（商事売買の特則）は指示どおり判例照合なしで執筆
+- 条文照合（第7編）：手形法の e-Gov lawId は `307AC0000000020`（law_search で特定）。7・8・10・11・12・13・14・16・17・69・75・76・77・78条を現行条文と照合。小切手法（`308AC0000000057`）は本編では参照のみで条文引用なし
+- 第7編で照合済みの判例：手形法16条1項の適用を求める主張があると解すべき場合＝最大判昭45.6.24（民集24巻6号712頁・id 55087・約束手形金請求／`tegata-uragaki`）。指示書メモの「利益相反取引と手形振出」候補は誤りで、同日付4件を全件照合した結果、手形関連はid 55087のみでその内容は裏書の連続（16条1項）に関するものと判明したため、採用先を`tegata-kiso`から`tegata-uragaki`に変更
+- 第7編で不採用（条文中心とした）記事：`tegata-kiso`・`tegata-kojin-koben`・`tegata-giso`は指示どおり日付照合できる適合判例が見当たらず条文中心で執筆
 
 ## 進め方（ARTICLE_GUIDE §6 準拠）
 
