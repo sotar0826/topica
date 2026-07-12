@@ -345,6 +345,81 @@ export const MINSO_CURRICULUM: PartDef[] = [
   },
 ];
 
+// 憲法カリキュラム（2026-07-12 開始。人権4編＋統治2編・29トピック。判例中心科目）
+export const KENPO_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "憲法の全体像と人権総論",
+    slug: "jinken-soron",
+    topics: [
+      { slug: "kenpo-zentaizo", title: "憲法の全体像と学び方", hasAdvanced: false },
+      { slug: "jinken-kyoyu", title: "人権の享有主体（外国人・法人）", hasAdvanced: true },
+      { slug: "shijinkan-koryoku", title: "人権の私人間効力", hasAdvanced: true },
+      { slug: "koumuin-jinken", title: "特別な法律関係における人権（公務員・在監者）", hasAdvanced: false },
+      { slug: "jinken-genkai", title: "人権の限界と違憲審査の枠組み", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 2,
+    name: "包括的基本権と平等",
+    slug: "hokatsu-byodo",
+    topics: [
+      { slug: "kofuku-tsuikyu", title: "幸福追求権（13条）とプライバシー", hasAdvanced: true },
+      { slug: "hou-no-shita-no-byodo", title: "法の下の平等（14条）", hasAdvanced: true },
+      { slug: "kazoku-to-byodo", title: "家族と平等（国籍・再婚禁止・夫婦同氏）", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 3,
+    name: "精神的自由",
+    slug: "seishin-jiyu",
+    topics: [
+      { slug: "shiso-ryoshin", title: "思想・良心の自由（19条）", hasAdvanced: true },
+      { slug: "shinkyo-jiyu", title: "信教の自由（20条）", hasAdvanced: true },
+      { slug: "seikyo-bunri", title: "政教分離", hasAdvanced: true },
+      { slug: "hyogen-jiyu-soron", title: "表現の自由・総論（21条）", hasAdvanced: true },
+      { slug: "hyogen-jiyu-kakuron", title: "表現の自由・各論（事前抑制・検閲・報道）", hasAdvanced: true },
+      { slug: "gakumon-jiyu", title: "学問の自由（23条）", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "経済的自由・人身の自由・社会権",
+    slug: "keizai-shakai",
+    topics: [
+      { slug: "shokugyo-jiyu", title: "職業選択の自由（22条）", hasAdvanced: true },
+      { slug: "zaisan-ken", title: "財産権（29条）", hasAdvanced: true },
+      { slug: "jinshin-jiyu", title: "人身の自由と適正手続（31条以下）", hasAdvanced: false },
+      { slug: "seizon-ken", title: "生存権（25条）", hasAdvanced: true },
+      { slug: "kyoiku-rodo", title: "教育を受ける権利・労働基本権（26〜28条）", hasAdvanced: false },
+      { slug: "sanseiken", title: "参政権と選挙制度（15条・議員定数）", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 5,
+    name: "統治①国会・内閣・財政",
+    slug: "tochi-1",
+    topics: [
+      { slug: "kokkai", title: "国会（国権の最高機関・立法）", hasAdvanced: false },
+      { slug: "giin-jichi", title: "議院の自律と議員の特権", hasAdvanced: false },
+      { slug: "naikaku", title: "内閣と議院内閣制（解散を含む）", hasAdvanced: false },
+      { slug: "zaisei-chihojichi", title: "財政・地方自治", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 6,
+    name: "統治②裁判所と憲法保障",
+    slug: "tochi-2",
+    topics: [
+      { slug: "shiho-ken", title: "司法権の意義と限界", hasAdvanced: true },
+      { slug: "saibansho-dokuritsu", title: "裁判所の組織と裁判官の独立", hasAdvanced: false },
+      { slug: "iken-shinsa-sei", title: "違憲審査制と憲法判断の方法", hasAdvanced: true },
+      { slug: "heiwa-shugi", title: "平和主義（前文・9条）", hasAdvanced: false },
+      { slug: "kenpo-kaisei", title: "憲法改正・最高法規性・憲法保障", hasAdvanced: false },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
@@ -358,6 +433,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "会社という仕組みを動かすルール。株式・機関・資金調達から組織再編、商法総則・手形小切手まで、会社法を中心に全34トピックで体系的に学べます。",
     parts: SHOHO_CURRICULUM,
+  },
+  {
+    slug: "kenpo",
+    name: "憲法",
+    description:
+      "国家の基本設計と人権保障を定める最高法規。人権の享有主体から精神的自由・経済的自由、統治機構・違憲審査まで、判例を軸に全29トピックで体系的に学べます。",
+    parts: KENPO_CURRICULUM,
   },
   {
     slug: "minso",
