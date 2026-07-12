@@ -76,7 +76,7 @@
 - 執筆順序：カリキュラム順。基礎編を先に通し、応用編は基礎編完成後
 - 条文照合：民事訴訟法は e-Gov API v2 `law_data/408AC0000000109`（平成8年法律109号）。抽出は scratchpad の get_article3.py（MainProvision限定）
 - 判例照合：`py scripts/hanrei.py`（search は id と事件番号の対応がずれることがあるため、必ず get で中身を確認してから採用）
-- 進捗：**第1編（基礎編5本）・第2編（当事者・基礎編4本）・第3編（審理・基礎編6本）・第4編（判決と効力・基礎編4本）・第5編（複雑訴訟・基礎編5本）すべて公開済み**（2026-07-07〜2026-07-12。第1編＝`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`／第2編＝`tojisha-noryoku`・`tojisha-kakutei`・`tojisha-tekikaku`・`soshou-dairi`／第3編＝`benron-shugi`・`shakumei`・`jihaku`・`shomei-sekinin`・`shoko-shirabe`・`soten-seiri`／第4編＝`hanketsu-shurui`・`kihanryoku`・`kihanryoku-hani`・`ichibu-seikyu`／第5編＝`seikyu-heigo`・`kyodo-soshou`・`hojo-sanka`・`dokuritsu-sanka`・`soshou-shokei`）。次は第6編（終了と上訴）`soshou-shuryo` から
+- 進捗：**第1編（基礎編5本）・第2編（当事者・基礎編4本）・第3編（審理・基礎編6本）・第4編（判決と効力・基礎編4本）・第5編（複雑訴訟・基礎編5本）・第6編（終了と上訴・基礎編4本）すべて公開済み**（2026-07-07〜2026-07-12。第1編＝`minso-zentaizo`・`uttae-ruikei`・`shobun-shugi`・`soshou-yoken`・`kankatsu`／第2編＝`tojisha-noryoku`・`tojisha-kakutei`・`tojisha-tekikaku`・`soshou-dairi`／第3編＝`benron-shugi`・`shakumei`・`jihaku`・`shomei-sekinin`・`shoko-shirabe`・`soten-seiri`／第4編＝`hanketsu-shurui`・`kihanryoku`・`kihanryoku-hani`・`ichibu-seikyu`／第5編＝`seikyu-heigo`・`kyodo-soshou`・`hojo-sanka`・`dokuritsu-sanka`・`soshou-shokei`／第6編＝`soshou-shuryo`・`joso`・`saishin`・`kani-tetsuzuki`）。**→ 第6編完了＝民事訴訟法カリキュラム全28トピックの基礎編が完成**
 - 第5編で照合済みの判例：入会権確認の訴えは入会権者全員で提起することを要する固有必要的共同訴訟＝最判昭41.11.25（民集20巻9号1921頁・id 53682／`kyodo-soshou`）。`hanrei.py search`で6件返ったうち`get`で全件確認し、入会権を扱うのはid 53682のみと特定した（同idの重複表示id 53958あり）
 - 第5編で条文中心とした記事：`seikyu-heigo`（136・143・145・146条）・`hojo-sanka`（42・43・44・45・46・53条）・`dokuritsu-sanka`（47条・40条準用）・`soshou-shokei`（124・49・50・51・115条）。条文照合は`minso.json`＋`get_article3.py`で38・39・40・41・42〜46・53・47・49〜51・115・124〜129・136・143・145・146条を現行文言と照合
 - 第4編で照合済みの判例（2件、事件番号・出典・裁判要旨まで確認）：最判昭55.10.23（民集34巻5号747頁・id 53369）売買を原因とする所有権確認判決確定後の詐欺取消し主張の可否（基準時後の形成権行使の遮断）→ `kihanryoku-hani`／最判昭37.8.10（民集16巻8号1720頁・id 53017）明示的一部請求の既判力は残部に及ばない → `ichibu-seikyu`。いずれも`hanrei.py search`のid対応ずれ（既知バグ）があったため、同日付候補を`get`で全件突き合わせて正しいidを特定した
@@ -88,6 +88,8 @@
 - 第1編で照合済みの判例：遺言無効確認の訴えの適否＝最判昭47.2.15（民集26巻1号30頁・id 51924／`soshou-yoken`）
 - 第1編での訂正：指示書は訴え提起の方式を133条としていたが、令和4年IT化改正で133条は秘匿決定（住所・氏名の秘匿）に関する規定に差し替わっており、訴え提起の方式は134条であることを確認して訂正した（`uttae-ruikei`）
 - 第1編で不採用にした判例：`soshou-yoken`の`hanrei.py search`で同日付候補が2件返った（id 51924／61986）が、既知のid対応ずれのため両方を`get`で確認。id 61986は無関係の損害賠償請求事件（農地買収）と判明し不採用
+- 第6編で照合済みの判例：仮差押えの目的物の品質を前提とした和解が要素の錯誤によって無効とされた事例＝最判昭33.6.14（民集12巻9号1492頁・id 52876／`soshou-shuryo`）。訴訟上の和解の私法契約としての側面と、無効主張の可否を示す判例として採用。`hanrei.py search`のid対応ずれ（既知バグ）があったため同日付候補を`get`で全件確認し、事件番号が一致するid 52876を採用（id 52818は別事件と判明し不採用）
+- 第6編で条文中心とした記事：`joso`（281・285・296・297・298・302・303・304・311・312・313・318・328・330・337条）・`saishin`（338・339・340・341・342条）・`kani-tetsuzuki`（350・352・356・357・358・367・368〜378・382〜396条）。条文照合は`minso.json`＋`get_article3.py`で89・261〜267条を含め全条文を現行文言（令和4年IT化改正後。267条は電子調書、387条以下は電子支払督促の文言）と照合
 
 ## 進め方（ARTICLE_GUIDE §6 準拠）
 

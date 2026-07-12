@@ -17,6 +17,28 @@
 
 ## 直近セッションログ
 
+### 2026-07-12 [Code] — 民訴基礎編28本完成（第6編回収＋総仕上げ）
+
+**フォーカス**: 民訴第6編ワーカーの上限中断分の回収と、民訴カリキュラム完成の記録
+
+**完了**:
+- 第6編（終了と上訴）4本公開: `soshou-shuryo`（訴訟上の和解＝最判昭33.6.14・民集12巻9号1492頁を照合済み）／`joso`／`saishin`／`kani-tetsuzuki`。ワーカーが上限で中断した最終コミット・docs更新を親で回収
+- **民事訴訟法カリキュラム全28トピックの基礎編が完成**（2026-07-07開始→07-12完了・全て判例照合ルール厳守）
+
+**サイト到達点**:
+- 民法: 基礎編51＋応用編33＋コラム5 ／ 商法・会社法: 基礎編34 ／ 民訴: 基礎編28 ／ 用語集・お問い合わせ・SEO一式
+- 公開記事 計151本・照合済み判例 約50件（全件 courts.go.jp で事件番号・出典・裁判要旨まで確認）
+
+**応用編バックログ（hasAdvanced: true で未執筆）**:
+- 民訴9本: uttae-ruikei／soshou-yoken／tojisha-tekikaku／benron-shugi／jihaku／shomei-sekinin／kihanryoku／kihanryoku-hani／ichibu-seikyu
+- 商法12本: kaisha-hojinkaku／kaisha-setsuritsu／kabushiki-joto／kabunushi-sokai／torishimariyaku／yakuin-gimu／yakuin-sekinin／boshu-kabushiki／kaisha-bunkatsu／shogo-naitagashi／tegata-kojin-koben ほか
+
+**次の選択肢（ユーザー指示待ち）**:
+1. 応用編バックログの消化（民訴→商法の順を推奨。判例の厚い論点が揃っている）
+2. 新科目（刑法・憲法・行政法など）
+3. SEO・回遊性強化（Search Consoleインデックス登録・用語集拡充・Pagefind検索導入）
+
+
 ### 2026-07-06 [Code・続2] — 燃費改善：検索の完全スクリプト化＋執筆のワーカー委譲
 
 **フォーカス**: クレジット消費の抜本改善（ユーザー指示・方法は一任）
