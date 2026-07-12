@@ -33,10 +33,11 @@
 - 民訴10本: uttae-ruikei／soshou-yoken／tojisha-tekikaku／benron-shugi／jihaku／shomei-sekinin／kihanryoku／kihanryoku-hani／ichibu-seikyu／kyodo-soshou
 - 商法12本: kaisha-hojinkaku／kaisha-setsuritsu／kabushiki-joto／kabunushi-sokai／torishimariyaku／yakuin-gimu／yakuin-sekinin／boshu-kabushiki／kaisha-bunkatsu／shogo-naitagashi／tegata-kojin-koben ほか
 
-**次の選択肢（ユーザー指示待ち）**:
-1. 応用編バックログの消化（民訴→商法の順を推奨。判例の厚い論点が揃っている）
-2. 新科目（刑法・憲法・行政法など）
-3. SEO・回遊性強化（Search Consoleインデックス登録・用語集拡充・Pagefind検索導入）
+**確定ロードマップ（2026-07-12 ユーザー指示）**:
+1. 応用編バックログの消化（民訴10本 → 商法12本）
+2. **憲法** → **刑法** → **刑事訴訟法** の順で新科目を追加し、**六法すべてを完成させる**
+- 各科目とも従来どおり：構成案→curriculum.ts→ワーカー執筆（判例照合絶対・基礎編先行）の体制。憲法は判例中心科目のため照合の比重がさらに上がる点に注意（大法廷判例多数）
+- 刑法・刑訴の判例検索も同じ courts.go.jp DB（courtCaseType=1 は最高裁全裁判＝刑事も含む）と scripts/hanrei.py で対応可能
 
 
 ### 2026-07-06 [Code・続2] — 燃費改善：検索の完全スクリプト化＋執筆のワーカー委譲
