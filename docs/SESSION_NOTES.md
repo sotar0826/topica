@@ -30,7 +30,7 @@
 - 公開記事 計151本・照合済み判例 約50件（全件 courts.go.jp で事件番号・出典・裁判要旨まで確認）
 
 **応用編バックログ（hasAdvanced: true で未執筆）**:
-- 民訴9本: uttae-ruikei／soshou-yoken／tojisha-tekikaku／benron-shugi／jihaku／shomei-sekinin／kihanryoku／kihanryoku-hani／ichibu-seikyu
+- 民訴10本: uttae-ruikei／soshou-yoken／tojisha-tekikaku／benron-shugi／jihaku／shomei-sekinin／kihanryoku／kihanryoku-hani／ichibu-seikyu／kyodo-soshou
 - 商法12本: kaisha-hojinkaku／kaisha-setsuritsu／kabushiki-joto／kabunushi-sokai／torishimariyaku／yakuin-gimu／yakuin-sekinin／boshu-kabushiki／kaisha-bunkatsu／shogo-naitagashi／tegata-kojin-koben ほか
 
 **次の選択肢（ユーザー指示待ち）**:
