@@ -397,6 +397,92 @@ main {
   text-decoration: none;
 }
 
+/* ===== 学習進捗（localStorage・progress.js） ===== */
+.read-toggle {
+  margin: 1.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.read-btn {
+  padding: 0.55rem 1.4rem;
+  font-size: 0.9rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.read-btn:hover {
+  background: var(--accent-light);
+}
+
+.read-btn.done {
+  background: var(--accent);
+  color: #fff;
+}
+
+.topic-list .read-mark {
+  color: #2e7d32;
+  font-weight: bold;
+  margin-left: auto;
+}
+
+.topic-list li.is-read > a {
+  color: var(--text-muted);
+}
+
+.progress-box {
+  margin: 1rem 0;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.88rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.3rem 0.8rem;
+  align-items: center;
+}
+
+.progress-box .progress-label {
+  font-weight: bold;
+}
+
+.progress-box .progress-count {
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-track {
+  grid-column: 1 / -1;
+  height: 8px;
+  background: var(--accent-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.progress-reset-row {
+  margin-top: 2.5rem;
+  text-align: right;
+}
+
+.progress-reset {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 /* ===== トップページ ===== */
 .hero {
   text-align: center;

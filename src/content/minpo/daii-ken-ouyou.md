@@ -1,5 +1,6 @@
 ---
 title: 債権者代位権
+seoTitle: 債権者代位権の判例・学説と論述のポイント
 level: advanced
 description: 代位訴訟の構造（法定訴訟担当・既判力）、抗弁の対抗関係、転用型の限界、債権者代位と差押えの競合を深めます。
 related:

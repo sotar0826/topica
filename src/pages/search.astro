@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+// サイト内検索（Pagefind）。
+// インデックスはビルド時に `pagefind --site dist` が生成する（package.json の build）。
+// ローカル `npm run dev` では /pagefind/ が存在しないため動かない（本番・`npm run preview` でのみ動作）。
+---
+
+<BaseLayout
+  title="サイト内検索"
+  description="トピカの全記事から、条文番号・判例・キーワードで検索できます。"
+>
+  <div class="breadcrumb"><a href="/">トップ</a> › 検索</div>
+
+  <h1>サイト内検索</h1>
+  <p style="font-size: 0.9rem; color: var(--text-muted);">
+    キーワード・条文番号（例：177条）・判例（例：昭和45年6月24日）などで全記事を検索できます。
+  </p>
+
+  <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+  <div id="search" class="search-box"></div>
+
+  <noscript>
+    <p>検索の利用には JavaScript を有効にしてください。</p>
+  </noscript>
+</BaseLayout>
+
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener("DOMContentLoaded", () => {
+    if (typeof PagefindUI === "undefined") {
+      document.getElementById("search").innerHTML =
+        '<p style="color:#888;">検索インデックスが見つかりません（開発環境では動作しません）。</p>';
+      return;
+    }
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      showImages: false,
+      pageSize: 8,
+      translations: {
+        placeholder: "キーワードを入力（例：錯誤、177条）",
+        clear_search: "クリア",
+        load_more: "さらに表示",
+        search_label: "サイト内検索",
+        zero_results: "「[SEARCH_TERM]」に一致する記事は見つかりませんでした",
+        many_results: "「[SEARCH_TERM]」の検索結果：[COUNT]件",
+        one_result: "「[SEARCH_TERM]」の検索結果：[COUNT]件",
+        searching: "検索中…",
+      },
+    });
+  });
+</script>
+
+<style>
+  .search-box {
+    margin-top: 1rem;
+    --pagefind-ui-primary: var(--accent, #2f6690);
+    --pagefind-ui-text: var(--text, #2b2b2b);
+    --pagefind-ui-border: var(--border, #ddd);
+    --pagefind-ui-font: inherit;
+  }
+</style>

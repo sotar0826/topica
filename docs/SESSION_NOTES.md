@@ -17,6 +17,69 @@
 
 ## 直近セッションログ
 
+### 2026-07-14 [Code] — Phase 7: 学習進捗トラッキング（localStorage）
+
+**フォーカス**: SITE_IMPROVEMENTS.md Phase 7（二度手間にならない仕組み系の先行実装・2件目）
+
+**完了**:
+- `public/progress.js` 新設（バニラJS・BaseLayoutで全ページ読込）。キーは `topica:read:{subject}/{slug}` = 読了日
+- 記事末尾に読了トグルボタン（minpo/shoho/minso/kenpo の `[slug].astro`。hasan・コラムは対象外）
+- 科目トップ：各行に✓マーク（`li[data-read-slug]`）＋進捗バー（基礎編ベース、公開済み数が分母。**curriculum.tsから自動生成なので記事追加に自動追随**）＋最下部にリセットボタン
+- トップページ：全科目の進捗サマリー（読了0件の科目・全科目0件時は非表示）
+- 本番でフルフロー検証済み：読了→科目トップ反映（1/51・✓）→遷移後も保持→トップにサマリー→リセットで全消去
+- ハマり：進捗バーの差し込みregexが related-box の内側にネストした（＋minso/kenpo はCRLFでパターン不一致）→個別修正済み。**minso/kenpo の index.astro はCRLF**である点、今後のスクリプト処理で注意
+
+**残りの先行実装候補**: Phase 9 ダークモード・追従目次 → Phase 3 OGP画像
+
+### 2026-07-14 [Code] — Phase 6: サイト内検索（Pagefind）
+
+**フォーカス**: SITE_IMPROVEMENTS.md Phase 6。※ユーザー方針（2026-07-14）：**記事が揃ってからの方が効率的な機能（Phase 4用語集・5判例・8クイズ）は後回し**。二度手間にならない仕組み系（6・7・3・9）だけ先行実装する
+
+**完了**:
+- `pagefind` を devDependencies に追加。build スクリプトを `astro build && pagefind --site dist` に変更（**Pagesのビルド設定は使っていない＝ローカルビルドなので他に変更不要**）
+- インデックス対象は記事本文のみ：minpo/shoho/minso/kenpo/column の `[slug].astro` の `<article>` に `data-pagefind-body` を付与（**hasanは付けない＝noindex 科目を検索からも除外**）。結果：日本語180ページ（記事175＋コラム5）
+- `/search/` ページ新設（Pagefind UI・日本語訳・テーマ変数連携）。ヘッダーに「🔍検索」リンク追加
+- 本番検証済み：「錯誤」で16件・サブ見出し付き・科目横断でヒット。モバイル（375px）でも表示崩れなし
+- 注意：ローカル `npm run dev` では /pagefind/ が無いため検索は動かない（ページ内にフォールバック表示あり）。動作確認は本番か `npm run build && npm run preview` で
+- Pagefind 1.5 は旧 `pagefind-ui.js` に非推奨警告を出す（当面は動作）。いずれ Component UI への移行を検討
+
+**次の先行実装候補（二度手間にならない系）**: Phase 7 進捗トラッキング → Phase 9 ダークモード・追従目次 → Phase 3 OGP画像
+
+### 2026-07-13 [Code] — Phase 2: titleタグ最適化（全180記事）
+
+**フォーカス**: SITE_IMPROVEMENTS.md Phase 2
+
+**完了**:
+- 全コレクション（minpo/hasan/shoho/minso/kenpo/column）に `seoTitle` フィールド追加。テンプレートは `entry.data.seoTitle ?? title` で後方互換（「｜トピカ」はBaseLayoutが付加）
+- `scripts/gen-seotitle.mjs` 新設（ドライラン→--write の2段階）。基礎編=「{題}とは？民法{N}条の要件をわかりやすく解説」（条数はdescriptionから自動抽出・minpoのみ）、応用編=「{題}の判例・学説と論述のポイント」、全角32字上限で短縮フォールバック、不自然な題は EXCEPTIONS マップで手当て（全体像系・代表条文ズレの補正など16件）
+- minpo/shoho/minso/kenpo の175記事に一括適用＋コラム5本は手作り。**hasanはnoindex中のため対象外**
+- ハマり：minpoスキーマだけコメント行の挟みで一括置換から漏れ、zodが seoTitle を落として無反映→スキーマ追記で解決（スポットチェックで発見）
+- 本番確認済み（錯誤・法の下の平等で新title配信を確認）
+
+**残タスク**:
+- [ ] 科目トップ（/minpo/ 等）と用語集のtitle最適化（記事優先で未着手）
+- [ ] hasan 再公開時に gen-seotitle の SUBJECTS に hasan を追加して流す
+
+### 2026-07-13 [Code] — 独自ドメイン移行完了（topica-law.com）
+
+**フォーカス**: SITE_IMPROVEMENTS.md Phase 0〜1（ドメイン移行）
+
+**完了**:
+- ドメイン取得（ユーザー・お名前.com・topica-law.com）
+- Cloudflareゾーン追加（Free）／パーキング用DNSレコード16件削除／お名前.com側ネームサーバーを micah/paloma.ns.cloudflare.com に変更（Chrome操作で代行）／Pages Custom Domains に topica-law.com 追加（CNAME @ → topica.pages.dev 自動作成）
+- コード側: `astro.config.mjs` site／`src/lib/site.ts`（新設・正規オリジンの単一情報源）／`robots.txt`／BaseLayout・全科目 `[slug].astro` のフォールバックを新ドメインへ。`functions/_middleware.js` 新設（ホスト名 `topica.pages.dev` 完全一致のみ301、プレビューデプロイ除外）
+- 検証済み: 新ドメイン200＋canonical/og:url/sitemap/robotsすべて新ドメイン／旧ドメイン→301（パス・クエリ維持）／プレビューデプロイは非転送
+
+**Search Console（同日実施済み）**:
+- [x] 新プロパティ `https://topica-law.com/`（URLプレフィックス型）追加・所有権自動確認済み
+- [x] sitemap-index.xml 送信済み（初回ステータスは「取得できませんでした」＝新規ドメイン直後の一時表示。翌日以降「成功しました」になるか要確認）
+- [x] 旧プロパティから**アドレス変更**実行済み（検証合格→「このサイトは現在移行中です」表示。移行表示は180日間続く。※Search Console のGoogleアカウントは beak8848@gmail.com 側）
+
+**残タスク**:
+- [ ] 数日後: sitemap ステータスが「成功しました」になったか確認
+- [ ] Cloudflare Web Analytics: site tag共通なので計測は継続するはず。管理ページのPV表示が新ドメイン分を拾うか要観察
+- 次は Phase 2（titleタグ最適化）以降へ
+
 ### 2026-07-12 [Code] — 民訴基礎編28本完成（第6編回収＋総仕上げ）
 
 **フォーカス**: 民訴第6編ワーカーの上限中断分の回収と、民訴カリキュラム完成の記録

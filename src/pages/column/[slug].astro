@@ -25,7 +25,7 @@ const relatedLinks = entry.data.related
   })
   .filter((x) => x !== null);
 
-const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica.pages.dev").href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
 
 const jsonLd = [
   articleLd({
@@ -44,7 +44,7 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={entry.data.title}
+  title={entry.data.seoTitle ?? entry.data.title}
   description={entry.data.description}
   ogType="article"
   jsonLd={jsonLd}
@@ -71,7 +71,7 @@ const jsonLd = [
     )
   }
 
-  <article class="topic-body">
+  <article class="topic-body" data-pagefind-body>
     <Content />
   </article>
 

@@ -1,5 +1,6 @@
 ---
 title: 債権譲渡
+seoTitle: 債権譲渡の判例・学説と論述のポイント
 level: advanced
 description: 同時到達・到達先後不明の処理、債権譲渡と差押えの競合、将来債権譲渡の限界、債務引受・契約上の地位の移転を深めます。
 related:

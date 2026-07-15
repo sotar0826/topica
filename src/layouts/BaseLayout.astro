@@ -25,7 +25,7 @@ const {
 const fullTitle = title === "トピカ" ? "トピカ｜法律学習サイト" : `${title}｜トピカ`;
 
 // canonical / OGP 用の絶対URL。site 未設定でもフォールバックで壊れないようにする。
-const site = Astro.site ?? new URL("https://topica.pages.dev");
+const site = Astro.site ?? new URL("https://topica-law.com");
 const canonical = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(image, site).href;
 
@@ -96,6 +96,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
           <a href="/kenpo/">憲法</a>
           <a href="/column/">コラム</a>
           <a href="/yougo/">用語集</a>
+          <a href="/search/">🔍検索</a>
         </nav>
       </div>
     </header>
@@ -113,5 +114,6 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
       </p>
       <p>© 2026 トピカ</p>
     </footer>
+    <script is:inline src="/progress.js" defer></script>
   </body>
 </html>

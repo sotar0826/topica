@@ -1,5 +1,6 @@
 ---
 title: 錯誤
+seoTitle: 錯誤の判例・学説と論述のポイント
 level: advanced
 description: 動機の錯誤をめぐる判例・学説の展開と、予備試験論文で錯誤を書くための答案構成を学びます。
 related:

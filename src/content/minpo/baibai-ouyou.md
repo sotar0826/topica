@@ -1,5 +1,6 @@
 ---
 title: 売買
+seoTitle: 売買の判例・学説と論述のポイント
 level: advanced
 description: 契約不適合の判断構造（主観的瑕疵概念との連続性）、数量指示売買、他人物売買と相続の交錯、買主の救済の競合関係を深めます。
 related:

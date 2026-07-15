@@ -1,5 +1,6 @@
 ---
 title: 虚偽表示
+seoTitle: 虚偽表示の判例・学説と論述のポイント
 level: advanced
 description: 94条2項の類推適用（意思外形対応型・非対応型）と110条併用型、転得者の処理まで。論述頻出の最重要論点です。
 related:

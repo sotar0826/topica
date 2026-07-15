@@ -1,6 +1,6 @@
 # トピカ 引き継ぎメモ（新チャット用）
 
-最終更新：2026-06-26 / 本番 https://topica.pages.dev
+最終更新：2026-07-13 / 本番 https://topica-law.com （旧 topica.pages.dev は全ページ301転送）
 
 新しいチャットを開いたら、まずこのファイルと `topica/CLAUDE.md` を読めば文脈を引き継げます。
 
@@ -11,7 +11,9 @@
 司法試験・予備試験（将来的には論述）を目指すユーザーのための法律学習サイト「トピカ」。
 **1トピック＝1ページ**。各トピックに基礎編と（重要論点には）応用編。Astro 製の静的サイトを Cloudflare Pages で無料公開している。
 
-- 本番URL：https://topica.pages.dev
+- 本番URL：https://topica-law.com （独自ドメイン・2026-07-13移行。DNSはCloudflare、レジストラはお名前.com）
+- 旧URL topica.pages.dev は `functions/_middleware.js` で301転送（プレビューデプロイ `<hash>.topica.pages.dev` は転送対象外）
+- 正規オリジンの単一情報源：`src/lib/site.ts` の `SITE_URL`（変更時は astro.config.mjs / robots.txt / _middleware.js も）
 - GitHubリポジトリ：`sotar0826/topica`（※GitHub連携の自動デプロイは未設定。デプロイは下記の手動コマンド）
 
 ---

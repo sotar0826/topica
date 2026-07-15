@@ -1,5 +1,6 @@
 ---
 title: 法人
+seoTitle: 法人とは？民法34条の要件をわかりやすく解説
 level: basic
 description: 法人の意義と種類、権利能力の範囲（34条）、法人でない団体（権利能力なき社団）の扱いを学びます。
 related:

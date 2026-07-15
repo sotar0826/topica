@@ -33,7 +33,7 @@ const relatedLinks = entry.data.related
   })
   .filter((x) => x !== null);
 
-const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica.pages.dev").href;
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
 
 const headline = `${entry.data.title}${isAdvanced ? "（応用編）" : ""}`;
 const jsonLd = [
@@ -56,7 +56,7 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={headline}
+  title={entry.data.seoTitle ?? headline}
   description={entry.data.description}
   ogType="article"
   jsonLd={jsonLd}
@@ -91,9 +91,11 @@ const jsonLd = [
     )
   }
 
-  <article class="topic-body">
+  <article class="topic-body" data-pagefind-body>
     <Content />
   </article>
+
+  <div class="read-toggle" data-read-page={`minpo/${entry.id}`}></div>
 
   {
     (entry.data.updated || entry.data.lawVersion) && (

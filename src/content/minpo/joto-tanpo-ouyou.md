@@ -1,5 +1,6 @@
 ---
 title: 譲渡担保
+seoTitle: 譲渡担保の判例・学説と論述のポイント
 level: advanced
 description: 集合動産譲渡担保（特定性・対抗要件・通常営業の範囲内の処分）、集合債権譲渡担保、所有権留保との交錯を深めます。
 related:

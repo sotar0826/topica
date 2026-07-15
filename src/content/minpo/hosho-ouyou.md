@@ -1,5 +1,6 @@
 ---
 title: 保証
+seoTitle: 保証の判例・学説と論述のポイント
 level: advanced
 description: 保証と時効の交錯（主債務の時効と保証人の援用・456条の2問題）、共同保証、根保証の元本確定、判例の重要展開を深めます。
 related:

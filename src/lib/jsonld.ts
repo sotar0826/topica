@@ -1,7 +1,7 @@
 // 構造化データ（JSON-LD）を組み立てるヘルパー。
 // 各ページテンプレートで生成し、BaseLayout の jsonLd prop に渡す。
 
-const SITE = "https://topica.pages.dev";
+import { SITE_URL as SITE } from "./site";
 
 /** Date を YYYY-MM-DD 形式（ISO日付部分）にする */
 export const ymd = (d: Date): string => d.toISOString().slice(0, 10);

@@ -1,5 +1,6 @@
 ---
 title: 共有
+seoTitle: 共有の判例・学説と論述のポイント
 level: advanced
 description: 共同相続と共有の交錯（遺産共有の性質・使用貸借推認・預貯金債権）、共有物分割の現代的論点、所在等不明共有者制度を深めます。
 related:

@@ -28,6 +28,12 @@ let globalNum = 0;
     </p>
   </div>
 
+  <div class="progress-box" data-progress data-subject="kenpo" data-total={publishedCount}>
+    <span class="progress-label">📈 あなたの学習進捗（基礎編）</span>
+    <span class="progress-count"></span>
+    <div class="progress-track"><div class="progress-fill"></div></div>
+  </div>
+
   {
     subject.parts.map((part) => (
       <section class="part-section">
@@ -39,7 +45,7 @@ let globalNum = 0;
             const advancedExists = existing.has(`${topic.slug}-ouyou`);
             return (
               <>
-                <li>
+                <li data-read-slug={basicExists ? `kenpo/${topic.slug}` : undefined}>
                   <span class="num">{globalNum}.</span>
                   {basicExists ? (
                     <a href={`/kenpo/${topic.slug}/`}>{topic.title}</a>
@@ -49,7 +55,7 @@ let globalNum = 0;
                   {!basicExists && <span class="tag-soon">準備中</span>}
                 </li>
                 {topic.hasAdvanced && (
-                  <li class="topic-branch">
+                  <li class="topic-branch" data-read-slug={advancedExists ? `kenpo/${topic.slug}-ouyou` : undefined}>
                     <span class="num">{globalNum}-1.</span>
                     {advancedExists ? (
                       <a href={`/kenpo/${topic.slug}-ouyou/`}>{topic.title}</a>
@@ -67,4 +73,9 @@ let globalNum = 0;
       </section>
     ))
   }
+  <p class="progress-reset-row">
+    <button type="button" class="progress-reset" data-reset-subject="kenpo" data-reset-label="憲法">
+      憲法の読了記録をリセット
+    </button>
+  </p>
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
 title: 民法の全体像と学び方
+seoTitle: 民法の勉強法と全体像をわかりやすく解説
 level: basic
 description: 民法典の構造（パンデクテン方式）と5編の役割、効率的な学習順序を最初に押さえます。
 related: []

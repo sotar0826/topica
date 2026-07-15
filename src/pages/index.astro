@@ -1,7 +1,18 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { PUBLIC_SUBJECTS, topicOrderOf } from "../data/curriculum";
 import { abs } from "../lib/jsonld";
+
+// 学習進捗サマリー用：科目ごとの公開済み基礎編トピック数
+const progressRows = await Promise.all(
+  PUBLIC_SUBJECTS.map(async (subject) => {
+    const entries = await getCollection(subject.slug as "minpo");
+    const existing = new Set(entries.map((e) => e.id));
+    const total = topicOrderOf(subject.slug).filter((t) => existing.has(t.slug)).length;
+    return { slug: subject.slug, name: subject.name, total };
+  })
+);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -43,6 +54,32 @@ const jsonLd = {
   <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
     ※ 科目は今後、順次追加予定です。
   </p>
+
+  {/* 学習進捗サマリー（読了記録があるときだけ progress.js が表示する） */}
+  <section id="progress-summary" hidden>
+    <h2 style="font-size: 1.2rem; margin-top: 2.5rem;">あなたの学習進捗</h2>
+    {
+      progressRows.map((row) => (
+        <div
+          class="progress-box"
+          data-progress
+          data-subject={row.slug}
+          data-total={row.total}
+          data-hide-empty="1"
+          hidden
+        >
+          <span class="progress-label">{row.name}</span>
+          <span class="progress-count" />
+          <div class="progress-track">
+            <div class="progress-fill" />
+          </div>
+        </div>
+      ))
+    }
+    <p style="font-size: 0.8rem; color: var(--text-muted);">
+      読了記録はこの端末のブラウザにのみ保存されます。
+    </p>
+  </section>
 
   <h2 style="font-size: 1.2rem; margin-top: 2.5rem;">このサイトの使い方</h2>
   <ul style="font-size: 0.95rem;">

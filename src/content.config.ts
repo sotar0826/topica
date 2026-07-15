@@ -11,6 +11,8 @@ const minpo = defineCollection({
     level: z.enum(["basic", "advanced"]).default("basic"),
     /** 3行以内の要約（一覧・meta description に使用） */
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     /** 前提知識となる既習トピックのスラッグ */
     related: z.array(z.string()).default([]),
     /** 初回公開日（JSON-LD の datePublished 用・任意） */
@@ -29,6 +31,8 @@ const hasan = defineCollection({
     title: z.string(),
     level: z.enum(["basic", "advanced"]).default("basic"),
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     related: z.array(z.string()).default([]),
     published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
@@ -43,6 +47,8 @@ const shoho = defineCollection({
     title: z.string(),
     level: z.enum(["basic", "advanced"]).default("basic"),
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     related: z.array(z.string()).default([]),
     published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
@@ -57,6 +63,8 @@ const minso = defineCollection({
     title: z.string(),
     level: z.enum(["basic", "advanced"]).default("basic"),
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     related: z.array(z.string()).default([]),
     published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
@@ -71,6 +79,8 @@ const kenpo = defineCollection({
     title: z.string(),
     level: z.enum(["basic", "advanced"]).default("basic"),
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     related: z.array(z.string()).default([]),
     published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
@@ -84,6 +94,8 @@ const column = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
+    seoTitle: z.string().optional(),
     /** 一覧での表示順（小さいほど上） */
     order: z.number().default(99),
     /** 所属する編の番号（民法トップで各編の末尾に表示される） */
