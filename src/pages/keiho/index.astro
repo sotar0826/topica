@@ -1,0 +1,81 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+
+const subject = findSubject("keiho")!;
+const order = topicOrderOf("keiho");
+
+const entries = await getCollection("keiho");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = order.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="刑法" description={subject.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 刑法</div>
+
+  <h1>刑法</h1>
+  <p>{subject.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 学習の進め方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      第1〜5編で<strong>総論</strong>（罪刑法定主義→構成要件→違法性→責任・未遂→共犯）、第6編で<strong>各論</strong>（主要犯罪）を扱います。
+      刑法は犯罪論体系の「型」で考える科目です。各トピックとも判例を一次資料で照合したうえで、構成要件→違法性→責任の検討順序に沿って解説します。
+      現在 <strong>{publishedCount} / {order.length}</strong> トピック公開中（順次追加します）。
+    </p>
+  </div>
+
+  <div class="progress-box" data-progress data-subject="keiho" data-total={publishedCount}>
+    <span class="progress-label">📈 あなたの学習進捗（基礎編）</span>
+    <span class="progress-count"></span>
+    <div class="progress-track"><div class="progress-fill"></div></div>
+  </div>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <>
+                <li data-read-slug={basicExists ? `keiho/${topic.slug}` : undefined}>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/keiho/${topic.slug}/`}>{topic.title}</a>
+                  ) : (
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch" data-read-slug={advancedExists ? `keiho/${topic.slug}-ouyou` : undefined}>
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/keiho/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+  <p class="progress-reset-row">
+    <button type="button" class="progress-reset" data-reset-subject="keiho" data-reset-label="刑法">
+      刑法の読了記録をリセット
+    </button>
+  </p>
+</BaseLayout>

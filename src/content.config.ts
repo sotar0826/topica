@@ -88,6 +88,21 @@ const kenpo = defineCollection({
   }),
 });
 
+// 刑法。構造は minpo と同じ（1トピック=1ファイル、応用編は -ouyou.md）
+const keiho = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/keiho" }),
+  schema: z.object({
+    title: z.string(),
+    seoTitle: z.string().optional(),
+    level: z.enum(["basic", "advanced"]).default("basic"),
+    description: z.string(),
+    related: z.array(z.string()).default([]),
+    published: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+    lawVersion: z.string().optional(),
+  }),
+});
+
 // コラム：単元から独立した司法試験レベルの読み物（横断テーマ・重要判例の深掘りなど）
 const column = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/column" }),
@@ -123,4 +138,4 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, column, devlog };
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, column, devlog };

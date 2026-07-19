@@ -420,6 +420,85 @@ export const KENPO_CURRICULUM: PartDef[] = [
   },
 ];
 
+// 刑法カリキュラム（2026-07-16 開始。総論5編＋各論1編・33トピック）
+export const KEIHO_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "刑法の全体像と罪刑法定主義",
+    slug: "keiho-kiso",
+    topics: [
+      { slug: "keiho-zentaizo", title: "刑法の全体像と学び方", hasAdvanced: false },
+      { slug: "zaikei-hotei", title: "罪刑法定主義", hasAdvanced: true },
+      { slug: "keiho-tekiyo-hani", title: "刑法の適用範囲", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 2,
+    name: "構成要件",
+    slug: "kosei-yoken",
+    topics: [
+      { slug: "kosei-yoken-soron", title: "構成要件総説・実行行為", hasAdvanced: false },
+      { slug: "fusakui-han", title: "不作為犯", hasAdvanced: true },
+      { slug: "inga-kankei", title: "因果関係", hasAdvanced: true },
+      { slug: "koi-jijitsu-sakugo", title: "故意と事実の錯誤", hasAdvanced: true },
+      { slug: "kashitsu-han", title: "過失犯", hasAdvanced: true },
+      { slug: "iho-ishiki", title: "違法性の意識と法律の錯誤", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 3,
+    name: "違法性",
+    slug: "ihosei",
+    topics: [
+      { slug: "ihosei-soron", title: "違法性阻却総論", hasAdvanced: false },
+      { slug: "seito-boei", title: "正当防衛", hasAdvanced: true },
+      { slug: "kinkyu-hinan", title: "緊急避難", hasAdvanced: false },
+      { slug: "shodaku-jikyu", title: "被害者の承諾・自救行為", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "責任・未遂・罪数",
+    slug: "sekinin-misui",
+    topics: [
+      { slug: "sekinin-noryoku", title: "責任能力", hasAdvanced: false },
+      { slug: "genin-jiyu-koi", title: "原因において自由な行為", hasAdvanced: true },
+      { slug: "misui-chushi", title: "未遂犯と中止犯", hasAdvanced: true },
+      { slug: "funo-han", title: "不能犯", hasAdvanced: false },
+      { slug: "zaisu", title: "罪数", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 5,
+    name: "共犯",
+    slug: "kyohan",
+    topics: [
+      { slug: "kyohan-soron", title: "正犯と共犯", hasAdvanced: false },
+      { slug: "kyodo-seihan", title: "共同正犯・共謀共同正犯", hasAdvanced: true },
+      { slug: "kyosa-hojo", title: "教唆犯・幇助犯", hasAdvanced: false },
+      { slug: "kyohan-mibun", title: "共犯と身分", hasAdvanced: true },
+      { slug: "kyohan-shomondai", title: "共犯の諸問題（錯誤・承継・離脱）", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 6,
+    name: "各論（個人・社会・国家法益）",
+    slug: "kakuron",
+    topics: [
+      { slug: "satsujin", title: "殺人の罪・遺棄の罪", hasAdvanced: false },
+      { slug: "shogai-boko", title: "傷害・暴行の罪", hasAdvanced: true },
+      { slug: "jiyu-hanzai", title: "自由に対する罪・住居侵入", hasAdvanced: false },
+      { slug: "meiyo-shinyo", title: "名誉・信用と業務に対する罪", hasAdvanced: true },
+      { slug: "setto", title: "窃盗の罪", hasAdvanced: true },
+      { slug: "goto", title: "強盗の罪", hasAdvanced: true },
+      { slug: "sagi", title: "詐欺の罪", hasAdvanced: true },
+      { slug: "kyokatsu", title: "恐喝の罪", hasAdvanced: false },
+      { slug: "oryo-hainin", title: "横領・背任の罪", hasAdvanced: true },
+      { slug: "hoka-giso-wairo", title: "放火・文書偽造・賄賂の罪（概観）", hasAdvanced: false },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
@@ -440,6 +519,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "国家の基本設計と人権保障を定める最高法規。人権の享有主体から精神的自由・経済的自由、統治機構・違憲審査まで、判例を軸に全29トピックで体系的に学べます。",
     parts: KENPO_CURRICULUM,
+  },
+  {
+    slug: "keiho",
+    name: "刑法",
+    description:
+      "犯罪と刑罰を定める法律。罪刑法定主義から構成要件・違法性・責任の犯罪論体系、共犯、そして各論の主要犯罪まで、判例を軸に全33トピックで体系的に学べます。",
+    parts: KEIHO_CURRICULUM,
   },
   {
     slug: "minso",
