@@ -1,0 +1,165 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findTopicOf, prevNextOf, topicOrderOf } from "../../data/curriculum";
+import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("keiso");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const isAdvanced = entry.data.level === "advanced";
+const baseSlug = entry.id.replace(/-ouyou$/, "");
+const topicInfo = findTopicOf("keiso", baseSlug);
+const nav = prevNextOf("keiso", baseSlug);
+const order = topicOrderOf("keiso");
+
+const allEntries = await getCollection("keiso");
+const existingIds = new Set(allEntries.map((e) => e.id));
+const advancedExists = existingIds.has(`${baseSlug}-ouyou`);
+
+const relatedLinks = entry.data.related
+  .map((slug) => {
+    const t = order.find((x) => x.slug === slug);
+    return t ? { slug, title: t.title, exists: existingIds.has(slug) } : null;
+  })
+  .filter((x) => x !== null);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
+
+const headline = `${entry.data.title}${isAdvanced ? "（応用編）" : ""}`;
+const jsonLd = [
+  articleLd({
+    title: headline,
+    description: entry.data.description,
+    url: pageUrl,
+    published: entry.data.published,
+    updated: entry.data.updated,
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "刑事訴訟法", url: abs("/keiso/") },
+    ...(topicInfo
+      ? [{ name: `第${topicInfo.partNumber}編 ${topicInfo.partName}` }]
+      : []),
+    { name: headline, url: pageUrl },
+  ]),
+];
+---
+
+<BaseLayout
+  title={entry.data.seoTitle ?? headline}
+  description={entry.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb">
+    <a href="/">トップ</a> › <a href="/keiso/">刑事訴訟法</a>
+    {topicInfo && ` › 第${topicInfo.partNumber}編 ${topicInfo.partName}`}
+  </div>
+
+  <div class="topic-header">
+    <span class={`level-badge${isAdvanced ? " advanced" : ""}`}>
+      {isAdvanced ? "応用編（発展）" : "基礎編"}
+    </span>
+    <h1>{entry.data.title}</h1>
+  </div>
+
+  {
+    (relatedLinks.length > 0 || (isAdvanced && existingIds.has(baseSlug))) && (
+      <div class="related-box">
+        <span class="label">📚 先に読んでおきたいページ</span>
+        <ul>
+          {isAdvanced && existingIds.has(baseSlug) && (
+            <li>
+              <a href={`/keiso/${baseSlug}/`}>{topicInfo?.title}（基礎編）</a> — このページの前提です
+            </li>
+          )}
+          {relatedLinks.map((r) => (
+            <li>{r.exists ? <a href={`/keiso/${r.slug}/`}>{r.title}</a> : `${r.title}（準備中）`}</li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <article class="topic-body" data-pagefind-body>
+    <Content />
+  </article>
+
+  <div class="read-toggle" data-read-page={`keiso/${entry.id}`}></div>
+
+  {
+    (entry.data.updated || entry.data.lawVersion) && (
+      <p class="page-meta">
+        {entry.data.updated && (
+          <span>
+            最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time>
+          </span>
+        )}
+        {entry.data.updated && entry.data.lawVersion && " ・ "}
+        {entry.data.lawVersion && <span>{entry.data.lawVersion}</span>}
+      </p>
+    )
+  }
+
+  {
+    !isAdvanced && advancedExists && (
+      <div class="related-box">
+        <span class="label">🚀 さらに学ぶ</span>
+        <ul>
+          <li>
+            <a href={`/keiso/${baseSlug}-ouyou/`}>{entry.data.title}（応用編）</a> — 判例・学説・論述対策へ
+          </li>
+        </ul>
+      </div>
+    )
+  }
+
+  <nav class="topic-nav">
+    {
+      nav.prev ? (
+        <a href={`/keiso/${nav.prev.slug}/`} class="prev">
+          <span class="dir">← 前のトピック</span>
+          <br />
+          {nav.prev.number}. {nav.prev.title}
+        </a>
+      ) : (
+        <span />
+      )
+    }
+    {
+      isAdvanced && topicInfo && existingIds.has(baseSlug) ? (
+        <a href={`/keiso/${baseSlug}/`} class="branch">
+          <span class="dir">基礎編に戻る</span>
+          <br />
+          {topicInfo.number}. {topicInfo.title}
+        </a>
+      ) : !isAdvanced && advancedExists && topicInfo ? (
+        <a href={`/keiso/${baseSlug}-ouyou/`} class="branch">
+          <span class="dir">└ 応用編へ</span>
+          <br />
+          {topicInfo.number}-1. {topicInfo.title}（応用編）
+        </a>
+      ) : null
+    }
+    {
+      nav.next ? (
+        <a href={`/keiso/${nav.next.slug}/`} class="next">
+          <span class="dir">次のトピック →</span>
+          <br />
+          {nav.next.number}. {nav.next.title}
+        </a>
+      ) : (
+        <span />
+      )
+    }
+  </nav>
+</BaseLayout>

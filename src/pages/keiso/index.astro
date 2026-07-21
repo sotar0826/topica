@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+
+const subject = findSubject("keiso")!;
+const order = topicOrderOf("keiso");
+
+const entries = await getCollection("keiso");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = order.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="刑事訴訟法" description={subject.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 刑事訴訟法</div>
+
+  <h1>刑事訴訟法</h1>
+  <p>{subject.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 学習の進め方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      手続の時系列に沿って、第2〜3編で<strong>捜査</strong>、第4編で<strong>公訴・訴因</strong>、第5〜6編で<strong>公判と証拠法</strong>・裁判を扱います。
+      刑事訴訟法は「手続のどの段階の、誰のどの処分が問題か」を特定して考える科目です。各トピックとも判例を一次資料で照合したうえで、条文の要件に沿って解説します。
+      憲法の人身の自由（31条以下）と地続きのため、憲法既習だと理解が早まります。
+      現在 <strong>{publishedCount} / {order.length}</strong> トピック公開中（順次追加します）。
+    </p>
+  </div>
+
+  <div class="progress-box" data-progress data-subject="keiso" data-total={publishedCount}>
+    <span class="progress-label">📈 あなたの学習進捗（基礎編）</span>
+    <span class="progress-count"></span>
+    <div class="progress-track"><div class="progress-fill"></div></div>
+  </div>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <>
+                <li data-read-slug={basicExists ? `keiso/${topic.slug}` : undefined}>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/keiso/${topic.slug}/`}>{topic.title}</a>
+                  ) : (
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch" data-read-slug={advancedExists ? `keiso/${topic.slug}-ouyou` : undefined}>
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/keiso/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+  <p class="progress-reset-row">
+    <button type="button" class="progress-reset" data-reset-subject="keiso" data-reset-label="刑事訴訟法">
+      刑事訴訟法の読了記録をリセット
+    </button>
+  </p>
+</BaseLayout>

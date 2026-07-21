@@ -499,6 +499,70 @@ export const KEIHO_CURRICULUM: PartDef[] = [
   },
 ];
 
+// 刑事訴訟法カリキュラム（2026-07-22 開始。捜査→公訴→公判→証拠→裁判の手続時系列・6編18トピック）
+export const KEISO_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "刑事訴訟の全体像と基本原則",
+    slug: "keiso-kiso",
+    topics: [
+      { slug: "keiso-zentaizo", title: "刑事訴訟の全体像と学び方", hasAdvanced: false },
+      { slug: "tojisha-shugi", title: "当事者主義と基本原則", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 2,
+    name: "捜査①——捜査の原則と身体拘束",
+    slug: "sosa-1",
+    topics: [
+      { slug: "kyosei-shobun", title: "強制処分法定主義と任意捜査の限界", hasAdvanced: true },
+      { slug: "shokumu-shitsumon", title: "職務質問・所持品検査", hasAdvanced: true },
+      { slug: "taiho-koryu", title: "逮捕と勾留", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 3,
+    name: "捜査②——証拠の収集と被疑者の防御",
+    slug: "sosa-2",
+    topics: [
+      { slug: "sosaku-oshu", title: "捜索・差押え", hasAdvanced: true },
+      { slug: "torishirabe-sekken", title: "取調べと接見交通権", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 4,
+    name: "公訴と訴因",
+    slug: "koso",
+    topics: [
+      { slug: "koso-teiki", title: "公訴の提起と訴追裁量", hasAdvanced: false },
+      { slug: "soin", title: "訴因の機能と特定", hasAdvanced: true },
+      { slug: "soin-henko", title: "訴因変更", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 5,
+    name: "公判と証拠①——証拠法の基礎と自白",
+    slug: "kohan-shoko-1",
+    topics: [
+      { slug: "kohan-tetsuzuki", title: "公判手続の流れ", hasAdvanced: false },
+      { slug: "shoko-soron", title: "証拠法総論", hasAdvanced: true },
+      { slug: "jihaku-hosoku", title: "自白法則・補強法則", hasAdvanced: true },
+      { slug: "iho-shushu", title: "違法収集証拠排除法則", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 6,
+    name: "証拠②と裁判",
+    slug: "shoko-2-saiban",
+    topics: [
+      { slug: "denbun", title: "伝聞法則", hasAdvanced: true },
+      { slug: "denbun-reigai", title: "伝聞例外", hasAdvanced: true },
+      { slug: "saiban-ichiji-fusairi", title: "裁判の確定と一事不再理", hasAdvanced: true },
+      { slug: "joso-saishin", title: "上訴・再審", hasAdvanced: false },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
@@ -526,6 +590,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "犯罪と刑罰を定める法律。罪刑法定主義から構成要件・違法性・責任の犯罪論体系、共犯、そして各論の主要犯罪まで、判例を軸に全33トピックで体系的に学べます。",
     parts: KEIHO_CURRICULUM,
+  },
+  {
+    slug: "keiso",
+    name: "刑事訴訟法",
+    description:
+      "犯罪の捜査から公訴・公判・証拠・裁判までの手続を定める法律。強制処分法定主義・訴因・自白法則・伝聞法則などの基本原理を、判例を軸に全18トピックで体系的に学べます。",
+    parts: KEISO_CURRICULUM,
   },
   {
     slug: "minso",
