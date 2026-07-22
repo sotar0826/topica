@@ -36,6 +36,10 @@ const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 // 空のままならビーコンは出力しない（ビルドは壊れない）。
 const CF_ANALYTICS_TOKEN = "c7cd2df2924841e28234f03cdd033f9e";
 
+// Google AdSense のサイト運営者ID（審査用コードの client パラメータ）。
+// 空にすればスニペットは出力されない。
+const ADSENSE_CLIENT = "ca-pub-7356455610185406";
+
 // Google Search Console 所有権確認（HTMLタグ方式）。
 // public/googlec8f8a152e88811da.html（ファイル方式）は Cloudflare Pages が
 // .html を拡張子なしURLへ308リダイレクトしてしまい検証不可のため、
@@ -74,6 +78,15 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
       jsonLdList.map((obj) => (
         <script type="application/ld+json" set:html={JSON.stringify(obj)} />
       ))
+    }
+    {
+      ADSENSE_CLIENT && (
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
+          crossorigin="anonymous"
+        />
+      )
     }
     {
       CF_ANALYTICS_TOKEN && (
