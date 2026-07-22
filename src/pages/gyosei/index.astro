@@ -1,0 +1,82 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+
+const subject = findSubject("gyosei")!;
+const order = topicOrderOf("gyosei");
+
+const entries = await getCollection("gyosei");
+const existing = new Set(entries.map((e) => e.id));
+const publishedCount = order.filter((t) => existing.has(t.slug)).length;
+
+let globalNum = 0;
+---
+
+<BaseLayout title="行政法" description={subject.description}>
+  <div class="breadcrumb"><a href="/">トップ</a> › 行政法</div>
+
+  <h1>行政法</h1>
+  <p>{subject.description}</p>
+
+  <div class="related-box">
+    <span class="label">📖 学習の進め方</span>
+    <p style="margin: 0.4rem 0 0; font-size: 0.9rem;">
+      第1〜4編で<strong>行政作用法</strong>（行政活動のルール）、第5〜6編で<strong>行政救済法</strong>（争い方と賠償・補償）を扱います。
+      行政法は統一的な法典がなく、「行政活動の共通ルール」と「判例が作った枠組み」を軸に考える科目です。各トピックとも判例を一次資料で照合したうえで解説します。
+      憲法（人権・統治）と民法（不法行為ほか）の知識を前提とする箇所があるため、両科目の既習をおすすめします。
+      現在 <strong>{publishedCount} / {order.length}</strong> トピック公開中（順次追加します）。
+    </p>
+  </div>
+
+  <div class="progress-box" data-progress data-subject="gyosei" data-total={publishedCount}>
+    <span class="progress-label">📈 あなたの学習進捗（基礎編）</span>
+    <span class="progress-count"></span>
+    <div class="progress-track"><div class="progress-fill"></div></div>
+  </div>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        <h2>第{part.number}編 {part.name}</h2>
+        <ol class="topic-list">
+          {part.topics.map((topic) => {
+            globalNum++;
+            const basicExists = existing.has(topic.slug);
+            const advancedExists = existing.has(`${topic.slug}-ouyou`);
+            return (
+              <>
+                <li data-read-slug={basicExists ? `gyosei/${topic.slug}` : undefined}>
+                  <span class="num">{globalNum}.</span>
+                  {basicExists ? (
+                    <a href={`/gyosei/${topic.slug}/`}>{topic.title}</a>
+                  ) : (
+                    <span class="coming">{topic.title}</span>
+                  )}
+                  {!basicExists && <span class="tag-soon">準備中</span>}
+                </li>
+                {topic.hasAdvanced && (
+                  <li class="topic-branch" data-read-slug={advancedExists ? `gyosei/${topic.slug}-ouyou` : undefined}>
+                    <span class="num">{globalNum}-1.</span>
+                    {advancedExists ? (
+                      <a href={`/gyosei/${topic.slug}-ouyou/`}>{topic.title}</a>
+                    ) : (
+                      <span class="coming">{topic.title}</span>
+                    )}
+                    <span class="tag-ouyou">応用編</span>
+                    {!advancedExists && <span class="tag-soon">準備中</span>}
+                  </li>
+                )}
+              </>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+  <p class="progress-reset-row">
+    <button type="button" class="progress-reset" data-reset-subject="gyosei" data-reset-label="行政法">
+      行政法の読了記録をリセット
+    </button>
+  </p>
+</BaseLayout>

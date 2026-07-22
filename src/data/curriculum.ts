@@ -563,6 +563,72 @@ export const KEISO_CURRICULUM: PartDef[] = [
   },
 ];
 
+// 行政法カリキュラム（2026-07-23 開始。基礎→作用→手続→救済の6編19トピック。
+// 資格別コース構想（行政書士等）の共通基盤にもなる科目）
+export const GYOSEI_CURRICULUM: PartDef[] = [
+  {
+    number: 1,
+    name: "行政法の基礎",
+    slug: "gyosei-kiso",
+    topics: [
+      { slug: "gyosei-zentaizo", title: "行政法の全体像と学び方", hasAdvanced: false },
+      { slug: "horitsu-niyoru-gyosei", title: "法律による行政の原理・一般原則", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 2,
+    name: "行政作用①——行政行為",
+    slug: "gyosei-sayo-1",
+    topics: [
+      { slug: "gyosei-koi", title: "行政行為の意義・種類・附款", hasAdvanced: false },
+      { slug: "gyosei-koi-koryoku", title: "行政行為の効力（公定力・不可争力）", hasAdvanced: true },
+      { slug: "shokken-torikeshi-tekkai", title: "職権取消しと撤回", hasAdvanced: true },
+      { slug: "gyosei-sairyo", title: "行政裁量と司法審査", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 3,
+    name: "行政作用②——多様な行為形式",
+    slug: "gyosei-sayo-2",
+    topics: [
+      { slug: "gyosei-rippo", title: "行政立法（法規命令・行政規則）", hasAdvanced: true },
+      { slug: "gyosei-shido-keikaku", title: "行政指導・行政計画・行政契約", hasAdvanced: true },
+      { slug: "gyosei-kyosei", title: "行政上の強制執行・即時強制・行政罰", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 4,
+    name: "行政手続と情報",
+    slug: "tetsuzuki-joho",
+    topics: [
+      { slug: "gyosei-tetsuzuki-ho", title: "行政手続法（申請・不利益処分・理由提示）", hasAdvanced: true },
+      { slug: "joho-kokai", title: "情報公開と個人情報保護の概観", hasAdvanced: false },
+    ],
+  },
+  {
+    number: 5,
+    name: "行政救済①——行政争訟",
+    slug: "kyusai-1",
+    topics: [
+      { slug: "fufuku-shinsa", title: "行政不服審査法の仕組み", hasAdvanced: false },
+      { slug: "shobunsei", title: "取消訴訟の訴訟要件①——処分性", hasAdvanced: true },
+      { slug: "genkoku-tekikaku", title: "取消訴訟の訴訟要件②——原告適格・訴えの利益", hasAdvanced: true },
+      { slug: "torikeshi-shinri", title: "取消訴訟の審理・判決・執行停止", hasAdvanced: true },
+      { slug: "sonota-kokoku", title: "その他の抗告訴訟・当事者訴訟", hasAdvanced: true },
+    ],
+  },
+  {
+    number: 6,
+    name: "行政救済②——国家補償",
+    slug: "kyusai-2",
+    topics: [
+      { slug: "kokka-baisho-1jo", title: "国家賠償法1条", hasAdvanced: true },
+      { slug: "kokka-baisho-2jo", title: "国家賠償法2条（営造物責任）", hasAdvanced: true },
+      { slug: "sonshitsu-hosho", title: "損失補償", hasAdvanced: true },
+    ],
+  },
+];
+
 export const SUBJECTS: SubjectDef[] = [
   {
     slug: "minpo",
@@ -604,6 +670,13 @@ export const SUBJECTS: SubjectDef[] = [
     description:
       "民事紛争を裁判で解決するための手続法。訴えの提起から審理・判決・上訴までの流れと、弁論主義・既判力などの基本原理を全28トピックで体系的に学べます。",
     parts: MINSO_CURRICULUM,
+  },
+  {
+    slug: "gyosei",
+    name: "行政法",
+    description:
+      "行政活動のルールと国民の救済手段を定める法分野。法律による行政の原理から行政行為・裁量・行政手続、取消訴訟・国家賠償まで、判例を軸に全19トピックで体系的に学べます。",
+    parts: GYOSEI_CURRICULUM,
   },
   {
     slug: "hasan",

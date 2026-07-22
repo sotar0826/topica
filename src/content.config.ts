@@ -118,6 +118,21 @@ const keiso = defineCollection({
   }),
 });
 
+// 行政法。構造は minpo と同じ（1トピック=1ファイル、応用編は -ouyou.md）
+const gyosei = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gyosei" }),
+  schema: z.object({
+    title: z.string(),
+    seoTitle: z.string().optional(),
+    level: z.enum(["basic", "advanced"]).default("basic"),
+    description: z.string(),
+    related: z.array(z.string()).default([]),
+    published: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+    lawVersion: z.string().optional(),
+  }),
+});
+
 // 判例解説：1判例=1ページ。「最判平○.○.○」「{論点} 判例」検索の受け皿。
 // 収録判例は courts.go.jp で事件番号・出典・裁判要旨まで照合済みのもののみ
 const hanrei = defineCollection({
@@ -183,4 +198,4 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, hanrei, column, devlog };
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, column, devlog };
