@@ -77,6 +77,8 @@ const jsonLd = [
     <h1>{entry.data.title}</h1>
   </div>
 
+  <div class="toc-container" data-toc></div>
+
   {
     (relatedLinks.length > 0 || (isAdvanced && existingIds.has(baseSlug))) && (
       <div class="related-box">

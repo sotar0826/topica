@@ -12,7 +12,66 @@
   --border: #e2e8f0;
   --warning-bg: #fff7e6;
   --warning-border: #f0c36d;
+  --advanced-bg: #fdeee4;
+  --advanced-text: #b4530a;
+  --branch-bg: #fff8f3;
+  --branch-border: #e8c4a8;
+  --column-bg: #e8f1e8;
+  --column-text: #2e6b34;
+  --success: #2e7d32;
+  --card-shadow: rgba(47, 102, 144, 0.15);
+  --on-accent: #ffffff;
   --max-width: 760px;
+}
+
+/* ===== ダークモード =====
+   JS（inline script）が localStorage / prefers-color-scheme を見て
+   <html data-theme="dark|light"> を先行付与する（FOUC防止）。
+   JS無効時は prefers-color-scheme のみに追従する。 */
+:root[data-theme="dark"] {
+  --accent: #5b9bd0;
+  --accent-light: #1d3143;
+  --accent-dark: #9cc7ea;
+  --text: #dfe3e7;
+  --text-muted: #9aa7b2;
+  --bg: #14181d;
+  --bg-soft: #1b2127;
+  --border: #2c343c;
+  --warning-bg: #3a2f16;
+  --warning-border: #7a5c24;
+  --advanced-bg: #3a2a1c;
+  --advanced-text: #e8a565;
+  --branch-bg: #2a2219;
+  --branch-border: #5c4530;
+  --column-bg: #1d2b1f;
+  --column-text: #7cc282;
+  --success: #4caf50;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+  --on-accent: #0d1117;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --accent: #5b9bd0;
+    --accent-light: #1d3143;
+    --accent-dark: #9cc7ea;
+    --text: #dfe3e7;
+    --text-muted: #9aa7b2;
+    --bg: #14181d;
+    --bg-soft: #1b2127;
+    --border: #2c343c;
+    --warning-bg: #3a2f16;
+    --warning-border: #7a5c24;
+    --advanced-bg: #3a2a1c;
+    --advanced-text: #e8a565;
+    --branch-bg: #2a2219;
+    --branch-border: #5c4530;
+    --column-bg: #1d2b1f;
+    --column-text: #7cc282;
+    --success: #4caf50;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --on-accent: #0d1117;
+  }
 }
 
 * {
@@ -22,10 +81,23 @@
 html {
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "BIZ UDPGothic",
     Meiryo, system-ui, sans-serif;
-  color: var(--text);
   background: var(--bg);
   line-height: 1.9;
   font-size: 16px;
+}
+
+/* color/background は body 側でも明示する（一部エンジンでルート要素自身の
+   var() 再評価がライブ切替時に反映されないケースへの保険。子要素への継承は
+   問題なく効くため body で明示すれば確実に塗り直る）。 */
+body {
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+}
+
+html,
+body {
+  transition: background-color 0.15s, color 0.15s;
 }
 
 body {
@@ -46,6 +118,10 @@ h1, h2, h3 {
   background: var(--bg);
 }
 
+.site-header {
+  position: relative;
+}
+
 .site-header .inner {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -53,6 +129,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.6rem;
 }
 
 .site-logo {
@@ -69,10 +146,139 @@ h1, h2, h3 {
   margin-left: 0.5rem;
 }
 
+/* ===== ヘッダー右側（ナビ＋操作ボタン群） ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.header-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
 .header-nav a {
   margin-left: 1rem;
   font-size: 0.9rem;
   text-decoration: none;
+}
+
+.header-nav .nav-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.header-nav .nav-divider {
+  width: 1px;
+  height: 1rem;
+  background: var(--border);
+  margin: 0 0.9rem 0 1rem;
+}
+
+/* ダークモード切替・ハンバーガーの共通ボタンスタイル */
+.icon-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 8px;
+  width: 2.1rem;
+  height: 2.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.icon-btn:hover {
+  background: var(--accent-light);
+}
+
+/* ハンバーガーは JS 有効時のみ表示（無効時はナビを折返し表示のまま出す） */
+.nav-toggle {
+  display: none;
+}
+
+.nav-toggle .bar {
+  display: block;
+  width: 1.1rem;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+
+.nav-toggle .bar::before,
+.nav-toggle .bar::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+}
+
+.nav-toggle .bar::before {
+  top: -6px;
+}
+
+.nav-toggle .bar::after {
+  top: 6px;
+}
+
+@media (max-width: 768px) {
+  .header-nav {
+    gap: 0.3rem 0.7rem;
+  }
+
+  .header-nav .nav-divider {
+    display: none;
+  }
+
+  /* JS有効時のみドロワー化。noscript／JS失敗時は折返し表示のまま。 */
+  html.has-js .nav-toggle {
+    display: inline-flex;
+  }
+
+  html.has-js .header-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 1rem 1.2rem;
+    box-shadow: 0 4px 10px var(--card-shadow);
+    z-index: 50;
+  }
+
+  html.has-js .header-nav.is-open {
+    display: flex;
+  }
+
+  html.has-js .header-nav .nav-group {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  html.has-js .header-nav a {
+    margin-left: 0;
+    padding: 0.5rem 0;
+    width: 100%;
+  }
+}
+
+/* JSが無い場合の保険（万一 has-js が付いても崩れないように） */
+noscript.nav-fallback {
+  display: none;
 }
 
 /* ===== レイアウト ===== */
@@ -112,8 +318,8 @@ main {
 }
 
 .level-badge.advanced {
-  background: #fdeee4;
-  color: #b4530a;
+  background: var(--advanced-bg);
+  color: var(--advanced-text);
 }
 
 /* 記事本文の見出し */
@@ -257,8 +463,8 @@ main {
 /* 応用編⇔基礎編の枝ジャンプ（前後ナビの中央） */
 .topic-nav .branch {
   text-align: center;
-  background: #fff8f3;
-  border-color: #e8c4a8;
+  background: var(--branch-bg);
+  border-color: var(--branch-border);
 }
 
 /* ===== 用語集 ===== */
@@ -299,7 +505,7 @@ main {
   display: inline-block;
   padding: 0.7rem 1.4rem;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border-radius: 8px;
   text-decoration: none;
   font-weight: bold;
@@ -373,8 +579,8 @@ main {
   font-size: 0.7rem;
   padding: 0.05rem 0.5rem;
   border-radius: 999px;
-  background: #fdeee4;
-  color: #b4530a;
+  background: var(--advanced-bg);
+  color: var(--advanced-text);
   text-decoration: none;
 }
 
@@ -392,8 +598,8 @@ main {
   font-size: 0.7rem;
   padding: 0.05rem 0.5rem;
   border-radius: 999px;
-  background: #e8f1e8;
-  color: #2e6b34;
+  background: var(--column-bg);
+  color: var(--column-text);
   text-decoration: none;
 }
 
@@ -408,7 +614,7 @@ main {
   font-size: 0.9rem;
   border: 1px solid var(--accent);
   border-radius: 999px;
-  background: #fff;
+  background: var(--bg);
   color: var(--accent);
   cursor: pointer;
 }
@@ -419,11 +625,11 @@ main {
 
 .read-btn.done {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .topic-list .read-mark {
-  color: #2e7d32;
+  color: var(--success);
   font-weight: bold;
   margin-left: auto;
 }
@@ -510,7 +716,7 @@ main {
 }
 
 .subject-card:hover {
-  box-shadow: 0 2px 10px rgba(47, 102, 144, 0.15);
+  box-shadow: 0 2px 10px var(--card-shadow);
 }
 
 .subject-card h2 {
@@ -557,5 +763,112 @@ main {
 
   .topic-nav {
     flex-direction: column;
+  }
+}
+
+/* ===== 追従目次（toc.js が生成） ===== */
+.toc-container:empty {
+  display: none;
+}
+
+.toc {
+  margin: 1rem 0 1.8rem;
+}
+
+.toc-details {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  background: var(--bg-soft);
+}
+
+.toc-details summary {
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--accent-dark);
+  font-size: 0.92rem;
+}
+
+.toc-details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+.toc-details ol {
+  margin: 0.3rem 0 0;
+  padding-left: 1.4rem;
+  font-size: 0.88rem;
+}
+
+.toc-details ol ul {
+  margin: 0.2rem 0 0.3rem;
+  padding-left: 1.2rem;
+  font-size: 0.95em;
+}
+
+.toc-details li {
+  margin: 0.3rem 0;
+}
+
+.toc-details a {
+  text-decoration: none;
+}
+
+.toc-details a:hover {
+  text-decoration: underline;
+}
+
+/* 広い画面では本文右マージンにstickyで固定表示 */
+@media (min-width: 1300px) {
+  .toc {
+    position: fixed;
+    top: 5.5rem;
+    left: calc(50% + (var(--max-width) / 2) + 2rem);
+    width: 230px;
+    max-height: calc(100vh - 7.5rem);
+    overflow-y: auto;
+    margin: 0;
+  }
+}
+
+/* ===== 印刷 ===== */
+@media print {
+  .site-header,
+  .site-footer,
+  .ad-slot,
+  .toc-container,
+  .read-toggle,
+  .topic-nav,
+  .breadcrumb,
+  .progress-reset-row,
+  #progress-summary,
+  .search-box {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  html {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .topic-body details {
+    border: none;
+    padding: 0;
+    background: none;
+    break-inside: avoid;
+  }
+
+  .topic-body h2,
+  .topic-body h3 {
+    break-after: avoid;
   }
 }

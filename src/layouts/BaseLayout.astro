@@ -51,6 +51,25 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      // ダークモードの先行適用（FOUC防止）＋ JS有効判定。
+      // 必ずCSS適用前（<head>の先頭）で同期実行する。
+      document.documentElement.classList.add("has-js");
+      (function () {
+        try {
+          var stored = localStorage.getItem("topica:theme");
+          var theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {
+          /* localStorage/matchMedia不可時はCSSのprefers-color-scheme頼りにする */
+        }
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
@@ -102,21 +121,53 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
     <header class="site-header">
       <div class="inner">
         <a href="/" class="site-logo">トピカ<span>法律学習サイト</span></a>
-        <nav class="header-nav">
-          <a href="/minpo/">民法</a>
-          <a href="/shoho/">商法</a>
-          <a href="/minso/">民訴</a>
-          <a href="/kenpo/">憲法</a>
-          <a href="/keiho/">刑法</a>
-          <a href="/keiso/">刑訴</a>
-          <a href="/gyosei/">行政法</a>
-          <a href="/hanrei/">判例</a>
-          <a href="/column/">コラム</a>
-          <a href="/yougo/">用語集</a>
-          <a href="/search/">🔍検索</a>
-        </nav>
+        <div class="header-right">
+          <nav class="header-nav" id="header-nav">
+            <div class="nav-group nav-subjects">
+              <a href="/minpo/">民法</a>
+              <a href="/shoho/">商法</a>
+              <a href="/minso/">民訴</a>
+              <a href="/kenpo/">憲法</a>
+              <a href="/keiho/">刑法</a>
+              <a href="/keiso/">刑訴</a>
+              <a href="/gyosei/">行政法</a>
+            </div>
+            <div class="nav-divider" aria-hidden="true"></div>
+            <div class="nav-group nav-content">
+              <a href="/hanrei/">判例</a>
+              <a href="/column/">コラム</a>
+              <a href="/yougo/">用語集</a>
+              <a href="/search/">🔍検索</a>
+            </div>
+          </nav>
+          <button
+            id="theme-toggle"
+            type="button"
+            class="icon-btn theme-toggle"
+            aria-label="ダークモードに切り替える"
+          >
+            🌙
+          </button>
+          <button
+            id="nav-toggle"
+            type="button"
+            class="icon-btn nav-toggle"
+            aria-expanded="false"
+            aria-controls="header-nav"
+            aria-label="メニューを開く"
+          >
+            <span class="bar"></span>
+          </button>
+        </div>
       </div>
     </header>
+    <noscript class="nav-fallback">
+      <style>
+        /* JS無効時はハンバーガー・ドロワー化を完全に無効化し、折返し表示のまま見せる */
+        .nav-toggle { display: none !important; }
+        .header-nav { display: flex !important; position: static !important; box-shadow: none !important; }
+      </style>
+    </noscript>
     <main>
       <slot />
     </main>
@@ -132,5 +183,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
       <p>© 2026 トピカ</p>
     </footer>
     <script is:inline src="/progress.js" defer></script>
+    <script is:inline src="/nav.js" defer></script>
+    <script is:inline src="/toc.js" defer></script>
   </body>
 </html>
