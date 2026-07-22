@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { PUBLIC_SUBJECTS } from "../../data/curriculum";
+import { abs, breadcrumbLd } from "../../lib/jsonld";
+
+const entries = await getCollection("hanrei");
+
+// 科目 → 判決日昇順で整理
+const groups = PUBLIC_SUBJECTS.map((subject) => ({
+  subject,
+  items: entries
+    .filter((e) => e.data.subject === subject.slug)
+    .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf()),
+})).filter((g) => g.items.length > 0);
+
+const jsonLd = breadcrumbLd([
+  { name: "トップ", url: abs("/") },
+  { name: "判例解説", url: abs("/hanrei/") },
+]);
+---
+
+<BaseLayout
+  title="判例解説一覧"
+  description="民法・商法・憲法・刑法・訴訟法の重要判例を1判例1ページで解説。事案の概要・判旨・意義を、裁判所公式データベースで原典を確認したうえで整理しています。"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb"><a href="/">トップ</a> › 判例解説</div>
+
+  <h1>判例解説</h1>
+  <p>
+    学習上重要な判例を、1判例1ページで「事案の概要 → 判旨 → 意義・位置づけ」の順に整理しています。
+    収録している判例は、すべて裁判所の公式データベース（裁判例検索）で事件番号・出典・裁判要旨まで確認したものに限っています。
+    現在 <strong>{entries.length}</strong> 件収録（順次追加します）。
+  </p>
+
+  {
+    groups.map((g) => (
+      <section class="part-section">
+        <h2>{g.subject.name}</h2>
+        <ol class="topic-list">
+          {g.items.map((e) => (
+            <li>
+              <a href={`/hanrei/${e.id}/`}>{e.data.title}</a>
+              <span style="font-size: 0.85rem; color: #666;">
+                — {e.data.court}
+                {e.data.decisionDate}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</BaseLayout>

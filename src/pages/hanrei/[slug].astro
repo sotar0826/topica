@@ -1,0 +1,123 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("hanrei");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const subject = findSubject(entry.data.subject);
+
+// 関連トピックのリンク解決（"keiso/kyosei-shobun" 形式 → タイトル）
+const topicLinks = entry.data.topics
+  .map((t) => {
+    const [sub, slug] = t.split("/");
+    const base = slug.replace(/-ouyou$/, "");
+    const info = topicOrderOf(sub).find((x) => x.slug === base);
+    const subName = findSubject(sub)?.name ?? sub;
+    return info
+      ? { href: `/${sub}/${slug}/`, label: `${subName}：${info.title}` }
+      : null;
+  })
+  .filter((x) => x !== null);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
+const headline = `${entry.data.title}（${entry.data.court}${entry.data.decisionDate}）`;
+
+const jsonLd = [
+  articleLd({
+    title: headline,
+    description: entry.data.description,
+    url: pageUrl,
+    published: entry.data.published,
+    updated: entry.data.updated,
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "判例解説", url: abs("/hanrei/") },
+    { name: entry.data.title, url: pageUrl },
+  ]),
+];
+---
+
+<BaseLayout
+  title={entry.data.seoTitle ?? headline}
+  description={entry.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb">
+    <a href="/">トップ</a> › <a href="/hanrei/">判例解説</a>
+    {subject && ` › ${subject.name}`}
+  </div>
+
+  <div class="topic-header">
+    <span class="level-badge">判例解説</span>
+    <h1>{entry.data.title}</h1>
+  </div>
+
+  <table>
+    <tbody>
+      <tr><th style="white-space: nowrap;">裁判所</th><td>{entry.data.court}</td></tr>
+      <tr><th style="white-space: nowrap;">裁判年月日</th><td>{entry.data.decisionDate}</td></tr>
+      <tr><th style="white-space: nowrap;">出典</th><td>{entry.data.citation}</td></tr>
+      {
+        entry.data.caseNumber && (
+          <tr><th style="white-space: nowrap;">事件番号</th><td>{entry.data.caseNumber}</td></tr>
+        )
+      }
+      {
+        entry.data.articles.length > 0 && (
+          <tr><th style="white-space: nowrap;">関連条文</th><td>{entry.data.articles.join("・")}</td></tr>
+        )
+      }
+    </tbody>
+  </table>
+
+  <article class="topic-body" data-pagefind-body>
+    <Content />
+  </article>
+
+  {
+    (entry.data.updated || true) && (
+      <p class="page-meta">
+        {entry.data.updated && (
+          <span>
+            最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time>
+          </span>
+        )}
+      </p>
+    )
+  }
+
+  {
+    topicLinks.length > 0 && (
+      <div class="related-box">
+        <span class="label">📚 この判例を扱っているトピック</span>
+        <ul>
+          {topicLinks.map((t) => (
+            <li>
+              <a href={t.href}>{t.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <nav class="topic-nav">
+    <a href="/hanrei/" class="prev">
+      <span class="dir">← 判例解説一覧へ</span>
+    </a>
+    <span />
+  </nav>
+</BaseLayout>

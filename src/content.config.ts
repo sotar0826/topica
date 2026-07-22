@@ -118,6 +118,36 @@ const keiso = defineCollection({
   }),
 });
 
+// 判例解説：1判例=1ページ。「最判平○.○.○」「{論点} 判例」検索の受け皿。
+// 収録判例は courts.go.jp で事件番号・出典・裁判要旨まで照合済みのもののみ
+const hanrei = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/hanrei" }),
+  schema: z.object({
+    /** 通称（例：「GPS捜査事件」）。通称がなければ「最判昭和53年9月7日」形式 */
+    title: z.string(),
+    seoTitle: z.string().optional(),
+    /** 例：最高裁大法廷、最高裁第二小法廷 */
+    court: z.string(),
+    /** 表示用の裁判年月日（例：平成29年3月15日） */
+    decisionDate: z.string(),
+    /** ソート用のISO日付 */
+    dateISO: z.coerce.date(),
+    /** 出典（例：刑集71巻3号13頁） */
+    citation: z.string(),
+    /** 事件番号（例：平成28年（あ）第442号）任意 */
+    caseNumber: z.string().optional(),
+    /** 科目slug: minpo | shoho | minso | kenpo | keiho | keiso */
+    subject: z.string(),
+    /** 関連トピック（"keiso/kyosei-shobun" 形式・基礎編slugで指定） */
+    topics: z.array(z.string()).default([]),
+    /** 関連条文の表示用文字列（例：「刑訴法197条1項」） */
+    articles: z.array(z.string()).default([]),
+    description: z.string(),
+    published: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+  }),
+});
+
 // コラム：単元から独立した司法試験レベルの読み物（横断テーマ・重要判例の深掘りなど）
 const column = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/column" }),
@@ -153,4 +183,4 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, column, devlog };
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, hanrei, column, devlog };

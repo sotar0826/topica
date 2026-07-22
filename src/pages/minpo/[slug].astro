@@ -23,6 +23,11 @@ const nav = prevNext(baseSlug);
 // 応用編が存在するかどうか（基礎編ページに応用編リンクを出す用）
 const allEntries = await getCollection("minpo");
 const existingIds = new Set(allEntries.map((e) => e.id));
+
+const hanreiAll = await getCollection("hanrei");
+const relatedHanrei = hanreiAll
+  .filter((h) => h.data.topics.includes(`minpo/${baseSlug}`))
+  .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf());
 const advancedExists = existingIds.has(`${baseSlug}-ouyou`);
 
 // 関連ページ（前提知識）のリンク解決
@@ -119,6 +124,21 @@ const jsonLd = [
           <li>
             <a href={`/minpo/${baseSlug}-ouyou/`}>{entry.data.title}（応用編）</a> — 判例・学説・論述対策へ
           </li>
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    relatedHanrei.length > 0 && (
+      <div class="related-box">
+        <span class="label">⚖️ 関連する判例解説</span>
+        <ul>
+          {relatedHanrei.map((h) => (
+            <li>
+              <a href={`/hanrei/${h.id}/`}>{h.data.title}</a> — {h.data.court}{h.data.decisionDate}
+            </li>
+          ))}
         </ul>
       </div>
     )
