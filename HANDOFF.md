@@ -121,6 +121,9 @@
 2. `nichijo-kaji-110`（日常家事債務と110条、part:1）
 3. `shinrai-hogo-map`（信頼保護の見取り図・横断、part:2）
 
+### 行政法（`gyosei`）— **基礎編7/19本 公開済み**
+第1編2本・第2編4本に加え、第3編1本目 `gyosei-rippo`（行政立法——法規命令・行政規則）まで公開済み（2026-07-24）。次は `gyosei-shido-keikaku`。
+
 ### 公開ファイル数
 - minpo 73 / hasan 26 / column 3（+ about/privacy/disclaimer 等の固定ページ）
 
