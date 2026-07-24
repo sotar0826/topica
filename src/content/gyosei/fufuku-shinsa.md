@@ -7,6 +7,7 @@ related:
   - gyosei-koi-koryoku
   - gyosei-tetsuzuki-ho
   - gyosei-sairyo
+  - shobunsei
 published: 2026-07-24
 updated: 2026-07-24
 lawVersion: 現行法令準拠（2026年7月確認）
