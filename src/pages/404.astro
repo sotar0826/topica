@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PUBLIC_SUBJECTS } from "../data/curriculum";
+---
+
+<BaseLayout
+  title="ページが見つかりません"
+  description="お探しのページは見つかりませんでした。科目一覧・判例解説・サイト内検索からお探しください。"
+  noindex={true}
+>
+  <h1>ページが見つかりません</h1>
+  <p>
+    お探しのページは、移動または削除された可能性があります。
+    URLに誤りがないかご確認ください。下記からお探しのトピックへ移動できます。
+  </p>
+
+  <div class="related-box">
+    <span class="label">📚 科目から探す</span>
+    <ul>
+      {
+        PUBLIC_SUBJECTS.map((s) => (
+          <li>
+            <a href={`/${s.slug}/`}>{s.name}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="related-box">
+    <span class="label">🔍 その他の入口</span>
+    <ul>
+      <li><a href="/search/">サイト内検索</a> — キーワードで記事を探せます</li>
+      <li><a href="/hanrei/">判例解説</a> — 判例名・裁判年月日から探せます</li>
+      <li><a href="/yougo/">法律用語集</a> — 用語の意味を調べられます</li>
+      <li><a href="/column/">コラム</a> — 単元をまたぐテーマの読み物</li>
+      <li><a href="/">トップページ</a></li>
+    </ul>
+  </div>
+</BaseLayout>
