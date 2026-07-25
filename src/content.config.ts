@@ -167,6 +167,23 @@ const hanrei = defineCollection({
   }),
 });
 
+// 判決全文：判例解説とは別ページで判決文をそのまま掲載する（著作権法13条3号により
+// 判決に著作権はない）。生成は scripts/fetch-zenbun.py。noindex 必須・sitemap除外必須
+// （裁判所サイト等と同一テキストで独自性のないページのため）。
+const zenbun = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/zenbun" }),
+  schema: z.object({
+    /** 対応する hanrei コレクションのスラッグ */
+    hanreiSlug: z.string(),
+    /** 裁判所ウェブサイト（裁判例検索）のID */
+    courtsId: z.string(),
+    /** 判決全文PDFのURL（出典明示に使う） */
+    sourceUrl: z.string(),
+    /** 取得日 */
+    fetchedAt: z.coerce.date(),
+  }),
+});
+
 // コラム：単元から独立した司法試験レベルの読み物（横断テーマ・重要判例の深掘りなど）
 const column = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/column" }),
@@ -202,4 +219,4 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, column, devlog };
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog };

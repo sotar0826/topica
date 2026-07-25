@@ -1,0 +1,112 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("zenbun");
+  const paths = [];
+  for (const entry of entries) {
+    const hanreiEntry = await getEntry("hanrei", entry.data.hanreiSlug);
+    if (!hanreiEntry) continue; // 対応する判例解説がなければページ化しない
+    paths.push({
+      params: { slug: entry.data.hanreiSlug },
+      props: { entry, hanreiEntry },
+    });
+  }
+  return paths;
+}
+
+const { entry, hanreiEntry } = Astro.props;
+const { Content } = await render(entry);
+
+const headline = `${hanreiEntry.data.title}（${hanreiEntry.data.court}${hanreiEntry.data.decisionDate}）`;
+const courtsDetailUrl = `https://www.courts.go.jp/hanrei/${entry.data.courtsId}/detail2/index.html`;
+---
+
+<BaseLayout
+  title={`${headline} 判決全文`}
+  description={`${headline}の判決全文。${hanreiEntry.data.description}`}
+  noindex={true}
+>
+  <div class="breadcrumb">
+    <a href="/">トップ</a> › <a href="/hanrei/">判例解説</a> ›
+    <a href={`/hanrei/${hanreiEntry.id}/`}>{hanreiEntry.data.title}</a> › 判決全文
+  </div>
+
+  <div class="topic-header">
+    <span class="level-badge">判決全文</span>
+    <h1>{hanreiEntry.data.title} 判決全文</h1>
+  </div>
+
+  <table>
+    <tbody>
+      <tr><th style="white-space: nowrap;">裁判所</th><td>{hanreiEntry.data.court}</td></tr>
+      <tr><th style="white-space: nowrap;">裁判年月日</th><td>{hanreiEntry.data.decisionDate}</td></tr>
+      <tr><th style="white-space: nowrap;">出典</th><td>{hanreiEntry.data.citation}</td></tr>
+      {
+        hanreiEntry.data.caseNumber && (
+          <tr><th style="white-space: nowrap;">事件番号</th><td>{hanreiEntry.data.caseNumber}</td></tr>
+        )
+      }
+    </tbody>
+  </table>
+
+  <div class="source-note">
+    <p>
+      出典：裁判所ウェブサイト（裁判例検索）
+      <a href={courtsDetailUrl} target="_blank" rel="noopener noreferrer">判決全文PDF（裁判所ウェブサイト）</a>
+    </p>
+    <p>
+      判決文は著作権の目的とならない（著作権法13条3号）ため、原文をそのまま掲載しています。誤字脱字等の転記ミスがある可能性があるため、正式な引用には裁判所ウェブサイトの原本をご確認ください。
+    </p>
+  </div>
+
+  <article class="zenbun-body">
+    <Content />
+  </article>
+
+  <p class="page-meta">
+    <span>取得日: <time datetime={entry.data.fetchedAt.toISOString().slice(0, 10)}>{entry.data.fetchedAt.toISOString().slice(0, 10)}</time></span>
+  </p>
+
+  <nav class="topic-nav">
+    <a href={`/hanrei/${hanreiEntry.id}/`} class="prev">
+      <span class="dir">← 判例解説へ戻る</span>
+    </a>
+    <span />
+  </nav>
+</BaseLayout>
+
+<style>
+  .source-note {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.8rem 1.2rem;
+    margin: 1.2rem 0 1.8rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+
+  .source-note p {
+    margin: 0.4rem 0;
+  }
+
+  .source-note a {
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .zenbun-body {
+    max-width: 42em;
+    margin: 0 auto;
+    font-size: 0.98rem;
+    line-height: 2.1;
+  }
+
+  .zenbun-body :global(p) {
+    margin: 0 0 1.4em;
+    text-align: justify;
+  }
+</style>

@@ -6,6 +6,7 @@ decisionDate: 平成18年1月17日
 dateISO: 2006-01-17
 citation: 民集60巻1号27頁
 caseNumber: 平成17年（受）第144号
+courtsId: "52426"
 subject: minpo
 topics:
   - minpo/fudosan-bukken-hendo
