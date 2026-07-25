@@ -151,6 +151,8 @@ const hanrei = defineCollection({
     citation: z.string(),
     /** 事件番号（例：平成28年（あ）第442号）任意 */
     caseNumber: z.string().optional(),
+    /** 裁判所ウェブサイト（裁判例検索）のID。判決全文PDFへのリンク・全文ページの生成に使う */
+    courtsId: z.string().optional(),
     /** 科目slug: minpo | shoho | minso | kenpo | keiho | keiso */
     subject: z.string(),
     /** 関連トピック（"keiso/kyosei-shobun" 形式・基礎編slugで指定） */
