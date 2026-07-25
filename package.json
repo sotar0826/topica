@@ -6,14 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "dev": "node scripts/gen-hanrei-map.mjs && astro dev",
+    "build": "node scripts/gen-hanrei-map.mjs && astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^6.4.6"
+    "astro": "^6.4.6",
+    "mdast-util-find-and-replace": "^3.0.2"
   },
   "devDependencies": {
     "pagefind": "^1.5.2"

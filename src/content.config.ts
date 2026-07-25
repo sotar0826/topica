@@ -158,6 +158,8 @@ const hanrei = defineCollection({
     /** 関連条文の表示用文字列（例：「刑訴法197条1項」） */
     articles: z.array(z.string()).default([]),
     description: z.string(),
+    /** 重要度の暫定ランク。A=大法廷判決・違憲判決・百選定番／B=主要論点の基本判例／C=補助的 */
+    rank: z.enum(["A", "B", "C"]).optional(),
     published: z.coerce.date().optional(),
     updated: z.coerce.date().optional(),
   }),

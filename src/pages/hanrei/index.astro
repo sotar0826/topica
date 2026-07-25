@@ -6,13 +6,18 @@ import { abs, breadcrumbLd } from "../../lib/jsonld";
 
 const entries = await getCollection("hanrei");
 
-// 科目 → 判決日昇順で整理
+// 科目 → 判決日昇順で整理（科目順表示・デフォルト表示に使う）
 const groups = PUBLIC_SUBJECTS.map((subject) => ({
   subject,
   items: entries
     .filter((e) => e.data.subject === subject.slug)
     .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf()),
 })).filter((g) => g.items.length > 0);
+
+// 年代順表示（全科目横断・判決日昇順）
+const byDate = [...entries].sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf());
+
+const RANK_LABEL: Record<string, string> = { A: "重要度A", B: "重要度B", C: "重要度C" };
 
 const jsonLd = breadcrumbLd([
   { name: "トップ", url: abs("/") },
@@ -34,22 +39,87 @@ const jsonLd = breadcrumbLd([
     現在 <strong>{entries.length}</strong> 件収録（順次追加します）。
   </p>
 
-  {
-    groups.map((g) => (
-      <section class="part-section">
-        <h2>{g.subject.name}</h2>
-        <ol class="topic-list">
-          {g.items.map((e) => (
-            <li>
-              <a href={`/hanrei/${e.id}/`}>{e.data.title}</a>
-              <span style="font-size: 0.85rem; color: var(--text-muted);">
-                — {e.data.court}
-                {e.data.decisionDate}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </section>
-    ))
-  }
+  {/* JS有効時のみ表示（nav.js等と同じ思想）。JS無効時は下の全件表示のまま。 */}
+  <div class="hanrei-filters" id="hanrei-filters" hidden>
+    <div class="filter-row filter-subjects" role="tablist" aria-label="科目で絞り込み">
+      <button type="button" class="filter-chip is-active" data-subject="all" role="tab" aria-selected="true">
+        すべて
+      </button>
+      {
+        PUBLIC_SUBJECTS.map((s) => (
+          <button type="button" class="filter-chip" data-subject={s.slug} role="tab" aria-selected="false">
+            {s.name}
+          </button>
+        ))
+      }
+    </div>
+    <div class="filter-row filter-secondary">
+      <fieldset class="filter-ranks">
+        <legend>重要度</legend>
+        {
+          (["A", "B", "C"] as const).map((r) => (
+            <label class="filter-rank-label">
+              <input type="checkbox" value={r} checked data-rank-checkbox />
+              {RANK_LABEL[r]}
+            </label>
+          ))
+        }
+      </fieldset>
+      <label class="filter-sort-label">
+        並び替え:
+        <select id="hanrei-sort" data-sort>
+          <option value="subject">科目順</option>
+          <option value="date">年代順</option>
+        </select>
+      </label>
+    </div>
+    <p class="filter-count" id="hanrei-filter-count" aria-live="polite"></p>
+  </div>
+
+  <div class="hanrei-view" data-view="subject">
+    {
+      groups.map((g) => (
+        <section class="part-section" data-subject-section={g.subject.slug}>
+          <h2>{g.subject.name}</h2>
+          <ol class="topic-list">
+            {g.items.map((e) => (
+              <li class="hanrei-item" data-subject={e.data.subject} data-rank={e.data.rank ?? ""} data-date={e.data.dateISO.toISOString().slice(0, 10)}>
+                <a href={`/hanrei/${e.id}/`}>{e.data.title}</a>
+                {e.data.rank && <span class={`rank-badge rank-${e.data.rank}`}>{e.data.rank}</span>}
+                <span style="font-size: 0.85rem; color: var(--text-muted);">
+                  — {e.data.court}
+                  {e.data.decisionDate}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))
+    }
+  </div>
+
+  <div class="hanrei-view" data-view="date" hidden>
+    <section class="part-section">
+      <h2>年代順（全科目）</h2>
+      <ol class="topic-list">
+        {
+          byDate.map((e) => {
+            const subj = PUBLIC_SUBJECTS.find((s) => s.slug === e.data.subject);
+            return (
+              <li class="hanrei-item" data-subject={e.data.subject} data-rank={e.data.rank ?? ""} data-date={e.data.dateISO.toISOString().slice(0, 10)}>
+                <a href={`/hanrei/${e.id}/`}>{e.data.title}</a>
+                {e.data.rank && <span class={`rank-badge rank-${e.data.rank}`}>{e.data.rank}</span>}
+                <span style="font-size: 0.85rem; color: var(--text-muted);">
+                  — {subj?.name}・{e.data.court}
+                  {e.data.decisionDate}
+                </span>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+  </div>
 </BaseLayout>
+
+<script is:inline src="/hanrei-filter.js" defer></script>
