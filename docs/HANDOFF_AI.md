@@ -124,6 +124,15 @@ Claudeでは「親=監督（設計・検収・デプロイ確認）／子ワー�
 - **文献引用の可否**: 法的には著作権法32条の引用（公表著作物・主従関係・明瞭区別・出所明示・必要最小限）で可能。**ただし原本テキストを所持していないAIが書籍から「引用」することは捏造になるため禁止**（§3-4）。ユーザーが該当ページの原文を提供した場合のみ、32条の要件を満たす形で引用可。それまでは学説の紹介は要約＋文献名の参照表記（例:「（佐久間・総則）」のような略記はせず、一般的な言及にとどめる）で対応
 - 増強は既存50件の改稿＋新規追加の両方。台帳（CONTENT_PLAN）の照合済み判例から優先度の高いものを選ぶ
 
+## §10.1 判決全文ページの運用（2026-07-26実装）
+
+- `/hanrei/<slug>/zenbun/` に判決全文をそのまま掲載するページがある（著作権法13条3号により判決に著作権はない）。実装は `src/pages/hanrei/[slug]/zenbun.astro`、データは `src/content/zenbun/<hanrei-slug>.md`（`zenbun` コレクション。frontmatter: `hanreiSlug`/`courtsId`/`sourceUrl`/`fetchedAt`）
+- **取得手順**: `py scripts/fetch-zenbun.py <courtsId> <hanrei-slug>` を実行するだけで、PDFダウンロード→テキスト抽出→cp932文字化け修復→段落整形→Markdown生成まで自動で行う。成功したら該当 `src/content/hanrei/<slug>.md` の frontmatter に `courtsId: "<id>"` を追加すること（判例解説ページ側の導線表示に必要）
+- **文字化け時は必ず中止**: 日本語文字比率が低い、またはU+FFFDが多いPDFは「文字化けのため中止」と表示してファイルを作らない（exit code 2）。この場合は全文ページを作らず、判例解説ページには `courtsId` があれば裁判所ウェブサイトへの直リンクだけを出す（自動でそうなる）
+- **noindex必須・sitemap除外必須**: 裁判所サイト等と同一テキストで独自性のないページのため。`BaseLayout` の `noindex` prop と、`astro.config.mjs` の sitemap `filter` の `!page.includes('/zenbun/')` の両方で担保している。新しいページ種別を追加する際にこの2点を壊さないよう注意
+- **導線**: 判例解説ページ（`src/pages/hanrei/[slug].astro`）側は、zenbunエントリの有無で「📄 判決全文を読む」or 裁判所サイトへのリンクを出し分ける。**Astroの罠**: `zenbunEntry ? (A) : (courtsDetailUrl && (B))` という三項演算子の入れ子で書くと、else側のJSXがビルド後のHTMLに出力されない現象が発生した（原因未特定）。`{zenbunEntry && (A)}` と `{cond && (B)}` の2つの独立した条件ブロックに分ければ正しく描画される。同様のパターンを書く際は必ずdist出力を実際に確認すること
+- **残り約49件への展開**: `docs/CONTENT_PLAN.md` の判例台帳からcourtsIdが分かっている判例について1件ずつ `fetch-zenbun.py` を実行し、文字化けしたものはスキップ（要旨のみで維持）、成功したものは `courtsId` をfrontmatterに追加してビルド確認→まとめてコミット、を4〜6件/バッチで回す
+
 ## §11 プラットフォーム移行時の注意
 
 - このリポジトリはGitHub（sotar0826/topica）にあり、コード・docs・台帳がすべて入っているので**リポジトリをcloneできる環境ならどのAIでも継続可能**
