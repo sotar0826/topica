@@ -205,6 +205,25 @@ const column = defineCollection({
   }),
 });
 
+// 法律用語集：1用語=1ページ。/yougo/ は一覧、/yougo/<slug>/ が個別ページ。
+const yougo = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/yougo" }),
+  schema: z.object({
+    /** 用語名 */
+    term: z.string(),
+    /** 読み（任意） */
+    reading: z.string().optional(),
+    /** 一覧用の短い定義（旧TERMS配列のdefを踏襲） */
+    description: z.string(),
+    /** 関連する科目slug（任意。例: "minpo"） */
+    subject: z.string().optional(),
+    /** 関連トピック（"keiho/setto" 形式・基礎編slugで指定） */
+    related: z.array(z.string()).default([]),
+    /** 一覧での表示順（小さいほど上）。旧TERMS配列の並び順を踏襲 */
+    order: z.number().default(99),
+  }),
+});
+
 // 開発ログ／パッチノート（非公開・自分用メモ）。
 // 1エントリ=1ファイル。管理ページでのみ表示し、ナビ・サイトマップには出さない。
 const devlog = defineCollection({
@@ -219,4 +238,4 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog };
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo };

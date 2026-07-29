@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PUBLIC_SUBJECTS } from "../data/curriculum";
+import { abs, breadcrumbLd } from "../lib/jsonld";
+import quizData from "../data/quiz.json";
+
+const jsonLd = breadcrumbLd([
+  { name: "トップ", url: abs("/") },
+  { name: "一問一答", url: abs("/quiz/") },
+]);
+---
+
+<BaseLayout
+  title="一問一答"
+  description="民法・商法・民訴・憲法・刑法・刑訴・行政法の確認問題から、ランダムに10問の○×問題を出題します。全科目横断でも、科目を絞っても挑戦できます。"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb"><a href="/">トップ</a> › 一問一答</div>
+
+  <h1>一問一答</h1>
+  <p>
+    各トピックの確認問題（○×問題）から、ランダムに10問出題します。科目を選んで「開始」を押してください。
+  </p>
+
+  <noscript>
+    <p class="quiz-note">この機能を使うにはJavaScriptを有効にしてください。</p>
+  </noscript>
+
+  <div id="quiz-setup" hidden>
+    <label for="quiz-subject" class="quiz-setup-label">科目を選ぶ</label>
+    <select id="quiz-subject">
+      <option value="all">全科目（{quizData.length}問から出題）</option>
+      {
+        PUBLIC_SUBJECTS.map((s) => (
+          <option value={s.slug}>{s.name}</option>
+        ))
+      }
+    </select>
+    <button type="button" id="quiz-start" class="quiz-start-btn">開始</button>
+    <p class="quiz-note" id="quiz-setup-note"></p>
+  </div>
+
+  <div id="quiz-play" hidden>
+    <div class="quiz-progress">
+      <span id="quiz-progress-text"></span>
+      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+    </div>
+    <div class="quiz-card">
+      <p class="quiz-subject-tag" id="quiz-subject-tag"></p>
+      <p class="quiz-question" id="quiz-question"></p>
+      <div class="quiz-answer-buttons" id="quiz-answer-buttons">
+        <button type="button" class="quiz-btn quiz-btn-maru" data-answer="true">○</button>
+        <button type="button" class="quiz-btn quiz-btn-batsu" data-answer="false">×</button>
+      </div>
+      <div class="quiz-result" id="quiz-result" hidden>
+        <p class="quiz-result-mark" id="quiz-result-mark"></p>
+        <p class="quiz-explanation" id="quiz-explanation"></p>
+        <p class="quiz-source">
+          <a href="#" id="quiz-source-link">この問題の記事を読む →</a>
+        </p>
+        <button type="button" class="quiz-next-btn" id="quiz-next">次へ →</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="quiz-finish" hidden>
+    <h2>結果</h2>
+    <p class="quiz-score" id="quiz-score"></p>
+    <div id="quiz-wrong-wrap" hidden>
+      <p class="quiz-wrong-label">間違えた問題</p>
+      <ul id="quiz-wrong-list" class="quiz-wrong-list"></ul>
+    </div>
+    <button type="button" id="quiz-retry" class="quiz-start-btn">もう一度</button>
+  </div>
+
+  <script type="application/json" id="quiz-data" set:html={JSON.stringify(quizData)} />
+  <script is:inline src="/quiz.js" defer></script>
+</BaseLayout>

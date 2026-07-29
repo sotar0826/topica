@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Term from "../../components/Term.astro";
+import { breadcrumbLd, abs } from "../../lib/jsonld";
+
+const terms = (await getCollection("yougo")).sort((a, b) => a.data.order - b.data.order);
+
+const jsonLd = breadcrumbLd([
+  { name: "トップ", url: abs("/") },
+  { name: "用語集", url: abs("/yougo/") },
+]);
+---
+
+<BaseLayout
+  title="法律用語集"
+  description="民法学習でつまずきやすい基本用語を、初学者向けに短く正確に解説します。各用語から詳しい個別ページ・関連トピックへリンクしています。"
+  jsonLd={jsonLd}
+>
+  <div class="breadcrumb"><a href="/">トップ</a> › 用語集</div>
+
+  <h1>法律用語集</h1>
+  <p>
+    法律の条文や解説には、日常用語と意味の異なる専門用語が多く登場します。
+    ここでは学習の前提となる基本用語を短くまとめました。用語名をクリックすると、より詳しい解説ページに移動します。
+    例えば <Term slug="taiko-yoken">対抗要件</Term> のように、下線が引かれた用語はホバー（タップ）すると簡単な定義がその場で確認できます。
+  </p>
+
+  <dl class="glossary">
+    {
+      terms.map((t) => (
+        <div class="glossary-item">
+          <dt>
+            <a href={`/yougo/${t.id}/`}>{t.data.term}</a>
+            {t.data.reading && <span class="reading">（{t.data.reading}）</span>}
+          </dt>
+          <dd>
+            {t.data.description}
+            <span class="glossary-link">
+              → <a href={`/yougo/${t.id}/`}>くわしく見る</a>
+              {t.data.related.length > 0 &&
+                t.data.related.map((r) => {
+                  const [subject, slug] = r.split("/");
+                  return (
+                    <>
+                      {" "}
+                      / <a href={`/${subject}/${slug}/`}>関連トピック</a>
+                    </>
+                  );
+                })}
+            </span>
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</BaseLayout>

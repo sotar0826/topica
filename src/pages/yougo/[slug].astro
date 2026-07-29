@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { findSubject, topicOrderOf } from "../../data/curriculum";
+import { definedTermLd, breadcrumbLd, abs } from "../../lib/jsonld";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("yougo");
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const allTerms = await getCollection("yougo");
+
+// 関連トピックのリンク解決（"minpo/taiko-yoken" 形式 → タイトル）
+const topicLinks = entry.data.related
+  .map((r) => {
+    const [subject, slug] = r.split("/");
+    const base = slug.replace(/-ouyou$/, "");
+    const info = topicOrderOf(subject).find((x) => x.slug === base);
+    const subName = findSubject(subject)?.name ?? subject;
+    return info ? { href: `/${subject}/${slug}/`, label: `${subName}：${info.title}` } : null;
+  })
+  .filter((x) => x !== null);
+
+// 関連用語（同じ科目の他の用語。表示順で近いものを優先し、最大6件）
+const relatedTerms = allTerms
+  .filter((t) => t.id !== entry.id && t.data.subject === entry.data.subject)
+  .sort((a, b) => Math.abs(a.data.order - entry.data.order) - Math.abs(b.data.order - entry.data.order))
+  .slice(0, 6);
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
+const seoTitle = `${entry.data.term}とは？意味をわかりやすく解説`;
+
+const jsonLd = [
+  definedTermLd({
+    term: entry.data.term,
+    description: entry.data.description,
+    url: pageUrl,
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "用語集", url: abs("/yougo/") },
+    { name: entry.data.term, url: pageUrl },
+  ]),
+];
+---
+
+<BaseLayout title={seoTitle} description={entry.data.description} ogType="article" jsonLd={jsonLd}>
+  <div class="breadcrumb">
+    <a href="/">トップ</a> › <a href="/yougo/">用語集</a> › {entry.data.term}
+  </div>
+
+  <div class="topic-header">
+    <span class="level-badge">用語集</span>
+    <h1>
+      {entry.data.term}
+      {entry.data.reading && <span class="reading">（{entry.data.reading}）</span>}
+    </h1>
+  </div>
+
+  <p class="quiz-note" style="font-size: 0.95rem; color: var(--text);">{entry.data.description}</p>
+
+  <article class="topic-body">
+    <Content />
+  </article>
+
+  {
+    topicLinks.length > 0 && (
+      <div class="related-box">
+        <span class="label">📚 詳しく学べるトピック</span>
+        <ul>
+          {topicLinks.map((t) => (
+            <li>
+              <a href={t.href}>{t.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    relatedTerms.length > 0 && (
+      <div class="related-box">
+        <span class="label">🔤 関連用語</span>
+        <ul>
+          {relatedTerms.map((t) => (
+            <li>
+              <a href={`/yougo/${t.id}/`}>{t.data.term}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <nav class="topic-nav">
+    <a href="/yougo/" class="prev">
+      <span class="dir">← 用語集一覧へ</span>
+    </a>
+    <span />
+  </nav>
+</BaseLayout>

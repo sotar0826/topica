@@ -37,6 +37,23 @@ export function articleLd(opts: {
   return ld;
 }
 
+/** 用語集の個別ページ用 DefinedTerm 構造化データ */
+export function definedTermLd(opts: {
+  term: string;
+  description: string;
+  url: string;
+}): Record<string, any> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: opts.term,
+    description: opts.description,
+    url: opts.url,
+    inDefinedTermSet: abs("/yougo/"),
+    inLanguage: "ja",
+  };
+}
+
 /** パンくず用の BreadcrumbList 構造化データ。url を持たない項目は item を省略する */
 export function breadcrumbLd(
   items: { name: string; url?: string }[]

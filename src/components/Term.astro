@@ -1,0 +1,66 @@
+---
+// 用語ツールチップ（軽量版）。使用例: <Term slug="taiko-yoken">対抗要件</Term>
+// ホバー/フォーカスで定義ポップオーバーを表示（CSS: .term-tip 系、src/styles/global.css）。
+// タップ操作向けに、トリガー押下で開閉をトグルするJSも同梱する（このコンポーネントを
+// 使ったページでのみ読み込まれる。既存記事への一括適用はしない）。
+import { getEntry } from "astro:content";
+
+interface Props {
+  /** src/content/yougo/<slug>.md のslug */
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const entry = await getEntry("yougo", slug);
+---
+
+{
+  entry ? (
+    <span class="term-tip" data-term-tip>
+      <button type="button" class="term-tip-trigger" aria-expanded="false" data-term-tip-trigger>
+        <slot />
+      </button>
+      <span class="term-tip-popover" role="tooltip">
+        <strong>{entry.data.term}</strong>
+        <p>{entry.data.description}</p>
+        <a href={`/yougo/${slug}/`}>用語集で詳しく見る →</a>
+      </span>
+    </span>
+  ) : (
+    <slot />
+  )
+}
+
+<script>
+  // タップでポップオーバーを開閉する（イベント委譲。ページ内に<Term>が複数あっても1本で処理）。
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const trigger = target.closest("[data-term-tip-trigger]");
+    if (trigger) {
+      const tip = trigger.closest(".term-tip");
+      if (!tip) return;
+      const wasOpen = tip.classList.contains("is-open");
+      document.querySelectorAll(".term-tip.is-open").forEach((el) => {
+        el.classList.remove("is-open");
+        el.querySelector("[data-term-tip-trigger]")?.setAttribute("aria-expanded", "false");
+      });
+      if (!wasOpen) {
+        tip.classList.add("is-open");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+      return;
+    }
+    document.querySelectorAll(".term-tip.is-open").forEach((el) => {
+      if (!el.contains(target)) {
+        el.classList.remove("is-open");
+        el.querySelector("[data-term-tip-trigger]")?.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      document.querySelectorAll(".term-tip.is-open").forEach((el) => el.classList.remove("is-open"));
+    }
+  });
+</script>
