@@ -1,17 +1,5 @@
 import type { APIRoute } from "astro";
-import { getCollection } from "astro:content";
-
-// 公開科目（破産法はお蔵入りのため除外）
-const SUBJECT_SLUGS = ["minpo", "shoho", "minso", "kenpo", "keiho", "keiso", "gyosei"] as const;
-const SUBJECT_NAMES: Record<string, string> = {
-  minpo: "民法",
-  shoho: "商法・会社法",
-  minso: "民事訴訟法",
-  kenpo: "憲法",
-  keiho: "刑法",
-  keiso: "刑事訴訟法",
-  gyosei: "行政法",
-};
+import { collectRecentItems } from "../lib/recent";
 
 const SITE = "https://topica-law.com";
 
@@ -23,54 +11,16 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-type Item = { title: string; url: string; date: Date; description: string; category: string };
-
 export const GET: APIRoute = async () => {
-  const items: Item[] = [];
-
-  for (const slug of SUBJECT_SLUGS) {
-    const entries = await getCollection(slug as "minpo");
-    for (const e of entries) {
-      const advanced = e.data.level === "advanced";
-      items.push({
-        title: `${e.data.title}${advanced ? "（応用編）" : ""}`,
-        url: `${SITE}/${slug}/${e.id}/`,
-        date: e.data.updated ?? e.data.published ?? new Date(0),
-        description: e.data.description,
-        category: SUBJECT_NAMES[slug],
-      });
-    }
-  }
-
-  for (const e of await getCollection("hanrei")) {
-    items.push({
-      title: `${e.data.title}（${e.data.court}${e.data.decisionDate}）`,
-      url: `${SITE}/hanrei/${e.id}/`,
-      date: e.data.updated ?? e.data.published ?? e.data.dateISO,
-      description: e.data.description,
-      category: "判例解説",
-    });
-  }
-
-  for (const e of await getCollection("column")) {
-    items.push({
-      title: e.data.title,
-      url: `${SITE}/column/${e.id}/`,
-      date: e.data.updated ?? e.data.published ?? new Date(0),
-      description: e.data.description,
-      category: "コラム",
-    });
-  }
-
-  items.sort((a, b) => b.date.valueOf() - a.date.valueOf());
+  const items = await collectRecentItems();
   const latest = items.slice(0, 50);
 
   const body = latest
     .map(
       (i) => `    <item>
       <title>${esc(i.title)}</title>
-      <link>${esc(i.url)}</link>
-      <guid isPermaLink="true">${esc(i.url)}</guid>
+      <link>${esc(SITE + i.path)}</link>
+      <guid isPermaLink="true">${esc(SITE + i.path)}</guid>
       <category>${esc(i.category)}</category>
       <pubDate>${i.date.toUTCString()}</pubDate>
       <description>${esc(i.description)}</description>

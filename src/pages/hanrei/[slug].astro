@@ -25,6 +25,13 @@ const showCourtsFallback = !zenbunEntry && courtsDetailUrl;
 
 const subject = findSubject(entry.data.subject);
 
+// 同じ科目の他の判例解説（回遊導線）。一覧ページと同じ判決日昇順で並べ、
+// 現在のページに近い判例から見つけやすいよう当該判例の前後を中心に最大5件を抜き出す
+const sameSubjectEntries = (await getCollection("hanrei"))
+  .filter((e) => e.data.subject === entry.data.subject && e.id !== entry.id)
+  .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf());
+const relatedHanrei = sameSubjectEntries.slice(0, 5);
+
 // 関連トピックのリンク解決（"keiso/kyosei-shobun" 形式 → タイトル）
 const topicLinks = entry.data.topics
   .map((t) => {
@@ -131,6 +138,23 @@ const jsonLd = [
           {topicLinks.map((t) => (
             <li>
               <a href={t.href}>{t.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    relatedHanrei.length > 0 && (
+      <div class="related-box">
+        <span class="label">⚖️ {subject ? `${subject.name}の` : ""}他の判例解説</span>
+        <ul>
+          {relatedHanrei.map((e) => (
+            <li>
+              <a href={`/hanrei/${e.id}/`}>
+                {e.data.title}（{e.data.court}{e.data.decisionDate}）
+              </a>
             </li>
           ))}
         </ul>

@@ -731,6 +731,68 @@ main {
   color: var(--text-muted);
 }
 
+/* ===== トップページ：新着・更新 ===== */
+.recent-list {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.recent-list li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.recent-list a {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-list a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+.recent-meta {
+  flex-shrink: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.recent-category {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .recent-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .recent-list a {
+    max-width: 100%;
+    white-space: normal;
+  }
+}
+
 /* ===== フッター ===== */
 .site-footer {
   border-top: 1px solid var(--border);
