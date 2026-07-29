@@ -22,9 +22,15 @@
 | 弾 | 対象 | 状態 |
 |---|---|---|
 | パイロット | haishinteki-akuisha-h18 | ✅ 完了（5170字） |
-| 第1弾 | gps-sosa-jiken / chloroform-jiken / shakti-jiken / gofurikomi-sagi-jiken / winny-jiken | 🔄 進行中 |
-| 第2弾 | 憲法A・平成の判例＋刑訴A（下記） | 未着手 |
+| 第1弾 | gps-sosa-jiken / chloroform-jiken / shakti-jiken / gofurikomi-sagi-jiken / winny-jiken | ✅ 完了（2026-07-24） |
+| 第2弾 | hichakushutsushi-iken-kettei / sorachibuto-jinja-jiken / kokusekiho-iken-hanketsu / zaigai-senkyoken-hanketsu / sekken-shitei-h11 | ✅ 完了（2026-07-29） |
 | 第3弾以降 | 下記の優先順 | 未着手 |
+
+### 判決全文ページの生成状況（2026-07-29時点）
+
+第1弾5件＋第2弾のうち全文照合できた3件、計8件で `/hanrei/<slug>/zenbun/` を生成済み：
+gps-sosa-jiken（id 86600）／chloroform-jiken（id 50059）／shakti-jiken（id 50057）／gofurikomi-sagi-jiken（id 50004）／winny-jiken（id 81846）／hichakushutsushi-iken-kettei（id 83520）／zaigai-senkyoken-hanketsu（id 52338）／sekken-shitei-h11（id 52506）。
+第2弾のうち sorachibuto-jinja-jiken（id 38347）・kokusekiho-iken-hanketsu（id 36415）は特殊フォントPDFで文字化けしたため全文ページ未生成（判例解説ページには裁判所ウェブサイトへの直リンクが自動表示される）。
 
 ## バッチ割り（1バッチ5件・優先順）
 
