@@ -17,6 +17,8 @@
     "mdast-util-find-and-replace": "^3.0.2"
   },
   "devDependencies": {
-    "pagefind": "^1.5.2"
+    "@resvg/resvg-js": "^2.6.2",
+    "pagefind": "^1.5.2",
+    "satori": "^0.29.0"
   }
 }
