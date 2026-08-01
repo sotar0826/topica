@@ -4,6 +4,8 @@
  * 旧版の短い解説は公開を維持しつつ noindex とし、改稿後にこの一覧へ追加する。
  */
 export const INDEXABLE_HANREI_SLUGS = [
+  "94jo2ko-ruisui-s45",
+  "anzen-hairyo-gimu-s50",
   "chloroform-jiken",
   "ehime-tamagushiryo-jiken",
   "gofurikomi-sagi-jiken",
@@ -12,14 +14,17 @@ export const INDEXABLE_HANREI_SLUGS = [
   "hakusanmaru-jiken",
   "hichakushutsushi-iken-kettei",
   "hoppo-journal-jiken",
+  "hojinkaku-hinin-s44",
   "kokusekiho-iken-hanketsu",
   "kyoto-fugakuren-jiken",
   "mclean-jiken",
   "mitsubishi-jushi-jiken",
   "nerima-jiken",
+  "rumbar-jiken",
   "sekken-shitei-h11",
   "shakti-jiken",
   "shinrinho-iken-hanketsu",
+  "shiratori-kettei",
   "sorachibuto-jinja-jiken",
   "tsu-jichinsai-jiken",
   "winny-jiken",
