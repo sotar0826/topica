@@ -51,7 +51,7 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={seoTitle} description={entry.data.description} ogType="article" jsonLd={jsonLd}>
+<BaseLayout title={seoTitle} description={entry.data.description} ogType="article" jsonLd={jsonLd} noindex={true}>
   <div class="breadcrumb">
     <a href="/">トップ</a> › <a href="/yougo/">用語集</a> › {entry.data.term}
   </div>

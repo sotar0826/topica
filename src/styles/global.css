@@ -1301,3 +1301,66 @@ main {
     break-after: avoid;
   }
 }
+/* ===== トップ：目的別の入口 ===== */
+.start-section {
+  margin: 2.2rem 0 2.5rem;
+}
+
+.start-section > h2 {
+  font-size: 1.2rem;
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.start-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1rem 1.1rem;
+  color: var(--text);
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  text-decoration: none;
+}
+
+.start-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 3px 12px var(--card-shadow);
+}
+
+.start-card strong {
+  color: var(--accent-dark);
+}
+
+.start-card > span:last-child {
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.start-label {
+  width: fit-content;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-size: 0.74rem;
+  font-weight: bold;
+}
+
+.about-link,
+.source-links {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 640px) {
+  .start-grid {
+    grid-template-columns: 1fr;
+  }
+}

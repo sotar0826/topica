@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
 import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
+import { INDEXABLE_HANREI_SET } from "../../data/quality-gates.mjs";
 
 export async function getStaticPaths() {
   const entries = await getCollection("hanrei");
@@ -28,7 +29,7 @@ const subject = findSubject(entry.data.subject);
 // 同じ科目の他の判例解説（回遊導線）。一覧ページと同じ判決日昇順で並べ、
 // 現在のページに近い判例から見つけやすいよう当該判例の前後を中心に最大5件を抜き出す
 const sameSubjectEntries = (await getCollection("hanrei"))
-  .filter((e) => e.data.subject === entry.data.subject && e.id !== entry.id)
+  .filter((e) => e.data.subject === entry.data.subject && e.id !== entry.id && INDEXABLE_HANREI_SET.has(e.id))
   .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf());
 const relatedHanrei = sameSubjectEntries.slice(0, 5);
 
@@ -47,6 +48,7 @@ const topicLinks = entry.data.topics
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
 const headline = `${entry.data.title}（${entry.data.court}${entry.data.decisionDate}）`;
+const isIndexable = INDEXABLE_HANREI_SET.has(entry.id);
 
 const jsonLd = [
   articleLd({
@@ -70,6 +72,7 @@ const jsonLd = [
   ogType="article"
   image={`/og/hanrei/${entry.id}.png`}
   jsonLd={jsonLd}
+  noindex={!isIndexable}
 >
   <div class="breadcrumb">
     <a href="/">トップ</a> › <a href="/hanrei/">判例解説</a>
@@ -114,7 +117,7 @@ const jsonLd = [
     )
   }
 
-  <article class="topic-body" data-pagefind-body>
+  <article class="topic-body" data-pagefind-body={isIndexable ? "" : undefined}>
     <Content />
   </article>
 

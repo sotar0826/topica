@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import remarkHanreiLink from './src/lib/remark-hanrei-link.mjs';
+import { shouldIncludeInSitemap } from './src/data/quality-gates.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -9,9 +10,8 @@ export default defineConfig({
   site: 'https://topica-law.com',
   integrations: [
     sitemap({
-      // 管理ページ（非公開）・アーカイブ済み科目（破産法）・判決全文ページ（裁判所サイト等と
-      // 同一テキストで独自性がなくnoindexにしているため）はサイトマップから除外する。
-      filter: (page) => !page.includes('/kanri-') && !page.includes('/hasan/') && !page.includes('/zenbun/'),
+      // noindex対象と、内容の拡充が完了していない簡易ページはサイトマップから除外する。
+      filter: shouldIncludeInSitemap,
     }),
   ],
   markdown: {

@@ -1,24 +1,62 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { PUBLIC_SUBJECTS } from "../data/curriculum";
+import { INDEXABLE_HANREI_SET } from "../data/quality-gates.mjs";
+
+const topicCounts = await Promise.all(
+  PUBLIC_SUBJECTS.map(async (subject) => (await getCollection(subject.slug as "minpo")).length)
+);
+const topicCount = topicCounts.reduce((sum, count) => sum + count, 0);
 ---
 
-<BaseLayout title="このサイトについて">
+<BaseLayout
+  title="このサイトについて"
+  description="法律学習サイト「トピカ」の目的、収録内容、記事の特徴、学習の進め方をご案内します。"
+  adsense={false}
+>
   <h1>このサイトについて</h1>
   <p>
-    「トピカ」は、法律をはじめて学ぶ人のためのオンライン学習サイトです。
+    「トピカ」は、法律の全体像をつかみ、条文と判例を結び付けながら理解するためのオンライン学習サイトです。
+    長い教科書を最初から読むのではなく、論点ごとに区切ったページを学習順にたどれるように構成しています。
   </p>
-  <h2>特徴</h2>
+
+  <h2>トピカで学べること</h2>
+  <p>
+    民法、商法・会社法、憲法、民事訴訟法、刑法、刑事訴訟法、行政法の7科目を収録しています。
+    現在、基礎編・応用編を合わせて<strong>{topicCount}本</strong>のトピック記事と、
+    <strong>{INDEXABLE_HANREI_SET.size}件</strong>の詳しい判例解説を公開しています。
+  </p>
+
+  <h2>記事の特徴</h2>
   <ul>
-    <li><strong>1トピック1ページ</strong>：学びたい単元にすぐアクセスできます。</li>
-    <li><strong>二段階の難易度</strong>：完全初学者向けの「基礎編」と、判例・学説・論述まで踏み込む「応用編」を分けて提供します。</li>
-    <li><strong>現行法準拠</strong>：債権法改正（2020年施行）・相続法改正後の現行民法に準拠しています。</li>
+    <li><strong>1トピック1ページ</strong>：制度の趣旨、要件と効果、具体例、よくある誤解、確認問題を一つのページで確認できます。</li>
+    <li><strong>二段階の難易度</strong>：初めて学ぶための「基礎編」と、判例・学説・事例への当てはめまで扱う「応用編」を分けています。</li>
+    <li><strong>体系的な内部リンク</strong>：前提となる単元、関連判例、次に読むページを相互につなぎ、用語だけを孤立して覚えない構成にしています。</li>
+    <li><strong>一次資料への導線</strong>：法令はe-Gov法令検索、判例は裁判所ウェブサイトを基礎資料とし、判例解説から公式資料も確認できます。</li>
+    <li><strong>読んだ後に確認</strong>：各トピックの確認問題に加え、科目横断の<a href="/quiz/">一問一答</a>を利用できます。</li>
   </ul>
+
+  <p class="source-links">
+    公式資料：
+    <a href="https://elaws.e-gov.go.jp/" target="_blank" rel="noopener noreferrer">e-Gov法令検索</a>・
+    <a href="https://www.courts.go.jp/app/hanrei_jp/search1" target="_blank" rel="noopener noreferrer">裁判例検索</a>
+  </p>
+
   <h2>学習の進め方</h2>
   <ol>
-    <li>まず基礎編を学習順に通読して、全体像をつかむ</li>
-    <li>確認問題で理解度をチェックする</li>
-    <li>2周目で応用編に取り組み、判例・学説・論述レベルへ</li>
+    <li><a href="/#subjects">科目一覧</a>から学びたい科目を選び、基礎編を学習順に読む</li>
+    <li>各ページ末尾の確認問題で、規範や要件を説明できるか確かめる</li>
+    <li>応用編と関連判例へ進み、具体的な事案への当てはめ方を学ぶ</li>
+    <li>検索や一問一答を使って、科目をまたいで知識を結び直す</li>
   </ol>
+
+  <h2>利用にあたって</h2>
+  <p>
+    本サイトは法律の学習を目的とした一般的な情報を提供するもので、個別の法律相談や具体的な事件への助言を行うものではありません。
+    実際の問題については、弁護士その他の適切な専門家へご相談ください。詳しくは<a href="/disclaimer/">免責事項</a>をご確認ください。
+  </p>
+
   <h2>運営について</h2>
   <p>
     本サイトは個人が運営する学習サイトです。掲載内容は現行法令・公刊された判例に基づいて正確を期していますが、

@@ -4,6 +4,7 @@
 // 出力（件数・並び順）が変わるとRSSの内容にも影響するため、変更時は両方の見た目を確認すること。
 
 import { getCollection } from "astro:content";
+import { INDEXABLE_HANREI_SET } from "../data/quality-gates.mjs";
 
 // 公開科目（破産法はお蔵入りのため除外）
 export const SUBJECT_SLUGS = ["minpo", "shoho", "minso", "kenpo", "keiho", "keiso", "gyosei"] as const;
@@ -46,6 +47,7 @@ export async function collectRecentItems(): Promise<RecentItem[]> {
   }
 
   for (const e of await getCollection("hanrei")) {
+    if (!INDEXABLE_HANREI_SET.has(e.id)) continue;
     items.push({
       title: `${e.data.title}（${e.data.court}${e.data.decisionDate}）`,
       path: `/hanrei/${e.id}/`,

@@ -3,8 +3,11 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { PUBLIC_SUBJECTS } from "../../data/curriculum";
 import { abs, breadcrumbLd } from "../../lib/jsonld";
+import { INDEXABLE_HANREI_SET } from "../../data/quality-gates.mjs";
 
-const entries = await getCollection("hanrei");
+// 一覧と検索導線には、百選級リニューアルが完了した解説だけを掲載する。
+// 旧版の簡易解説はURLを維持し、改稿が完了するまで noindex とする。
+const entries = (await getCollection("hanrei")).filter((e) => INDEXABLE_HANREI_SET.has(e.id));
 
 // 科目 → 判決日昇順で整理（科目順表示・デフォルト表示に使う）
 const groups = PUBLIC_SUBJECTS.map((subject) => ({
@@ -36,7 +39,7 @@ const jsonLd = breadcrumbLd([
   <p>
     学習上重要な判例を、1判例1ページで「事案の概要 → 判旨 → 意義・位置づけ」の順に整理しています。
     収録している判例は、すべて裁判所の公式データベース（裁判例検索）で事件番号・出典・裁判要旨まで確認したものに限っています。
-    現在 <strong>{entries.length}</strong> 件収録（順次追加します）。
+    現在 <strong>{entries.length}</strong> 件の詳説を公開しています。事実関係、判旨、判例の位置づけ、答案での使い方まで読める解説を順次追加します。
   </p>
 
   {/* JS有効時のみ表示（nav.js等と同じ思想）。JS無効時は下の全件表示のまま。 */}

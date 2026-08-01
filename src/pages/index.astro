@@ -45,7 +45,33 @@ const jsonLd = {
     </p>
   </div>
 
-  <h2 style="font-size: 1.2rem;">科目一覧</h2>
+  <section aria-labelledby="start-heading" class="start-section">
+    <h2 id="start-heading">目的から探す</h2>
+    <div class="start-grid">
+      <a href="/minpo/zentaizo/" class="start-card">
+        <span class="start-label">はじめて学ぶ</span>
+        <strong>まず法律の全体像をつかむ</strong>
+        <span>身近な民法を入口に、基本用語と考え方を順番に学びます。</span>
+      </a>
+      <a href="#subjects" class="start-card">
+        <span class="start-label">科目から学ぶ</span>
+        <strong>体系に沿って読み進める</strong>
+        <span>基礎編から応用編へ、前提知識を確認しながら進めます。</span>
+      </a>
+      <a href="/hanrei/" class="start-card">
+        <span class="start-label">判例から学ぶ</span>
+        <strong>事案・判旨・射程を深く読む</strong>
+        <span>重要判例を、結論だけでなく判断の位置づけまで整理しています。</span>
+      </a>
+      <a href="/quiz/" class="start-card">
+        <span class="start-label">理解を確かめる</span>
+        <strong>一問一答に取り組む</strong>
+        <span>各記事の確認問題から出題し、解説と元の記事へ戻れます。</span>
+      </a>
+    </div>
+  </section>
+
+  <h2 id="subjects" style="font-size: 1.2rem; scroll-margin-top: 6rem;">科目一覧</h2>
   {
     PUBLIC_SUBJECTS.map((subject) => (
       <a href={`/${subject.slug}/`} class="subject-card">
@@ -113,5 +139,8 @@ const jsonLd = {
   </ul>
   <p style="margin-top: 0.5rem;">
     <a href="/quiz/">🎯 一問一答で確認する →</a>
+  </p>
+  <p class="about-link">
+    記事の構成や収録内容については、<a href="/about/">このサイトについて</a>をご覧ください。
   </p>
 </BaseLayout>

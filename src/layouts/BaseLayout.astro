@@ -6,6 +6,8 @@ interface Props {
   description?: string;
   /** true なら検索エンジンにインデックスさせない（非公開ページ用） */
   noindex?: boolean;
+  /** false ならAdSense審査・広告コードを読み込まない（検索など操作専用ページ用） */
+  adsense?: boolean;
   /** OGP のタイプ。トップ・一覧は website、記事は article */
   ogType?: "website" | "article";
   /** OGP画像（サイトルート基準のパス）。省略時はデフォルト画像 */
@@ -18,6 +20,7 @@ const {
   title,
   description = "法律を体系的に学べるオンライン学習サイト。基礎から応用まで、1トピック1ページで解説します。",
   noindex = false,
+  adsense = true,
   ogType = "website",
   image = "/ogp-default.png",
   jsonLd,
@@ -72,7 +75,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" type="application/rss+xml" title="トピカ｜新着・更新" href="/rss.xml" />
@@ -100,7 +103,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
       ))
     }
     {
-      ADSENSE_CLIENT && (
+      ADSENSE_CLIENT && adsense && !noindex && (
         <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
@@ -172,8 +175,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
     <main>
       <slot />
     </main>
-    <!-- 広告枠（将来用） -->
-    <div class="ad-slot"></div>
+    {adsense && !noindex && <div class="ad-slot" aria-hidden="true"></div>}
     <footer class="site-footer">
       <p>
         <a href="/about/">このサイトについて</a>

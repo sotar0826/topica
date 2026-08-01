@@ -1,0 +1,54 @@
+/**
+ * 検索・広告審査に出す判例解説。
+ * 百選級リニューアル（事案、判旨、解説、答案での使い方まで収録）が完了したものだけを列挙する。
+ * 旧版の短い解説は公開を維持しつつ noindex とし、改稿後にこの一覧へ追加する。
+ */
+export const INDEXABLE_HANREI_SLUGS = [
+  "chloroform-jiken",
+  "ehime-tamagushiryo-jiken",
+  "gofurikomi-sagi-jiken",
+  "gps-sosa-jiken",
+  "haishinteki-akuisha-h18",
+  "hakusanmaru-jiken",
+  "hichakushutsushi-iken-kettei",
+  "hoppo-journal-jiken",
+  "kokusekiho-iken-hanketsu",
+  "kyoto-fugakuren-jiken",
+  "mclean-jiken",
+  "mitsubishi-jushi-jiken",
+  "nerima-jiken",
+  "sekken-shitei-h11",
+  "shakti-jiken",
+  "shinrinho-iken-hanketsu",
+  "sorachibuto-jinja-jiken",
+  "tsu-jichinsai-jiken",
+  "winny-jiken",
+  "yakujiho-iken-hanketsu",
+  "yukan-wakayama-jiken",
+  "zaigai-senkyoken-hanketsu",
+];
+
+export const INDEXABLE_HANREI_SET = new Set(INDEXABLE_HANREI_SLUGS);
+
+/** @param {string} page */
+export function shouldIncludeInSitemap(page) {
+  const pathname = new URL(page).pathname;
+
+  if (
+    pathname.includes("/kanri-") ||
+    pathname.startsWith("/hasan/") ||
+    pathname.includes("/zenbun/") ||
+    pathname === "/search/" ||
+    pathname === "/404.html"
+  ) {
+    return false;
+  }
+
+  // 個別用語ページは現状600〜900字程度の簡易版。内容を拡充するまで一覧ページだけを収録する。
+  if (/^\/yougo\/[^/]+\/$/.test(pathname)) return false;
+
+  const hanreiMatch = pathname.match(/^\/hanrei\/([^/]+)\/$/);
+  if (hanreiMatch) return INDEXABLE_HANREI_SET.has(hanreiMatch[1]);
+
+  return true;
+}
