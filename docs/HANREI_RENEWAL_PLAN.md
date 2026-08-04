@@ -29,11 +29,11 @@
 | 追加改善 | rumbar-jiken / anzen-hairyo-gimu-s50 / hojinkaku-hinin-s44 / shiratori-kettei / 94jo2ko-ruisui-s45 | ✅ 完了（2026-08-01。5件とも全文照合成功） |
 | 第5弾 | hakusanmaru-jiken / yakuin-sekinin-daisansha-s44 / swat-jiken / osaka-nanko-jiken / osaka-kakuseizai-jiken | ✅ 完了（2026-08-02。白山丸は既改稿、残り4件を全文照合） |
 | 追加改善2 | yonago-ginko-jiken | ✅ 完了（2026-08-02。全文照合成功） |
-| 第6弾以降 | 下記の未改稿18件 | 継続中 |
+| 最終弾 | 未改稿だった18件すべて | ✅ 完了（2026-08-04。17件全文照合、1件裁判要旨照合） |
 
 ### 判決全文ページの生成状況（2026-08-02時点）
 
-現在30件で `/hanrei/<slug>/zenbun/` を生成済み。従来の集計から漏れていたパイロットと白山丸事件を含め、実ファイル数で再集計した：
+現在47件で `/hanrei/<slug>/zenbun/` を生成済み。2026-08-04に17件を追加し、全50解説の詳細版化が完了した。全文未生成は特殊フォント等で正常抽出できなかった3件のみ：
 haishinteki-akuisha-h18（id 52426）／gps-sosa-jiken（id 86600）／chloroform-jiken（id 50059）／shakti-jiken（id 50057）／gofurikomi-sagi-jiken（id 50004）／winny-jiken（id 81846）／hichakushutsushi-iken-kettei（id 83520）／zaigai-senkyoken-hanketsu（id 52338）／sekken-shitei-h11（id 52506）／ehime-tamagushiryo-jiken（id 54777）／shinrinho-iken-hanketsu（id 55203）／hoppo-journal-jiken（id 52665）／tsu-jichinsai-jiken（id 54189）／yakujiho-iken-hanketsu（id 51936）／mclean-jiken（id 53255）／mitsubishi-jushi-jiken（id 51931）／kyoto-fugakuren-jiken（id 51765）／yukan-wakayama-jiken（id 50801）／nerima-jiken（id 51311）／hakusanmaru-jiken（id 56982）／rumbar-jiken（id 54204）／anzen-hairyo-gimu-s50（id 52111）／hojinkaku-hinin-s44（id 55117）／shiratori-kettei（id 51033）／94jo2ko-ruisui-s45（id 54141）／yakuin-sekinin-daisansha-s44（id 51871）／swat-jiken（id 50048）／osaka-nanko-jiken（id 50373）／osaka-kakuseizai-jiken（id 51125）／yonago-ginko-jiken（id 50201）。
 第2弾のうち sorachibuto-jinja-jiken（id 38347）・kokusekiho-iken-hanketsu（id 36415）は特殊フォントPDFで文字化けしたため全文ページ未生成（判例解説ページには裁判所ウェブサイトへの直リンクが自動表示される）。
 第3弾・第4弾は事前の想定（昭和判例は文字化けしやすい）に反し、pypdfの警告（一部フォントの未対応）は出たもののcp932再デコードでいずれも日本語文字比率・置換文字比率ともにクリーンな抽出に成功し、全件で全文ページを生成できた。

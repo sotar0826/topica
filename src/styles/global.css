@@ -137,6 +137,8 @@ h1, h2, h3 {
   font-weight: bold;
   color: var(--accent-dark);
   text-decoration: none;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .site-logo span {
