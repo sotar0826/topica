@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 
 const subject = findSubject("kenpo")!;
 const order = topicOrderOf("kenpo");
@@ -11,9 +12,20 @@ const existing = new Set(entries.map((e) => e.id));
 const publishedCount = order.filter((t) => existing.has(t.slug)).length;
 
 let globalNum = 0;
+const jsonLd = [
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "憲法", url: abs("/kenpo/") },
+  ]),
+  collectionPageLd({
+    name: "憲法",
+    description: subject.description,
+    url: abs("/kenpo/"),
+  }),
+];
 ---
 
-<BaseLayout title="憲法" description={subject.description} image="/og/kenpo/index.png">
+<BaseLayout title="憲法" description={subject.description} image="/og/kenpo/index.png" jsonLd={jsonLd}>
   <div class="breadcrumb"><a href="/">トップ</a> › 憲法</div>
 
   <h1>憲法</h1>

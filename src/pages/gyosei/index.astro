@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 
 const subject = findSubject("gyosei")!;
 const order = topicOrderOf("gyosei");
@@ -11,9 +12,20 @@ const existing = new Set(entries.map((e) => e.id));
 const publishedCount = order.filter((t) => existing.has(t.slug)).length;
 
 let globalNum = 0;
+const jsonLd = [
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "行政法", url: abs("/gyosei/") },
+  ]),
+  collectionPageLd({
+    name: "行政法",
+    description: subject.description,
+    url: abs("/gyosei/"),
+  }),
+];
 ---
 
-<BaseLayout title="行政法" description={subject.description} image="/og/gyosei/index.png">
+<BaseLayout title="行政法" description={subject.description} image="/og/gyosei/index.png" jsonLd={jsonLd}>
   <div class="breadcrumb"><a href="/">トップ</a> › 行政法</div>
 
   <h1>行政法</h1>

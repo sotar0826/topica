@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import remarkHanreiLink from './src/lib/remark-hanrei-link.mjs';
 import { shouldIncludeInSitemap } from './src/data/quality-gates.mjs';
+import { SITEMAP_DATES } from './src/data/sitemap-dates.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,6 +13,13 @@ export default defineConfig({
     sitemap({
       // noindex対象と、内容の拡充が完了していない簡易ページはサイトマップから除外する。
       filter: shouldIncludeInSitemap,
+      // frontmatter の updated / published に基づく正確な更新日だけを付与する。
+      // ビルド日時を全ページへ一律に付けない。
+      serialize(item) {
+        const pathname = new URL(item.url).pathname;
+        const date = SITEMAP_DATES[pathname];
+        return date ? { ...item, lastmod: `${date}T00:00:00.000Z` } : item;
+      },
     }),
   ],
   markdown: {

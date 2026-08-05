@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { PUBLIC_SUBJECTS, topicOrderOf } from "../data/curriculum";
+import { INDEXABLE_HANREI_SET } from "../data/quality-gates.mjs";
 import { abs, ymd } from "../lib/jsonld";
 import { collectRecentItems } from "../lib/recent";
 
@@ -11,9 +12,10 @@ const progressRows = await Promise.all(
     const entries = await getCollection(subject.slug as "minpo");
     const existing = new Set(entries.map((e) => e.id));
     const total = topicOrderOf(subject.slug).filter((t) => existing.has(t.slug)).length;
-    return { slug: subject.slug, name: subject.name, total };
+    return { slug: subject.slug, name: subject.name, total, articleCount: entries.length };
   })
 );
+const topicArticleCount = progressRows.reduce((sum, row) => sum + row.articleCount, 0);
 
 // 新着・更新セクション用：rss.xml と同じ集め方（全公開科目＋判例解説＋コラム）から最新10件
 const recentItems = (await collectRecentItems()).slice(0, 10);
@@ -44,6 +46,21 @@ const jsonLd = {
       判例・学説まで踏み込む「応用編」へ、段階的にステップアップ。
     </p>
   </div>
+
+  <nav class="site-stats" aria-label="収録内容">
+    <a href="#subjects">
+      <strong>{PUBLIC_SUBJECTS.length}科目</strong>
+      <span>体系別カリキュラム</span>
+    </a>
+    <a href="#subjects">
+      <strong>{topicArticleCount}本</strong>
+      <span>基礎・応用の記事</span>
+    </a>
+    <a href="/hanrei/">
+      <strong>{INDEXABLE_HANREI_SET.size}件</strong>
+      <span>詳しい判例解説</span>
+    </a>
+  </nav>
 
   <section aria-labelledby="start-heading" class="start-section">
     <h2 id="start-heading">目的から探す</h2>

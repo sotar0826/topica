@@ -122,6 +122,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
     }
   </head>
   <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
     <header class="site-header">
       <div class="inner">
         <a href="/" class="site-logo">トピカ<span>法律学習サイト</span></a>
@@ -172,7 +173,7 @@ const GOOGLE_SITE_VERIFICATION = "c8f8a152e88811da";
         .header-nav { display: flex !important; position: static !important; box-shadow: none !important; }
       </style>
     </noscript>
-    <main>
+    <main id="main-content">
       <slot />
     </main>
     {adsense && !noindex && <div class="ad-slot" aria-hidden="true"></div>}

@@ -13,7 +13,7 @@
 - **六法すべての基礎編＋応用編が完成済み**。記事数: 民法84・商法45・憲法45・民訴38・刑法50・刑訴31・コラム5＝**298記事**＋**判例解説50件**（/hanrei/）
 - **行政法は基礎編19本＋応用編14本＝計33本を完成・公開済み**。行政法の基礎、行政作用、行政手続・情報、行政争訟、国家補償まで全6編を収録
 - 破産法はお蔵入り（archived: true・ページは保持・noindex）
-- SEO基盤実装済み: 独自ドメイン・301・canonical/OGPメタ/JSON-LD/sitemap/robots・seoTitle全記事・Pagefind検索・読了記録・判例相互リンク
+- SEO基盤実装済み: 独自ドメイン・301・canonical/OGPメタ/JSON-LD/sitemap/robots・seoTitle全記事・Pagefind検索・読了記録・判例相互リンク。sitemapは`gen-sitemap-dates.mjs`がfrontmatterの`updated`/`published`と明示管理する固定ページ日付から正確なlastmodを生成し、日付がないページには推測値を付けない
 - **AdSenseは2026-08-01に「有用性の低いコンテンツ」で不承認となり、品質改善後、同日にユーザーが再審査を申請済み**。2026-08-04に収録判例50件すべての詳細版化を完了し、一覧・新着・sitemap・検索対象へ掲載。判決全文47件はnoindex・広告停止で解説と分離し、簡易用語20件は拡充までnoindexを維持する
 - Search Console: 所有権確認済み・sitemap送信済み。新規ドメイン取得直後のためインデックスはこれから（検索流入の立ち上がりは3〜6ヶ月想定）
 - 判例50件の詳細版化は完了。次のコンテンツ優先候補は簡易用語20件の拡充、または新規重要判例の追加。その他の改善提案は docs/IMPROVEMENT_PROPOSAL_2026-07-22.md を参照
@@ -72,7 +72,7 @@ export CLOUDFLARE_API_TOKEN=$(grep -oE 'cfut_[A-Za-z0-9]+' .secrets.ps1) && \
 npx wrangler pages deploy dist --project-name topica --branch main --commit-dirty=true 2>&1 | tail -1 && \
 curl -s -o /dev/null -w "prod:%{http_code}" https://topica-law.com/<確認したいパス>/
 ```
-- デプロイはpush連動ではなく**手動**（wrangler）。buildにはPagefindのインデックス生成が含まれる
+- デプロイはpush連動ではなく**手動**（wrangler）。buildには判例リンクマップ・一問一答・sitemap更新日マップ・Pagefindインデックスの生成が含まれる。`src/data/sitemap-dates.mjs`は自動生成物のため手動編集しない
 - PowerShellで作業する場合はPATH追加を `$env:Path += ";C:\Program Files\nodejs"` に読み替える
 
 ## §6 検収チェック（記事公開のたびに実施）

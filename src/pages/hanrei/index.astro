@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { PUBLIC_SUBJECTS } from "../../data/curriculum";
-import { abs, breadcrumbLd } from "../../lib/jsonld";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 import { INDEXABLE_HANREI_SET } from "../../data/quality-gates.mjs";
 
 // 一覧と検索導線には、百選級リニューアルが完了した解説だけを掲載する。
@@ -22,15 +22,28 @@ const byDate = [...entries].sort((a, b) => a.data.dateISO.valueOf() - b.data.dat
 
 const RANK_LABEL: Record<string, string> = { A: "重要度A", B: "重要度B", C: "重要度C" };
 
-const jsonLd = breadcrumbLd([
-  { name: "トップ", url: abs("/") },
-  { name: "判例解説", url: abs("/hanrei/") },
-]);
+const description = "民法・商法・憲法・刑法・訴訟法の重要判例を1判例1ページで解説。事案の概要・判旨・意義を、裁判所公式データベースで原典を確認したうえで整理しています。";
+const orderedEntries = groups.flatMap((group) => group.items);
+const jsonLd = [
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "判例解説", url: abs("/hanrei/") },
+  ]),
+  collectionPageLd({
+    name: "判例解説",
+    description,
+    url: abs("/hanrei/"),
+    items: orderedEntries.map((entry) => ({
+      name: entry.data.title,
+      url: abs(`/hanrei/${entry.id}/`),
+    })),
+  }),
+];
 ---
 
 <BaseLayout
   title="判例解説一覧"
-  description="民法・商法・憲法・刑法・訴訟法の重要判例を1判例1ページで解説。事案の概要・判旨・意義を、裁判所公式データベースで原典を確認したうえで整理しています。"
+  description={description}
   jsonLd={jsonLd}
 >
   <div class="breadcrumb"><a href="/">トップ</a> › 判例解説</div>

@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 
 const subject = findSubject("shoho")!;
 const order = topicOrderOf("shoho");
@@ -11,9 +12,20 @@ const existing = new Set(entries.map((e) => e.id));
 const publishedCount = order.filter((t) => existing.has(t.slug)).length;
 
 let globalNum = 0;
+const jsonLd = [
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "商法・会社法", url: abs("/shoho/") },
+  ]),
+  collectionPageLd({
+    name: "商法・会社法",
+    description: subject.description,
+    url: abs("/shoho/"),
+  }),
+];
 ---
 
-<BaseLayout title="商法・会社法" description={subject.description} image="/og/shoho/index.png">
+<BaseLayout title="商法・会社法" description={subject.description} image="/og/shoho/index.png" jsonLd={jsonLd}>
   <div class="breadcrumb"><a href="/">トップ</a> › 商法・会社法</div>
 
   <h1>商法・会社法</h1>

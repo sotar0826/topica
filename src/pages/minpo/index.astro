@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { CURRICULUM, SUBJECT, TOPIC_ORDER } from "../../data/curriculum";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 
 const entries = await getCollection("minpo");
 const existing = new Set(entries.map((e) => e.id));
@@ -12,9 +13,20 @@ const columns = (await getCollection("column")).sort((a, b) => a.data.order - b.
 const columnsByPart = (partNumber: number) => columns.filter((c) => c.data.part === partNumber);
 
 let globalNum = 0;
+const jsonLd = [
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "民法", url: abs("/minpo/") },
+  ]),
+  collectionPageLd({
+    name: "民法",
+    description: SUBJECT.description,
+    url: abs("/minpo/"),
+  }),
+];
 ---
 
-<BaseLayout title="民法" description={SUBJECT.description} image="/og/minpo/index.png">
+<BaseLayout title="民法" description={SUBJECT.description} image="/og/minpo/index.png" jsonLd={jsonLd}>
   <div class="breadcrumb"><a href="/">トップ</a> › 民法</div>
 
   <h1>民法</h1>

@@ -6,8 +6,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && astro dev",
-    "build": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && astro build && pagefind --site dist",
+    "dev": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && node scripts/gen-sitemap-dates.mjs && astro dev",
+    "build": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && node scripts/gen-sitemap-dates.mjs && astro build && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },

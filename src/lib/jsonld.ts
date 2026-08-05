@@ -69,3 +69,34 @@ export function breadcrumbLd(
     })),
   };
 }
+
+/** 科目・判例などの一覧ページ用 CollectionPage 構造化データ */
+export function collectionPageLd(opts: {
+  name: string;
+  description: string;
+  url: string;
+  items?: { name: string; url: string }[];
+}): Record<string, any> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: opts.name,
+    description: opts.description,
+    url: opts.url,
+    inLanguage: "ja",
+    ...(opts.items?.length
+      ? {
+          mainEntity: {
+            "@type": "ItemList",
+            numberOfItems: opts.items.length,
+            itemListElement: opts.items.map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: item.name,
+              url: item.url,
+            })),
+          },
+        }
+      : {}),
+  };
+}
