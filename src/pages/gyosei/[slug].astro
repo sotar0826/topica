@@ -31,6 +31,7 @@ const relatedHanrei = hanreiAll
 const advancedExists = existingIds.has(`${baseSlug}-ouyou`);
 
 const relatedLinks = entry.data.related
+  .filter((slug) => !(isAdvanced && slug === baseSlug))
   .map((slug) => {
     const t = order.find((x) => x.slug === slug);
     return t ? { slug, title: t.title, exists: existingIds.has(slug) } : null;

@@ -7767,27 +7767,27 @@
     "topicTitle": "行政不服審査法の仕組み"
   },
   {
-    "question": "9条2項では目的を共通にする関係法令も考慮できる。",
-    "answer": true,
-    "explanation": "根拠法令の文言だけに限定されません。",
-    "subject": "gyosei",
-    "subjectName": "行政法",
-    "topicSlug": "genkoku-tekikaku-ouyou",
-    "topicTitle": "原告適格・訴えの利益"
-  },
-  {
-    "question": "小田急線判決は同じ住民の関連する全事業認可について原告適格を認めた。",
+    "question": "9条2項では、根拠法令の文言以外を一切考慮できない。",
     "answer": false,
-    "explanation": "鉄道事業と付属街路事業を区別しました。",
+    "explanation": "根拠法令と目的を共通にする関係法令の趣旨・目的も、保護利益を判断するために考慮します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "genkoku-tekikaku-ouyou",
     "topicTitle": "原告適格・訴えの利益"
   },
   {
-    "question": "被害の科学的範囲は原告適格の判断資料となる。",
+    "question": "小田急線高架化訴訟は、同じ住民の関連する全事業認可について原告適格を認めた。",
+    "answer": false,
+    "explanation": "鉄道事業認可と付属街路事業認可を区別し、処分ごとに原告適格を判断しました。",
+    "subject": "gyosei",
+    "subjectName": "行政法",
+    "topicSlug": "genkoku-tekikaku-ouyou",
+    "topicTitle": "原告適格・訴えの利益"
+  },
+  {
+    "question": "営業停止期間が終了しても、取消しによって除去できる法的不利益が残れば、狭義の訴えの利益が認められる余地がある。",
     "answer": true,
-    "explanation": "被害の直接性・重大性を具体化します。",
+    "explanation": "期間経過だけでなく、取消判決によって回復できる法律上の利益が残るかを見ます。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "genkoku-tekikaku-ouyou",
@@ -7821,9 +7821,9 @@
     "topicTitle": "取消訴訟の訴訟要件②——原告適格・訴えの利益"
   },
   {
-    "question": "公定力は、行政庁の判断が常に正しいことを意味する。",
+    "question": "公定力は、行政庁の判断が常に適法であることを意味する。",
     "answer": false,
-    "explanation": "取消訴訟制度による法的安定の要請を表す効力です。",
+    "explanation": "処分の効力を直接失わせるには、原則として法定の取消手続によるべきだという手続的な効力です。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-koi-koryoku-ouyou",
@@ -7832,16 +7832,16 @@
   {
     "question": "無効な処分は、民事訴訟の先決問題として効力を否定できる。",
     "answer": true,
-    "explanation": "無効な処分は当初から法的効力を持ちません。",
+    "explanation": "無効な処分は当初から法的効力を持たないためです。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-koi-koryoku-ouyou",
     "topicTitle": "行政行為の効力"
   },
   {
-    "question": "不可争力が生じると行政庁の職権取消しも常に不可能になる。",
+    "question": "不可争力が生じると、処分は遡って適法になる。",
     "answer": false,
-    "explanation": "不可争力は主に相手方からの争訟を制限する効力です。",
+    "explanation": "争訟手段が制限されるのであり、違法性を適法性へ転換する効力ではありません。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-koi-koryoku-ouyou",
@@ -7929,27 +7929,27 @@
     "topicTitle": "行政上の強制執行・即時強制・行政罰"
   },
   {
-    "question": "刑罰に結び付く重要事項ほど、法律による具体的な基準が求められる。",
+    "question": "行政立法の審査では、法律の委任が許されるかと、個別命令が委任範囲に収まるかを区別する。",
     "answer": true,
-    "explanation": "権利制限の重大性は委任の具体性を判断する重要要素です。",
+    "explanation": "二段階を分けることで、白紙委任と委任超過を混同しません。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-rippo-ouyou",
     "topicTitle": "行政立法"
   },
   {
-    "question": "法律の委任が有効なら、委任命令が法律の趣旨を超えても有効である。",
+    "question": "最大判平成21年11月18日は、地方自治法施行令の資格制限が解職請求手続に及ぶ限りで、政令として許される範囲を超えるとした。",
+    "answer": true,
+    "explanation": "法律が準用した対象と政令が規律した手続段階を比較した判断です。",
+    "subject": "gyosei",
+    "subjectName": "行政法",
+    "topicSlug": "gyosei-rippo-ouyou",
+    "topicTitle": "行政立法"
+  },
+  {
+    "question": "通達は行政内部を拘束するため、それだけで国民に新たな義務を課す根拠となる。",
     "answer": false,
-    "explanation": "個々の命令は委任の目的・範囲内でなければなりません。",
-    "subject": "gyosei",
-    "subjectName": "行政法",
-    "topicSlug": "gyosei-rippo-ouyou",
-    "topicTitle": "行政立法"
-  },
-  {
-    "question": "意見公募手続は、提出意見を必ず採用する制度ではない。",
-    "answer": true,
-    "explanation": "考慮と結果・理由の公示を求めます。",
+    "explanation": "通達は原則として内部規範であり、国民への義務付けには法律又は法規命令上の根拠が必要です。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-rippo-ouyou",
@@ -7985,25 +7985,25 @@
   {
     "question": "裁量審査では、裁判所が行政庁に代わって最善の政策を選び直す。",
     "answer": false,
-    "explanation": "判断過程と結論に逸脱・濫用があるかを審査します。",
+    "explanation": "裁量を与えた法律の趣旨に照らし、事実・判断過程・手続に逸脱・濫用があるかを審査します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-sairyo-ouyou",
     "topicTitle": "行政裁量と司法審査"
   },
   {
-    "question": "伊方原発訴訟は、専門技術的判断の過程に看過し難い過誤・欠落があるかを審査した。",
+    "question": "伊方原発訴訟では、現在の科学技術水準に照らした審査基準又は調査審議過程の不合理が問題となる。",
     "answer": true,
-    "explanation": "現在の科学技術水準に照らして判断します。",
+    "explanation": "裁判所は自ら安全性を直接判断するのではなく、判断過程の合理性を審査します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-sairyo-ouyou",
     "topicTitle": "行政裁量と司法審査"
   },
   {
-    "question": "個人タクシー事件は、裁量的選考でも公正な手続が必要となることを示した。",
+    "question": "個人タクシー事件は、多数申請者の選考では具体的審査基準を設定し、公正かつ合理的に適用すべきとした。",
     "answer": true,
-    "explanation": "主張・立証の機会を含む手続的統制が重要です。",
+    "explanation": "必要な場合には主張・証拠提出の機会も与えるべきとしました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-sairyo-ouyou",
@@ -8039,25 +8039,25 @@
   {
     "question": "行政指導に従わないことだけを理由に申請審査を遅らせることは許される。",
     "answer": false,
-    "explanation": "行政指導の任意性を害する不利益取扱いです。",
+    "explanation": "申請者が行政指導に従わない意思を示しているのに、申請への応答を留保するなどして権利行使を妨げることは、行政手続法33条の問題になります。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-shido-keikaku-ouyou",
     "topicTitle": "行政指導・行政計画・行政契約"
   },
   {
-    "question": "計画変更の適法性では、私人の信頼に基づく投資も考慮される。",
-    "answer": true,
-    "explanation": "計画の具体性や変更の必要性と衡量します。",
-    "subject": "gyosei",
-    "subjectName": "行政法",
-    "topicSlug": "gyosei-shido-keikaku-ouyou",
-    "topicTitle": "行政指導・行政計画・行政契約"
-  },
-  {
-    "question": "行政契約には平等原則が一切適用されない。",
+    "question": "行政計画に基づく投資があるなら、後の事情にかかわらず計画変更は違法となる。",
     "answer": false,
-    "explanation": "行政主体の契約活動も公法上の一般原則に拘束されます。",
+    "explanation": "計画の具体性、行政庁の関与、投資への信頼、変更の必要性、経過措置を比較して判断します。",
+    "subject": "gyosei",
+    "subjectName": "行政法",
+    "topicSlug": "gyosei-shido-keikaku-ouyou",
+    "topicTitle": "行政指導・行政計画・行政契約"
+  },
+  {
+    "question": "武蔵野市教育施設負担金事件では、寄付という名称ではなく、給水拒否等を背景に事業者が実質的に拒否できたかが重要であった。",
+    "answer": true,
+    "explanation": "形式上の任意性ではなく、建築を断念せざるを得ない実質的状況を重視しました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-shido-keikaku-ouyou",
@@ -8091,27 +8091,27 @@
     "topicTitle": "行政指導・行政計画・行政契約"
   },
   {
-    "question": "理由提示には行政庁の恣意抑制と相手方の不服申立て準備の機能がある。",
+    "question": "申請拒否は申請者に不利益でも、行政手続法上の不利益処分には含まれない。",
     "answer": true,
-    "explanation": "判断過程の適正と防御権の双方を保障します。",
+    "explanation": "申請に対する処分の規律が中心となり、審査基準・審査開始・拒否理由の提示を検討します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-tetsuzuki-ho-ouyou",
     "topicTitle": "行政手続法"
   },
   {
-    "question": "複雑な処分基準がある場合でも「基準違反」とだけ記載すれば常に十分である。",
+    "question": "複雑な処分基準がある場合でも、原因事実と根拠条文が通知されていれば、処分選択の理由を示す必要はない。",
     "answer": false,
-    "explanation": "どの事実にどの基準を適用したか理解できる必要があります。",
+    "explanation": "一級建築士免許取消事件は、どの基準をどのように適用し免許取消しを選択したかを知ることができない通知は、行政手続法14条1項に反するとしました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-tetsuzuki-ho-ouyou",
     "topicTitle": "行政手続法"
   },
   {
-    "question": "聴聞で提出された重要な反証を全く考慮しないことは判断過程の瑕疵となり得る。",
+    "question": "聴聞で提出された重要な反証を全く検討しないことは、判断過程と防御機会の両面で問題になり得る。",
     "answer": true,
-    "explanation": "手続を形式的に実施するだけでは足りません。",
+    "explanation": "聴聞では26条の十分考慮義務、処分判断では考慮漏れが問題となります。ただし、検討不足と反証提出の機会自体の欠缺は区別します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "gyosei-tetsuzuki-ho-ouyou",
@@ -8172,27 +8172,27 @@
     "topicTitle": "行政法の全体像と学び方"
   },
   {
-    "question": "侵害留保説は、国民の自由・財産を侵害する行政活動に法律の根拠を要求する。",
+    "question": "法律の留保の問題では、侵害の強さや一方的な公権力行使かどうかを検討する。",
     "answer": true,
-    "explanation": "侵害的な公権力行使を法律で統制する考え方です。",
+    "explanation": "侵害留保説を基本に、対象となる権利利益、行政活動の一方性、既存法令の授権範囲を具体的にみます。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "horitsu-niyoru-gyosei-ouyou",
     "topicTitle": "法律による行政の原理・一般原則"
   },
   {
-    "question": "信頼保護原則は、相手方が行政庁に虚偽の事実を伝えて得た回答にも同じように適用される。",
+    "question": "比例原則の必要性審査では、目的に役立つかだけを確認すればよい。",
     "answer": false,
-    "explanation": "相手方の帰責事由は信頼の保護価値を否定する重要な事情です。",
+    "explanation": "同程度に有効で、より制限の小さい代替手段がないかを検討します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "horitsu-niyoru-gyosei-ouyou",
     "topicTitle": "法律による行政の原理・一般原則"
   },
   {
-    "question": "比例原則の必要性審査では、より制限の小さい同程度に有効な手段の有無を検討する。",
+    "question": "最判昭和62年10月30日は、租税法規に適合する課税処分に信義則が問題となる余地を認めつつ、特別の事情を要求した。",
     "answer": true,
-    "explanation": "目的適合性だけでなく代替手段を検討します。",
+    "explanation": "租税法律主義と納税者間の平等・公平を踏まえ、信義則の適用を厳格に限定しました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "horitsu-niyoru-gyosei-ouyou",
@@ -8253,27 +8253,27 @@
     "topicTitle": "情報公開と個人情報保護の概観"
   },
   {
-    "question": "国賠法上の違法は、公務員の職務上の法的義務違反を中心に判断する。",
-    "answer": true,
-    "explanation": "処分の客観的違法と当然には一致しません。",
-    "subject": "gyosei",
-    "subjectName": "行政法",
-    "topicSlug": "kokka-baisho-1jo-ouyou",
-    "topicTitle": "国家賠償法1条"
-  },
-  {
-    "question": "規制権限不行使では危険の具体性・切迫性が重要である。",
-    "answer": true,
-    "explanation": "個別の権限行使義務が発生したかを判断します。",
-    "subject": "gyosei",
-    "subjectName": "行政法",
-    "topicSlug": "kokka-baisho-1jo-ouyou",
-    "topicTitle": "国家賠償法1条"
-  },
-  {
-    "question": "立法が違憲なら国会議員の国賠法上の違法は常に成立する。",
+    "question": "処分が客観的に違法であれば、公務員の過失を検討しなくても国家賠償法1条の責任が成立する。",
     "answer": false,
-    "explanation": "国賠責任には例外的な特別の事情が必要です。",
+    "explanation": "1条1項には故意又は過失が必要であり、職務上の法的義務違反も別に検討します。",
+    "subject": "gyosei",
+    "subjectName": "行政法",
+    "topicSlug": "kokka-baisho-1jo-ouyou",
+    "topicTitle": "国家賠償法1条"
+  },
+  {
+    "question": "規制権限不行使では、根拠法令の保護目的と危険の具体性・切迫性が重要である。",
+    "answer": true,
+    "explanation": "被害者に対する権限行使義務が具体化したかを判断するためです。",
+    "subject": "gyosei",
+    "subjectName": "行政法",
+    "topicSlug": "kokka-baisho-1jo-ouyou",
+    "topicTitle": "国家賠償法1条"
+  },
+  {
+    "question": "組織過失を論じる際は、どの情報がどの部署にあり、適切な体制ならどの措置が可能だったかを示す。",
+    "answer": true,
+    "explanation": "抽象的な組織批判ではなく、職務上の注意義務と因果関係を具体化します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "kokka-baisho-1jo-ouyou",
@@ -8307,27 +8307,27 @@
     "topicTitle": "国家賠償法1条"
   },
   {
-    "question": "無過失責任であるため、管理不能な突発的危険でも必ず瑕疵となる。",
+    "question": "国家賠償法2条1項では、担当公務員の過失を特定できなければ責任は成立しない。",
     "answer": false,
-    "explanation": "時間的・物理的な管理可能性も安全性判断で考慮します。",
+    "explanation": "営造物が通常有すべき安全性を欠くかが中心であり、公務員の過失は要件ではありません。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "kokka-baisho-2jo-ouyou",
     "topicTitle": "国家賠償法2条"
   },
   {
-    "question": "高知落石事件は注意標識だけでは不十分と判断した。",
+    "question": "突発的危険では、発生から事故までの時間や通報・巡回体制も瑕疵判断の事情となる。",
     "answer": true,
-    "explanation": "危険に適合した防護措置等が必要でした。",
+    "explanation": "管理者が危険を把握し、応急措置をとる現実的な可能性があったかを検討します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "kokka-baisho-2jo-ouyou",
     "topicTitle": "国家賠償法2条"
   },
   {
-    "question": "供用関連瑕疵では施設の公共性と周辺被害を衡量する。",
-    "answer": true,
-    "explanation": "国道43号線事件が代表例です。",
+    "question": "国道43号線事件では、道路に物理的な破損がなかったため瑕疵は否定された。",
+    "answer": false,
+    "explanation": "供用に伴う騒音等が受忍限度を超える事情の下で、瑕疵が認められました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "kokka-baisho-2jo-ouyou",
@@ -8361,27 +8361,27 @@
     "topicTitle": "国家賠償法2条（営造物責任）"
   },
   {
-    "question": "処分性は行政庁が付けた行為名によって決まる。",
+    "question": "処分性は、行政庁が行為に付けた名称だけで決まる。",
     "answer": false,
-    "explanation": "法令上の仕組みと実際の法的効果から判断します。",
+    "explanation": "根拠法令、現在の法的効果、後続手続との結合を含む制度全体から判断します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shobunsei-ouyou",
     "topicTitle": "取消訴訟の処分性"
   },
   {
-    "question": "病院開設中止勧告事件では保険医療機関指定への制度的連鎖が重視された。",
+    "question": "病院開設中止勧告事件では、勧告不服従と保険医療機関指定に関する不利益との制度的連結が重視された。",
     "answer": true,
-    "explanation": "勧告不服従による重大で確実な不利益が決め手です。",
+    "explanation": "勧告という名称ではなく、後続不利益の重大性と確実性を含む仕組みが問題になりました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shobunsei-ouyou",
     "topicTitle": "取消訴訟の処分性"
   },
   {
-    "question": "後続処分を待つことによる救済の実効性は処分性と無関係である。",
+    "question": "後続処分を待つことによる救済の実効性は、前段階の処分性を考える際に全く関係しない。",
     "answer": false,
-    "explanation": "紛争成熟性と実効的救済の観点が考慮されます。",
+    "explanation": "直接具体的法効果性を基礎に、現時点で争わせる必要性を評価する事情になります。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shobunsei-ouyou",
@@ -8415,9 +8415,9 @@
     "topicTitle": "取消訴訟の訴訟要件①——処分性"
   },
   {
-    "question": "処分時から瑕疵がある場合は、原則として職権取消しの問題である。",
+    "question": "処分時から許可要件を欠いていた場合は、原則として職権取消しの問題である。",
     "answer": true,
-    "explanation": "撤回は適法に成立した処分を後発事情により将来へ向けて消滅させます。",
+    "explanation": "成立当初に存在した瑕疵を理由とするためです。後発事情による撤回と区別して、遡及効や信頼保護を検討します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shokken-torikeshi-tekkai-ouyou",
@@ -8426,16 +8426,16 @@
   {
     "question": "相手方が虚偽資料で許可を得たことは、信頼保護を強める事情である。",
     "answer": false,
-    "explanation": "相手方の帰責事由は信頼の保護価値を低下させます。",
+    "explanation": "相手方の不正・帰責性は、処分存続への信頼の保護価値を低下させる重要な事情です。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shokken-torikeshi-tekkai-ouyou",
     "topicTitle": "職権取消しと撤回"
   },
   {
-    "question": "撤回の適法性と損失補償の要否は別に検討され得る。",
+    "question": "実子あっせん指定医師取消事件は、撤回による医師の不利益を考慮してもなお公益上の必要性が高い場合に指定撤回を認めた。",
     "answer": true,
-    "explanation": "適法な撤回でも特別の犠牲が問題となり得ます。",
+    "explanation": "最高裁は、不利益を考慮せずに撤回できるとはしていません。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "shokken-torikeshi-tekkai-ouyou",
@@ -8469,27 +8469,27 @@
     "topicTitle": "職権取消しと撤回"
   },
   {
-    "question": "拒否処分後の申請型義務付けは、原則として取消訴訟等と併合する。",
+    "question": "拒否処分後の申請型義務付けは、原則として拒否処分の取消訴訟又は無効等確認訴訟と併合する。",
     "answer": true,
-    "explanation": "拒否処分と義務付け判決の矛盾を避けます。",
+    "explanation": "拒否処分を残したまま同じ申請について処分を命じる矛盾を避けます。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonota-kokoku-ouyou",
     "topicTitle": "その他の抗告訴訟・当事者訴訟"
   },
   {
-    "question": "差止めは処分後の金銭賠償が可能なら常に認められる。",
+    "question": "差止めは、処分後に取消訴訟と執行停止で十分に救済できる場合にも当然に認められる。",
     "answer": false,
-    "explanation": "重大な損害と他に適当な方法がないことが必要です。",
+    "explanation": "重大な損害のおそれに加え、他に適当な方法がないことが必要です。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonota-kokoku-ouyou",
     "topicTitle": "その他の抗告訴訟・当事者訴訟"
   },
   {
-    "question": "仮の義務付けには本案に理由があるとみえることが必要である。",
+    "question": "仮の義務付けには、本案に理由があるとみえることのほか、償うことのできない損害を避ける緊急の必要が求められる。",
     "answer": true,
-    "explanation": "緊急性だけでは足りません。",
+    "explanation": "既存処分の執行停止とは別の、作為を仮に命じる制度です。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonota-kokoku-ouyou",
@@ -8523,27 +8523,27 @@
     "topicTitle": "その他の抗告訴訟・当事者訴訟"
   },
   {
-    "question": "特別の犠牲は負担の限定性と財産権侵害の実質から判断する。",
+    "question": "特別の犠牲は、負担が特定人に集中するかという形式面と、財産権侵害の重さという実質面を組み合わせて判断する。",
     "answer": true,
-    "explanation": "形式的・実質的基準を併用します。",
+    "explanation": "限定性、期間、全面性、残存利用可能性などを具体的に比較します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonshitsu-hosho-ouyou",
     "topicTitle": "損失補償"
   },
   {
-    "question": "規制の合憲性が認められれば29条3項の検討は不要である。",
+    "question": "河川附近地制限令事件は、補償規定がない規制は当然に無効であるとした。",
     "answer": false,
-    "explanation": "適法な規制でも特別の犠牲には補償が必要となり得ます。",
+    "explanation": "規制を直ちに無効とはせず、特別の犠牲があれば29条3項に基づく補償請求の余地を認めました。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonshitsu-hosho-ouyou",
     "topicTitle": "損失補償"
   },
   {
-    "question": "補償額のみの争いに形式的当事者訴訟が法定される場合がある。",
+    "question": "奈良県ため池条例事件は、危険な堤とう利用の禁止を財産権に内在する社会的制約として扱った。",
     "answer": true,
-    "explanation": "個別法の訴訟形式を確認します。",
+    "explanation": "もっとも、安全目的の規制であれば常に補償不要という意味ではありません。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "sonshitsu-hosho-ouyou",
@@ -8577,27 +8577,27 @@
     "topicTitle": "損失補償"
   },
   {
-    "question": "執行停止では損害の性質と回復困難性も考慮する。",
+    "question": "執行停止の「重大な損害」では、損害の性質と回復困難性も考慮する。",
     "answer": true,
-    "explanation": "金額だけで判断しません。",
+    "explanation": "25条3項により、金額だけでなく損害の性質・程度、処分の内容・性質も考慮します。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "torikeshi-shinri-ouyou",
     "topicTitle": "取消訴訟の審理・判決・執行停止"
   },
   {
-    "question": "限定的な執行停止で足りても常に処分の効力停止を選べる。",
+    "question": "執行又は手続続行の停止で目的を達せられても、常に処分の効力停止を選べる。",
     "answer": false,
-    "explanation": "必要最小限の停止方法を選びます。",
+    "explanation": "必要最小限の停止方法を選ぶ必要があります。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "torikeshi-shinri-ouyou",
     "topicTitle": "取消訴訟の審理・判決・執行停止"
   },
   {
-    "question": "事情判決は処分の違法性を主文で宣言する。",
+    "question": "事情判決は、処分が違法であることを主文で宣言する。",
     "answer": true,
-    "explanation": "違法性を否定する制度ではありません。",
+    "explanation": "事情判決は違法性を否定せず、取消しだけを例外的に差し控えます。",
     "subject": "gyosei",
     "subjectName": "行政法",
     "topicSlug": "torikeshi-shinri-ouyou",
