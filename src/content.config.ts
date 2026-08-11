@@ -190,6 +190,8 @@ const column = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
+    /** analysis = 論点横断コラム / guide = 初学者向け学習ガイド */
+    kind: z.enum(["analysis", "guide"]).default("analysis"),
     /** 検索結果向けの<title>（「｜トピカ」は自動付加）。未指定なら title をそのまま使う */
     seoTitle: z.string().optional(),
     /** 一覧での表示順（小さいほど上） */

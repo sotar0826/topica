@@ -22,7 +22,7 @@ const COLLECTIONS = [
 ];
 // Markdown frontmatterを持たない固定ページ。本文・構造を実際に変更した日だけ更新する。
 const STATIC_PAGE_DATES = {
-  "/": "2026-08-05",
+  "/": "2026-08-11",
   "/about/": "2026-08-01",
   "/contact/": "2026-08-05",
   "/disclaimer/": "2026-08-05",
@@ -33,8 +33,8 @@ const STATIC_PAGE_DATES = {
   "/kenpo/": "2026-08-05",
   "/keiho/": "2026-08-05",
   "/keiso/": "2026-08-05",
-  "/gyosei/": "2026-08-05",
-  "/hanrei/": "2026-08-05",
+  "/gyosei/": "2026-08-11",
+  "/hanrei/": "2026-08-11",
 };
 
 function frontmatterDate(text, key) {

@@ -1,27 +1,58 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { abs, breadcrumbLd, collectionPageLd } from "../../lib/jsonld";
 
 const entries = (await getCollection("column")).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const guides = entries.filter((entry) => entry.data.kind === "guide");
+const analyses = entries.filter((entry) => entry.data.kind !== "guide");
+const description = "法律の学び方、判例の読み方、科目別の学習順と、単元を横断する重要論点をまとめた学習ガイド・コラムです。";
+const jsonLd = [
+  collectionPageLd({
+    name: "学習ガイド・コラム",
+    description,
+    url: abs("/column/"),
+    items: entries.map((entry) => ({ name: entry.data.title, url: abs(`/column/${entry.id}/`) })),
+  }),
+  breadcrumbLd([
+    { name: "トップ", url: abs("/") },
+    { name: "学習ガイド・コラム", url: abs("/column/") },
+  ]),
+];
 ---
 
 <BaseLayout
-  title="コラム"
-  description="単元の枠を越えた横断テーマや重要判例を深掘りする、発展的な読み物です。"
+  title="学習ガイド・コラム"
+  description={description}
+  jsonLd={jsonLd}
 >
-  <div class="breadcrumb"><a href="/">トップ</a> › コラム</div>
+  <div class="breadcrumb"><a href="/">トップ</a> › 学習ガイド・コラム</div>
 
-  <h1>コラム</h1>
+  <h1>学習ガイド・コラム</h1>
   <p>
-    単元の枠を越えた横断テーマ（重要判例の射程、頻出の類推適用など）を深掘りする、発展的な読み物です。
-    各トピックの基礎編・応用編を読んだうえで挑戦すると効果的です。
+    初めて法律を学ぶときの進め方、判例の読み方、科目ごとの学習順を案内します。
+    後半の横断コラムでは、複数の単元にまたがる重要論点を一段深く整理しています。
   </p>
 
+  <h2>まず読む学習ガイド</h2>
+  <div class="guide-grid">
+    {
+      guides.map((entry) => (
+        <article class="guide-card">
+          <span class="level-badge basic">学習ガイド</span>
+          <a href={`/column/${entry.id}/`}>{entry.data.title}</a>
+          <p>{entry.data.description}</p>
+        </article>
+      ))
+    }
+  </div>
+
+  <h2>論点を横断するコラム</h2>
   <ol class="topic-list">
     {
-      entries.map((entry, i) => (
+      analyses.map((entry, i) => (
         <li>
           <span class="num">{i + 1}.</span>
           <a href={`/column/${entry.id}/`}>{entry.data.title}</a>

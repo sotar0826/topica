@@ -55,7 +55,9 @@ const jsonLd = [
   </div>
 
   <div class="topic-header">
-    <span class="level-badge advanced">コラム（発展）</span>
+    <span class={`level-badge ${entry.data.kind === "guide" ? "basic" : "advanced"}`}>
+      {entry.data.kind === "guide" ? "学習ガイド" : "コラム（発展）"}
+    </span>
     <h1>{entry.data.title}</h1>
   </div>
 
