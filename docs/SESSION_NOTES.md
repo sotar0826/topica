@@ -17,6 +17,8 @@
 
 ## 直近セッションログ
 
+【Codex・行政法主要判例第4弾5件】（2026-08-11）: `hamamatsu-kukaku-seiri-h20`（事業計画の処分性・id 36787）、`monju-genkoku-tekikaku-h4`（周辺住民の原告適格・id 52773）、`zaitaku-tohyo-kokubai-s60`（立法不作為と国賠・id 52654）、`daito-suigai-s59`（河川管理の瑕疵・id 52141）、`gikai-giin-kaishoku-seirei-h21`（委任命令の限界・id 38179）を追加。全件4,000字以上で判断構造、現行法との関係、比較判例、訴訟実務、答案の完成形まで収録。もんじゅ、在宅投票、大東水害は公式PDF全文を正常抽出してnoindex全文ページを併設し、浜松市事業計画、議員解職請求は特殊フォントのため裁判所公式の事件情報・裁判要旨に限定した。既存の行政法基礎・応用教材10本から直接リンクし、判例解説は計70件・行政法20件となった。530ページbuild、自動品質監査531 HTML問題なし、Pagefind 404ページ・11,265語。
+
 【Codex・行政法主要判例第3弾5件】（2026-08-11）: `jisshi-assen-shitei-ishi-s63`（授益処分の撤回・id 62344）、`brazil-hibakusha-h19`（違法通達と時効の信義則・id 34109）、`shobun-muko-kakunin-kokubai-s36`（公定力と国家賠償・id 53706）、`shotokuzei-kosei-kokubai-h5`（取消違法と国賠違法・id 55848）、`nara-tameike-jorei-s38`（財産権の内在的制約・id 51735）を追加。全件4,000字以上で判断構造、射程、比較判例、事例、答案の完成形まで収録。実子あっせん、無効確認、所得税更正の3件は公式PDF全文を正常抽出してnoindex全文ページを併設し、在ブラジル被爆者、奈良県ため池条例の2件は特殊フォントのため裁判所公式の事件情報・裁判要旨に限定した。既存教材6本から直接リンクし、判例解説は計65件・行政法15件となった。522ページbuild、自動品質監査523 HTML問題なし、Pagefind 399ページ・11,198語。5解説はcanonical・Article・広告・sitemap・indexを、3全文はnoindex・広告停止・sitemap除外を確認済み。
 
 【Codex・行政法主要判例第2弾5件】（2026-08-11）: `ikata-genpatsu-h4`（専門技術的裁量・id 54276）、`kojin-taxi-s46`（裁量と公正手続・id 51876）、`kokudo-43go-h7`（供用関連瑕疵・id 55862）、`kasen-fukinchi-seigenrei-s43`（損失補償・id 50697）、`kazei-shobun-shingisoku-s62`（信頼保護・id 70488）を追加。4件は公式PDF全文を正常抽出してnoindex全文ページを併設し、河川附近地制限令は特殊フォントのため公式裁判要旨ベースで執筆。既存教材5本から直接リンクし、判例解説は計60件・行政法10件となった。514ページbuild、自動品質監査515 HTML問題なし、Pagefind 394ページ・11,148語。

@@ -10,6 +10,9 @@ export const INDEXABLE_HANREI_SLUGS = [
   "benron-shugi-ihan-s41",
   "chintaishaku-shinrai-kankei-s28",
   "daii-ken-ishakin-s58",
+  "daito-suigai-s59",
+  "gikai-giin-kaishoku-seirei-h21",
+  "hamamatsu-kukaku-seiri-h20",
   "hotei-chijoken-s36",
   "ichibu-seikyu-kihanryoku-s37",
   "ikkyu-kenchikushi-menkyo-torikeshi-h23",
@@ -47,6 +50,7 @@ export const INDEXABLE_HANREI_SLUGS = [
   "kokudo-43go-h7",
   "kyoto-fugakuren-jiken",
   "mclean-jiken",
+  "monju-genkoku-tekikaku-h4",
   "kasen-fukinchi-seigenrei-s43",
   "kazei-shobun-shingisoku-s62",
   "musashino-kyoiku-shisetsu-futankin-h5",
@@ -69,6 +73,7 @@ export const INDEXABLE_HANREI_SLUGS = [
   "yukan-wakayama-jiken",
   "yonago-ginko-jiken",
   "zaigai-senkyoken-hanketsu",
+  "zaitaku-tohyo-kokubai-s60",
 ];
 
 export const INDEXABLE_HANREI_SET = new Set(INDEXABLE_HANREI_SLUGS);

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-11T13:31:19.860Z",
-  "count": 65,
+  "generatedAt": "2026-08-11T13:49:33.387Z",
+  "count": 70,
   "byDate": {
     "1973-06-07": "416jo-ruisui-s48",
     "1970-09-22": "94jo2ko-ruisui-s45",
@@ -11,11 +11,14 @@
     "1953-09-25": "chintaishaku-shinrai-kankei-s28",
     "2004-03-22": "chloroform-jiken",
     "1983-10-06": "daii-ken-ishakin-s58",
+    "1984-01-26": "daito-suigai-s59",
     "1997-04-02": "ehime-tamagushiryo-jiken",
+    "2009-11-18": "gikai-giin-kaishoku-seirei-h21",
     "2003-03-12": "gofurikomi-sagi-jiken",
     "2017-03-15": "gps-sosa-jiken",
     "2006-01-17": "haishinteki-akuisha-h18",
     "1962-11-28": "hakusanmaru-jiken",
+    "2008-09-10": "hamamatsu-kukaku-seiri-h20",
     "2013-09-04": "hichakushutsushi-iken-kettei",
     "1969-02-27": "hojinkaku-hinin-s44",
     "1986-06-11": "hoppo-journal-jiken",
@@ -37,6 +40,7 @@
     "1969-12-24": "kyoto-fugakuren-jiken",
     "1978-10-04": "mclean-jiken",
     "1973-12-12": "mitsubishi-jushi-jiken",
+    "1992-09-22": "monju-genkoku-tekikaku-h4",
     "1993-02-18": "musashino-kyoiku-shisetsu-futankin-h5",
     "1966-01-27": "naitagashi-sekinin-s41",
     "1963-06-26": "nara-tameike-jorei-s38",
@@ -66,7 +70,8 @@
     "1978-06-20": "yonago-ginko-jiken",
     "1972-02-15": "yuigon-muko-kakunin-s47",
     "1969-06-25": "yukan-wakayama-jiken",
-    "2005-09-14": "zaigai-senkyoken-hanketsu"
+    "2005-09-14": "zaigai-senkyoken-hanketsu",
+    "1985-11-21": "zaitaku-tohyo-kokubai-s60"
   },
   "byTitle": {
     "不法行為への416条類推適用": "416jo-ruisui-s48",
@@ -78,11 +83,14 @@
     "無断転貸と信頼関係破壊の法理": "chintaishaku-shinrai-kankei-s28",
     "クロロホルム事件": "chloroform-jiken",
     "慰謝料請求権と債権者代位権": "daii-ken-ishakin-s58",
+    "大東水害訴訟": "daito-suigai-s59",
     "愛媛玉串料事件": "ehime-tamagushiryo-jiken",
+    "議員解職請求代表者資格制限事件": "gikai-giin-kaishoku-seirei-h21",
     "誤振込事件": "gofurikomi-sagi-jiken",
     "GPS捜査事件": "gps-sosa-jiken",
     "時効取得と背信的悪意者": "haishinteki-akuisha-h18",
     "白山丸事件": "hakusanmaru-jiken",
+    "浜松市土地区画整理事業計画事件": "hamamatsu-kukaku-seiri-h20",
     "非嫡出子相続分違憲決定": "hichakushutsushi-iken-kettei",
     "法人格否認の法理": "hojinkaku-hinin-s44",
     "北方ジャーナル事件": "hoppo-journal-jiken",
@@ -104,6 +112,7 @@
     "京都府学連事件": "kyoto-fugakuren-jiken",
     "マクリーン事件": "mclean-jiken",
     "三菱樹脂事件": "mitsubishi-jushi-jiken",
+    "もんじゅ訴訟（原告適格）": "monju-genkoku-tekikaku-h4",
     "武蔵野市教育施設負担金事件": "musashino-kyoiku-shisetsu-futankin-h5",
     "名板貸人の責任と相手方の重過失": "naitagashi-sekinin-s41",
     "奈良県ため池条例事件": "nara-tameike-jorei-s38",
@@ -133,7 +142,8 @@
     "米子銀行強盗事件": "yonago-ginko-jiken",
     "遺言無効確認の訴えの適否に関する判例": "yuigon-muko-kakunin-s47",
     "夕刊和歌山時事事件": "yukan-wakayama-jiken",
-    "在外国民選挙権判決": "zaigai-senkyoken-hanketsu"
+    "在外国民選挙権判決": "zaigai-senkyoken-hanketsu",
+    "在宅投票制度廃止事件": "zaitaku-tohyo-kokubai-s60"
   },
   "ambiguousDates": []
 }
