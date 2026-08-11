@@ -32,10 +32,11 @@
 | 最終弾 | 未改稿だった18件すべて | ✅ 完了（2026-08-04。17件全文照合、1件裁判要旨照合） |
 | 行政法第1弾 | 病院開設中止勧告／小田急線高架化／武蔵野市教育施設負担金／一級建築士免許取消／高知落石 | ✅ 完了（2026-08-11。3件全文照合・全文ページ生成、2件裁判要旨照合） |
 | 行政法第2弾 | 伊方原発／個人タクシー／国道43号線／河川附近地制限令／課税処分と信義則 | ✅ 完了（2026-08-11。4件全文照合・全文ページ生成、1件裁判要旨照合） |
+| 行政法第3弾 | 実子あっせん指定医師取消／在ブラジル被爆者／行政処分無効確認と国賠／所得税更正国賠／奈良県ため池条例 | ✅ 完了（2026-08-11。3件全文照合・全文ページ生成、2件裁判要旨照合） |
 
 ### 判決全文ページの生成状況（2026-08-02時点）
 
-現在47件で `/hanrei/<slug>/zenbun/` を生成済み。2026-08-04に17件を追加し、全50解説の詳細版化が完了した。全文未生成は特殊フォント等で正常抽出できなかった3件のみ：
+従来の全50解説の詳細版化に加え、2026-08-11に行政法判例15件を3回に分けて追加した。行政法第3弾は5件中3件で全文を正常抽出し、在ブラジル被爆者事件と奈良県ため池条例事件は特殊フォントのため裁判所の事件情報・裁判要旨に限定した。
 haishinteki-akuisha-h18（id 52426）／gps-sosa-jiken（id 86600）／chloroform-jiken（id 50059）／shakti-jiken（id 50057）／gofurikomi-sagi-jiken（id 50004）／winny-jiken（id 81846）／hichakushutsushi-iken-kettei（id 83520）／zaigai-senkyoken-hanketsu（id 52338）／sekken-shitei-h11（id 52506）／ehime-tamagushiryo-jiken（id 54777）／shinrinho-iken-hanketsu（id 55203）／hoppo-journal-jiken（id 52665）／tsu-jichinsai-jiken（id 54189）／yakujiho-iken-hanketsu（id 51936）／mclean-jiken（id 53255）／mitsubishi-jushi-jiken（id 51931）／kyoto-fugakuren-jiken（id 51765）／yukan-wakayama-jiken（id 50801）／nerima-jiken（id 51311）／hakusanmaru-jiken（id 56982）／rumbar-jiken（id 54204）／anzen-hairyo-gimu-s50（id 52111）／hojinkaku-hinin-s44（id 55117）／shiratori-kettei（id 51033）／94jo2ko-ruisui-s45（id 54141）／yakuin-sekinin-daisansha-s44（id 51871）／swat-jiken（id 50048）／osaka-nanko-jiken（id 50373）／osaka-kakuseizai-jiken（id 51125）／yonago-ginko-jiken（id 50201）。
 第2弾のうち sorachibuto-jinja-jiken（id 38347）・kokusekiho-iken-hanketsu（id 36415）は特殊フォントPDFで文字化けしたため全文ページ未生成（判例解説ページには裁判所ウェブサイトへの直リンクが自動表示される）。
 第3弾・第4弾は事前の想定（昭和判例は文字化けしやすい）に反し、pypdfの警告（一部フォントの未対応）は出たもののcp932再デコードでいずれも日本語文字比率・置換文字比率ともにクリーンな抽出に成功し、全件で全文ページを生成できた。
