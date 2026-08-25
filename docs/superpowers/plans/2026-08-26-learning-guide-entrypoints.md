@@ -42,6 +42,6 @@
 
 - [x] `npm.cmd run build` で532ページ、公開品質監査、用語監査、学習ガイド監査、Pagefind 426ページを確認する。
 - [x] 375pxと1280pxで新規2ページ・トップ・コラム一覧の横スクロールと導線を確認する。
-- [ ] 差分レビュー後にmainへpushし、Cloudflare Pagesへ公開する。
-- [ ] 本番2ページのHTTP 200、index可能、canonical、Article、Pagefind、AdSense、sitemap、内部リンクを確認する。
-- [ ] `docs/SESSION_NOTES.md` と本計画を公開済みに更新する。
+- [x] 差分レビュー後にmainへpushし、Cloudflare Pagesへ公開する。
+- [x] 本番2ページのHTTP 200、index可能、canonical、Article、Pagefind、AdSense、sitemap、内部リンクを確認する。
+- [x] `docs/SESSION_NOTES.md` と本計画を公開済みに更新する。
