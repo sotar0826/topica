@@ -22,7 +22,7 @@ const COLLECTIONS = [
 ];
 // Markdown frontmatterを持たない固定ページ。本文・構造を実際に変更した日だけ更新する。
 const STATIC_PAGE_DATES = {
-  "/": "2026-08-11",
+  "/": "2026-08-26",
   "/about/": "2026-08-01",
   "/contact/": "2026-08-05",
   "/disclaimer/": "2026-08-05",
