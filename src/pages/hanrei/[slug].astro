@@ -4,6 +4,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
 import { articleLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
 import { INDEXABLE_HANREI_SET } from "../../data/quality-gates.mjs";
+import { selectRelatedHanrei } from "../../lib/related-hanrei.mjs";
 
 export async function getStaticPaths() {
   const entries = await getCollection("hanrei");
@@ -29,9 +30,9 @@ const subject = findSubject(entry.data.subject);
 // 同じ科目の他の判例解説（回遊導線）。一覧ページと同じ判決日昇順で並べ、
 // 現在のページに近い判例から見つけやすいよう当該判例の前後を中心に最大5件を抜き出す
 const sameSubjectEntries = (await getCollection("hanrei"))
-  .filter((e) => e.data.subject === entry.data.subject && e.id !== entry.id && INDEXABLE_HANREI_SET.has(e.id))
+  .filter((e) => e.data.subject === entry.data.subject && INDEXABLE_HANREI_SET.has(e.id))
   .sort((a, b) => a.data.dateISO.valueOf() - b.data.dateISO.valueOf());
-const relatedHanrei = sameSubjectEntries.slice(0, 5);
+const relatedHanrei = selectRelatedHanrei(sameSubjectEntries, entry.id, 5);
 
 // 関連トピックのリンク解決（"keiso/kyosei-shobun" 形式 → タイトル）
 const topicLinks = entry.data.topics
