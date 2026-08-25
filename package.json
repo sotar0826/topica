@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && node scripts/gen-sitemap-dates.mjs && astro dev",
-    "build": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && node scripts/gen-sitemap-dates.mjs && astro build && node scripts/audit-public-quality.mjs && pagefind --site dist",
+    "build": "node scripts/gen-hanrei-map.mjs && node scripts/gen-quiz.mjs && node scripts/gen-sitemap-dates.mjs && astro build && node scripts/audit-public-quality.mjs && node scripts/audit-glossary-quality.mjs && pagefind --site dist",
     "preview": "astro preview",
     "astro": "astro"
   },

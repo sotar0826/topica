@@ -78,6 +78,36 @@ export const INDEXABLE_HANREI_SLUGS = [
 
 export const INDEXABLE_HANREI_SET = new Set(INDEXABLE_HANREI_SLUGS);
 
+/**
+ * 検索・広告審査に出す法律用語ページ。
+ * 定義だけの短いページではなく、条文上の位置、具体例、似た概念との違い、
+ * 学習上の注意まで収録して品質監査を通過したものだけを列挙する。
+ */
+export const INDEXABLE_YOUGO_SLUGS = [
+  "bensai",
+  "bukken",
+  "daisansha",
+  "enyo",
+  "fuho-koi",
+  "horitsu-koi",
+  "hosho",
+  "ishihyoji",
+  "jiko",
+  "kaijo",
+  "kashitsu-mukashitsu",
+  "muko-torikeshi",
+  "saiken-saimu",
+  "songai-baisho",
+  "sosai",
+  "taiko-yoken",
+  "teito-ken",
+  "toki",
+  "tsuinin",
+  "zeni-akui",
+];
+
+export const INDEXABLE_YOUGO_SET = new Set(INDEXABLE_YOUGO_SLUGS);
+
 /** @param {string} page */
 export function shouldIncludeInSitemap(page) {
   const pathname = new URL(page).pathname;
@@ -92,8 +122,8 @@ export function shouldIncludeInSitemap(page) {
     return false;
   }
 
-  // 個別用語ページは現状600〜900字程度の簡易版。内容を拡充するまで一覧ページだけを収録する。
-  if (/^\/yougo\/[^/]+\/$/.test(pathname)) return false;
+  const yougoMatch = pathname.match(/^\/yougo\/([^/]+)\/$/);
+  if (yougoMatch) return INDEXABLE_YOUGO_SET.has(yougoMatch[1]);
 
   const hanreiMatch = pathname.match(/^\/hanrei\/([^/]+)\/$/);
   if (hanreiMatch) return INDEXABLE_HANREI_SET.has(hanreiMatch[1]);

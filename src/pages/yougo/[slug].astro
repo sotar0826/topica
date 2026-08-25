@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
 import { definedTermLd, breadcrumbLd, abs } from "../../lib/jsonld";
+import { INDEXABLE_YOUGO_SET } from "../../data/quality-gates.mjs";
 
 export async function getStaticPaths() {
   const entries = await getCollection("yougo");
@@ -36,6 +37,7 @@ const relatedTerms = allTerms
 
 const pageUrl = new URL(Astro.url.pathname, Astro.site ?? "https://topica-law.com").href;
 const seoTitle = `${entry.data.term}とは？意味をわかりやすく解説`;
+const isIndexable = INDEXABLE_YOUGO_SET.has(entry.id);
 
 const jsonLd = [
   definedTermLd({
@@ -51,7 +53,13 @@ const jsonLd = [
 ];
 ---
 
-<BaseLayout title={seoTitle} description={entry.data.description} ogType="article" jsonLd={jsonLd} noindex={true}>
+<BaseLayout
+  title={seoTitle}
+  description={entry.data.description}
+  ogType="article"
+  jsonLd={jsonLd}
+  noindex={!isIndexable}
+>
   <div class="breadcrumb">
     <a href="/">トップ</a> › <a href="/yougo/">用語集</a> › {entry.data.term}
   </div>
@@ -66,7 +74,7 @@ const jsonLd = [
 
   <p class="quiz-note" style="font-size: 0.95rem; color: var(--text);">{entry.data.description}</p>
 
-  <article class="topic-body">
+  <article class="topic-body" data-pagefind-body={isIndexable ? "" : undefined}>
     <Content />
   </article>
 
