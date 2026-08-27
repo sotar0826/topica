@@ -45,7 +45,9 @@
 
 ## Task 5: 公開・本番検証・記録
 
-- [ ] 差分レビュー後にmainへpushし、Cloudflare Pagesへ公開する。
-- [ ] 本番3解説のHTTP 200・index可能・canonical・Article・AdSense・sitemap・関連記事を確認する。
-- [ ] 全文が生成された場合は本番でnoindex・広告なし・sitemap除外を確認する。
-- [ ] `docs/SESSION_NOTES.md` と本計画を公開済みに更新する。
+- [x] 差分レビュー後にmainへpushし、Cloudflare Pagesへ公開する。
+- [x] 本番3解説のHTTP 200・index可能・canonical・Article・AdSense・sitemap・関連記事を確認する。
+- [x] 全文が生成された場合は本番でnoindex・広告なし・sitemap除外を確認する。
+- [x] `docs/SESSION_NOTES.md` と本計画を公開済みに更新する。
+
+**Published:** commit `1494718` / Cloudflare Pages `3e6d7ec3`（2026-08-28）。本番3解説・3全文の役割分離と公開設定を確認済み。
