@@ -1,8 +1,10 @@
 # トピカ 引き継ぎメモ（新チャット用）
 
-最終更新：2026-07-13 / 本番 https://topica-law.com （旧 topica.pages.dev は全ページ301転送）
+最終更新：2026-08-28 / 本番 https://topica-law.com （旧 topica.pages.dev は全ページ301転送）
 
 新しいチャットを開いたら、まずこのファイルと `topica/CLAUDE.md` を読めば文脈を引き継げます。
+
+> **2026-08-28現在の注意**：このファイル後半には初期開発時の履歴も残っている。最新の実装状況と作業ログは `docs/SESSION_NOTES.md`、公開判定は `src/data/quality-gates.mjs`、科目構成は `src/data/curriculum.ts` を正とする。現行の作業ツリーは `C:\Users\sotar\Documents\Codex\2026-07-24\a\work\topica`。公開サイトは7科目の体系記事、学習ガイド、用語20件、詳細判例79件を収録し、直近ビルドは548ページ、Pagefindは435ページを索引化している。2026-08-28までに百選級の重点監査対象判例9件を追加し、最新デプロイ `49acc749` まで本番確認済み。
 
 ---
 
