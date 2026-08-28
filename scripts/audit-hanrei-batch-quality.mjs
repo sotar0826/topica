@@ -10,7 +10,10 @@ const CASES = [
   "bulldog-source-jiken-h19",
   "hikokai-kaisha-tokubetsu-ketsugi-h24",
   "iriai-ken-koyu-hitsuyo-s41",
+  "kansetsu-rieki-soran-s43",
   "kashidashi-ringisho-jiko-riyo-h11",
+  "torishimariyaku-murishi-kashitsuke-s38",
+  "torishimariyakukai-ketsugi-ketsu-s40",
   "yawata-seitetsu-seiji-kenkin-s45",
 ];
 
