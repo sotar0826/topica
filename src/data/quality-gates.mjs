@@ -4,8 +4,10 @@
  * 旧版の短い解説は公開を維持しつつ noindex とし、改稿後にこの一覧へ追加する。
  */
 export const INDEXABLE_HANREI_SLUGS = [
+  "apaman-shop-jiken-h22",
   "byoin-kaisetsu-chushi-kankoku-h17",
   "brazil-hibakusha-h19",
+  "bulldog-source-jiken-h19",
   "416jo-ruisui-s48",
   "benron-shugi-ihan-s41",
   "chintaishaku-shinrai-kankei-s28",
@@ -73,6 +75,7 @@ export const INDEXABLE_HANREI_SLUGS = [
   "winny-jiken",
   "yakujiho-iken-hanketsu",
   "yakuin-sekinin-daisansha-s44",
+  "yawata-seitetsu-seiji-kenkin-s45",
   "yukan-wakayama-jiken",
   "yonago-ginko-jiken",
   "zaigai-senkyoken-hanketsu",

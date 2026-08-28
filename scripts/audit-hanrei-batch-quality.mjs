@@ -6,9 +6,12 @@ const SITEMAP = path.join(DIST, "sitemap-0.xml");
 const MIN_VISIBLE_CHARS = 3_200;
 const MIN_H2_COUNT = 8;
 const CASES = [
+  "apaman-shop-jiken-h22",
+  "bulldog-source-jiken-h19",
   "hikokai-kaisha-tokubetsu-ketsugi-h24",
   "iriai-ken-koyu-hitsuyo-s41",
   "kashidashi-ringisho-jiko-riyo-h11",
+  "yawata-seitetsu-seiji-kenkin-s45",
 ];
 
 function textOf(html) {
