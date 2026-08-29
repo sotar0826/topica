@@ -8,10 +8,13 @@ const MIN_H2_COUNT = 8;
 const CASES = [
   "apaman-shop-jiken-h22",
   "bulldog-source-jiken-h19",
+  "golf-club-meisho-zokuyo-h16",
   "hikokai-kaisha-tokubetsu-ketsugi-h24",
   "iriai-ken-koyu-hitsuyo-s41",
+  "juyo-zaisan-shobun-h6",
   "kansetsu-rieki-soran-s43",
   "kashidashi-ringisho-jiko-riyo-h11",
+  "shinsetsu-bunkatsu-sagai-h24",
   "torishimariyaku-murishi-kashitsuke-s38",
   "torishimariyakukai-ketsugi-ketsu-s40",
   "yawata-seitetsu-seiji-kenkin-s45",
