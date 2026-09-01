@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-01T16:34:42.987Z",
-  "count": 85,
+  "generatedAt": "2026-09-01T16:57:29.869Z",
+  "count": 88,
   "byDate": {
     "1973-06-07": "416jo-ruisui-s48",
     "1970-09-22": "94jo2ko-ruisui-s45",
@@ -25,6 +25,7 @@
     "2013-09-04": "hichakushutsushi-iken-kettei",
     "2012-04-24": "hikokai-kaisha-tokubetsu-ketsugi-h24",
     "1969-02-27": "hojinkaku-hinin-s44",
+    "1973-10-26": "hojinkaku-ranyo-s48",
     "1986-06-11": "hoppo-journal-jiken",
     "1961-02-10": "hotei-chijoken-s36",
     "1962-08-10": "ichibu-seikyu-kihanryoku-s37",
@@ -74,8 +75,8 @@
     "2001-04-11": "soin-henko-yohi-h13",
     "1960-02-11": "sokuji-shutoku-s35",
     "2010-01-20": "sorachibuto-jinja-jiken",
+    "1995-11-30": "super-tenant-naitagashi-h7",
     "2003-05-01": "swat-jiken",
-    "1963-12-06": "torishimariyaku-murishi-kashitsuke-s38",
     "1965-09-22": "torishimariyakukai-ketsugi-ketsu-s40",
     "1977-07-13": "tsu-jichinsai-jiken",
     "2011-12-19": "winny-jiken",
@@ -112,6 +113,7 @@
     "非嫡出子相続分違憲決定": "hichakushutsushi-iken-kettei",
     "非公開会社の特別決議欠缺と新株発行無効": "hikokai-kaisha-tokubetsu-ketsugi-h24",
     "法人格否認の法理": "hojinkaku-hinin-s44",
+    "債務逃れの新会社設立と法人格否認": "hojinkaku-ranyo-s48",
     "北方ジャーナル事件": "hoppo-journal-jiken",
     "更地への抵当権設定と法定地上権": "hotei-chijoken-s36",
     "明示的一部請求の既判力に関する判例": "ichibu-seikyu-kihanryoku-s37",
@@ -137,6 +139,7 @@
     "任意捜査における有形力の行使": "kyosei-shobun-igi-s51",
     "京都府学連事件": "kyoto-fugakuren-jiken",
     "マクリーン事件": "mclean-jiken",
+    "見せ金による株式払込みの効力": "misegane-haraikomi-s38",
     "三菱樹脂事件": "mitsubishi-jushi-jiken",
     "もんじゅ訴訟（原告適格）": "monju-genkoku-tekikaku-h4",
     "武蔵野市教育施設負担金事件": "musashino-kyoiku-shisetsu-futankin-h5",
@@ -161,6 +164,7 @@
     "共同正犯の実行行為者と訴因変更": "soin-henko-yohi-h13",
     "占有改定と即時取得": "sokuji-shutoku-s35",
     "空知太神社事件": "sorachibuto-jinja-jiken",
+    "スーパーマーケットのテナントと名板貸責任": "super-tenant-naitagashi-h7",
     "スワット事件": "swat-jiken",
     "取締役から会社への無利息・無担保貸付け": "torishimariyaku-murishi-kashitsuke-s38",
     "取締役会決議を欠く重要取引の効力": "torishimariyakukai-ketsugi-ketsu-s40",
@@ -175,5 +179,7 @@
     "在外国民選挙権判決": "zaigai-senkyoken-hanketsu",
     "在宅投票制度廃止事件": "zaitaku-tohyo-kokubai-s60"
   },
-  "ambiguousDates": []
+  "ambiguousDates": [
+    "1963-12-06"
+  ]
 }
