@@ -1,10 +1,10 @@
 # トピカ 引き継ぎメモ（新チャット用）
 
-最終更新：2026-09-02 / 本番 https://topica-law.com （旧 topica.pages.dev は全ページ301転送）
+最終更新：2026-09-03 / 本番 https://topica-law.com （旧 topica.pages.dev は全ページ301転送）
 
-新しいチャットを開いたら、まずこのファイルと `topica/CLAUDE.md` を読めば文脈を引き継げます。
+新しいチャットを開いたら、まずこのファイルと `CLAUDE.md` を読めば文脈を引き継げます。
 
-> **2026-09-02現在の注意**：このファイル後半には初期開発時の履歴も残っている。最新の実装状況と作業ログは `docs/SESSION_NOTES.md`、公開判定は `src/data/quality-gates.mjs`、科目構成は `src/data/curriculum.ts` を正とする。現行の作業ツリーは `C:\Users\sotar\Documents\Codex\2026-07-24\a\work\topica`。公開サイトは7科目の体系記事、学習ガイド、用語20件、詳細判例88件を収録し、直近ビルドは566ページ、Pagefindは444ページを索引化している。2026-09-02までに百選級の重点監査対象判例18件を追加し、最新デプロイ `fb8c8dae` まで本番確認済み。
+> **2026-09-03現在の注意**：このファイル後半には初期開発時の履歴も残っている。最新の実装状況と作業ログは `docs/SESSION_NOTES.md`、公開判定は `src/data/quality-gates.mjs`、科目構成は `src/data/curriculum.ts` を正とする。現行の作業ツリーは `C:\Users\sotar\Documents\Codex\2026-07-24\a\work\topica`。公開サイトは7科目の体系記事、学習ガイド、用語20件、詳細判例88件を収録し、直近ビルドは566ページ、Pagefindは444ページを索引化している。2026-09-03までに百選級の重点監査対象判例21件を追加し、最新デプロイ `85031c96` まで本番確認済み。
 
 ---
 
@@ -22,7 +22,7 @@
 
 ## 2. 環境・運用（重要）
 
-- プロジェクト：`C:\Users\sotar\Desktop\Claude Code\topica`
+- プロジェクト：`C:\Users\sotar\Documents\Codex\2026-07-24\a\work\topica`
 - Node.js は `C:\Program Files\nodejs` にあるが **セッションのPATHに入っていないことがある**。コマンドの前に必ず付ける：
   ```powershell
   $env:Path += ";C:\Program Files\nodejs"
@@ -30,12 +30,12 @@
 - **ビルドとデプロイ（dev サーバーが起動していると `.astro` の EPERM でビルドが失敗するので、preview を止めてから実行）**：
   ```powershell
   $env:Path += ";C:\Program Files\nodejs"
-  Set-Location "C:\Users\sotar\Desktop\Claude Code\topica"
-  . .\.secrets.ps1   # CLOUDFLARE_API_TOKEN を読み込む（git管理外）
+  Set-Location "C:\Users\sotar\Documents\Codex\2026-07-24\a\work\topica"
+  . "C:\Users\sotar\Desktop\Claude Code\topica\.secrets.ps1"   # CLOUDFLARE_API_TOKEN を読み込む（git管理外）
   npm run build
   npx wrangler pages deploy dist --project-name topica --branch main --commit-dirty=true
   ```
-- Cloudflare APIトークンは **リポジトリ直下の `.secrets.ps1`（gitignore済み・コミット禁止）** に置いてある。トークンをこのファイルや他のMarkdownに直接書かないこと（GitHubのpush protectionでpushがブロックされる）。GitHub連携はブラウザOAuthが要るため使わず、wrangler 直アップロードで運用している。
+- Cloudflare APIトークンは **`C:\Users\sotar\Desktop\Claude Code\topica\.secrets.ps1`（git管理外・コミット禁止）** に置いてある。トークンをこのファイルや他のMarkdownに直接書かないこと（GitHubのpush protectionでpushがブロックされる）。GitHub連携はブラウザOAuthが要るため使わず、wrangler 直アップロードで運用している。
 - dev プレビュー：`preview_start`（launch.json の name は `topica-dev`、ポート4321）。`.claude/launch.json` は `cmd /c set PATH=...&& npm run dev --prefix topica` のラッパー。
 
 ---
