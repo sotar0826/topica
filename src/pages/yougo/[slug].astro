@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { findSubject, topicOrderOf } from "../../data/curriculum";
-import { definedTermLd, breadcrumbLd, abs } from "../../lib/jsonld";
+import { definedTermLd, breadcrumbLd, abs, ymd } from "../../lib/jsonld";
 import { INDEXABLE_YOUGO_SET } from "../../data/quality-gates.mjs";
 
 export async function getStaticPaths() {
@@ -77,6 +77,14 @@ const jsonLd = [
   <article class="topic-body" data-pagefind-body={isIndexable ? "" : undefined}>
     <Content />
   </article>
+
+  {
+    entry.data.updated && (
+      <p class="page-meta">
+        最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time>
+      </p>
+    )
+  }
 
   {
     topicLinks.length > 0 && (

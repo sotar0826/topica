@@ -223,6 +223,8 @@ const yougo = defineCollection({
     related: z.array(z.string()).default([]),
     /** 一覧での表示順（小さいほど上）。旧TERMS配列の並び順を踏襲 */
     order: z.number().default(99),
+    /** 最終更新日（ページ下部の表示・sitemap の lastmod 用・任意） */
+    updated: z.coerce.date().optional(),
   }),
 });
 

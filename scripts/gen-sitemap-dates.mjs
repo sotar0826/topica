@@ -19,6 +19,7 @@ const COLLECTIONS = [
   "gyosei",
   "hanrei",
   "column",
+  "yougo",
 ];
 // Markdown frontmatterを持たない固定ページ。本文・構造を実際に変更した日だけ更新する。
 const STATIC_PAGE_DATES = {
