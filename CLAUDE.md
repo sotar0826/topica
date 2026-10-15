@@ -22,6 +22,7 @@ Node.js は `C:\Program Files\nodejs` にあるが、セッションのPATHに�
 - `src/pages/minpo/[slug].astro` — トピックページのレイアウト（関連リンク・前後ナビは自動生成）。※AI質問テンプレは 2026-07-05 に削除（サイトのAI色を薄くする方針）
 - `src/content/column/<slug>.md` — コラム（単元横断の発展的読み物）。frontmatter に `order`（一覧の表示順）。ページは `src/pages/column/`
 - `src/content/hasan/` — 破産法。**2026-07-05 お蔵入り**：`curriculum.ts` の `archived: true` によりトップ・ナビ・sitemapから除外、全ページ noindex。ページは削除せず、管理ダッシュボードの「保管庫」からのみ導線あり
+- `src/pages/gyoseishoshi/` — **行政書士サイト「行政書士ノート」（2026-10-15〜）。トピカとは別サイト扱い**：トピカのナビ・トップ・検索・RSS・記事からリンクしない。専用レイアウト `ShoshiLayout.astro`、単元定義は `src/data/gyoseishoshi.ts`、記事は `src/content/gyoseishoshi/<科目>/<単元>.md`。公開可否は `quality-gates.mjs` の `SHOSHI_INDEXABLE`。このサイト内に限り試験名（行政書士）を出してよい
 - `src/pages/yougo.astro` — 法律用語集（用語はページ内の `TERMS` 配列で管理）
 - 一覧での応用編は基礎編の枝として「10-1.」形式のナンバリングで表示（`topic-branch` クラス）
 

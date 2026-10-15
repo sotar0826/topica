@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+import ShoshiLayout from "../../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE, SHOSHI_SUBJECTS, type ShoshiSubject } from "../../../data/gyoseishoshi";
+
+export function getStaticPaths() {
+  return SHOSHI_SUBJECTS.map((subject) => ({ params: { subject: subject.slug }, props: { subject } }));
+}
+
+const { subject } = Astro.props as { subject: ShoshiSubject };
+const entries = await getCollection("gyoseishoshi");
+const existing = new Set(entries.map((e) => e.id));
+
+let num = 0;
+---
+
+<ShoshiLayout title={subject.name} description={`${subject.name}の単元一覧。${subject.description}`}>
+  <div class="breadcrumb"><a href={`${SHOSHI_BASE}/`}>トップ</a> › {subject.name}</div>
+
+  <h1>{subject.name}</h1>
+  <p>{subject.description}</p>
+  <p style="font-size: 0.9rem;">出題の目安：{subject.questions}（{subject.category}）</p>
+
+  {
+    subject.parts.map((part) => (
+      <section class="part-section">
+        {subject.parts.length > 1 && <h2>{part.name}</h2>}
+        <ol class="topic-list">
+          {part.units.map((unit) => {
+            num++;
+            const exists = existing.has(`${subject.slug}/${unit.slug}`);
+            return (
+              <li>
+                <span class="num">{num}.</span>
+                {exists ? (
+                  <a href={`${SHOSHI_BASE}/${subject.slug}/${unit.slug}/`}>{unit.title}</a>
+                ) : (
+                  <span class="coming">{unit.title}</span>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </section>
+    ))
+  }
+</ShoshiLayout>

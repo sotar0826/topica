@@ -242,4 +242,17 @@ const devlog = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo };
+// 行政書士試験の学習サイト（/gyoseishoshi/ 以下・トピカとは別サイト扱い）。
+// 1単元 = 1ファイル。パスは <科目slug>/<単元slug>.md で、src/data/gyoseishoshi.ts の定義と対応させる。
+const gyoseishoshi = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gyoseishoshi" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    published: z.coerce.date().optional(),
+    updated: z.coerce.date().optional(),
+    lawVersion: z.string().optional(),
+  }),
+});
+
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo, gyoseishoshi };

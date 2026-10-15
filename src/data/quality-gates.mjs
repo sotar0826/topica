@@ -126,6 +126,14 @@ export const INDEXABLE_YOUGO_SLUGS = [
 
 export const INDEXABLE_YOUGO_SET = new Set(INDEXABLE_YOUGO_SLUGS);
 
+/**
+ * 行政書士サイト（/gyoseishoshi/ 以下）を検索エンジンに公開するか。
+ * 骨組みだけの段階で薄いページをインデックスさせると、同じドメインのトピカの評価
+ * （AdSense審査を含む）に影響しうるため、記事がそろうまでは false（全ページ noindex・sitemap除外）。
+ * 公開時に true にする。src/data/gyoseishoshi.ts から再エクスポートしてレイアウトでも使う。
+ */
+export const SHOSHI_INDEXABLE = false;
+
 /** @param {string} page */
 export function shouldIncludeInSitemap(page) {
   const pathname = new URL(page).pathname;
@@ -139,6 +147,8 @@ export function shouldIncludeInSitemap(page) {
   ) {
     return false;
   }
+
+  if (pathname.startsWith("/gyoseishoshi/")) return SHOSHI_INDEXABLE;
 
   const yougoMatch = pathname.match(/^\/yougo\/([^/]+)\/$/);
   if (yougoMatch) return INDEXABLE_YOUGO_SET.has(yougoMatch[1]);

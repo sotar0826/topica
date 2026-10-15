@@ -1,0 +1,75 @@
+---
+import { getCollection } from "astro:content";
+import ShoshiLayout from "../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE, SHOSHI_SITE_NAME, SHOSHI_SUBJECTS } from "../../data/gyoseishoshi";
+
+const entries = await getCollection("gyoseishoshi");
+const countOf = (subjectSlug: string) => entries.filter((e) => e.id.startsWith(`${subjectSlug}/`)).length;
+const unitTotalOf = (subjectSlug: string) =>
+  SHOSHI_SUBJECTS.find((s) => s.slug === subjectSlug)!.parts.reduce((n, p) => n + p.units.length, 0);
+---
+
+<ShoshiLayout
+  title={SHOSHI_SITE_NAME}
+  description="行政書士試験の出題科目（行政法・民法・憲法・商法・基礎法学・基礎知識）を、単元ごとに条文と判例に即して整理する学習サイト。"
+>
+  <h1>{SHOSHI_SITE_NAME}</h1>
+  <p>
+    行政書士試験の出題科目を、単元ごとに1ページで整理する学習サイトです。
+    配点の大きい行政法と民法を中心に、条文の文言と判例の結論を正確に押さえることを目標にします。
+  </p>
+
+  <section class="part-section">
+    <h2>試験の構成</h2>
+    <p>
+      試験は「行政書士の業務に関し必要な法令等」と「行政書士の業務に関し必要な基礎知識」の2つで構成され、
+      300点満点です。合格には、全体の得点に加えて、それぞれの区分で基準点を超える必要があります。
+    </p>
+    <div class="topic-body">
+    <table>
+      <thead>
+        <tr><th>区分</th><th>出題形式</th><th>配点</th><th>基準点</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>法令等</td>
+          <td>5肢択一式 40問（各4点）<br />多肢選択式 3問（各8点）<br />記述式 3問（各20点）</td>
+          <td>244点</td>
+          <td>122点以上（50％）</td>
+        </tr>
+        <tr>
+          <td>基礎知識</td>
+          <td>5肢択一式 14問（各4点）</td>
+          <td>56点</td>
+          <td>24点以上（40％）</td>
+        </tr>
+        <tr>
+          <td>合計</td>
+          <td>60問</td>
+          <td>300点</td>
+          <td>180点以上（60％）</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size: 0.85rem;">
+      ※ 試験の実施方法・合格基準は年度ごとに試験案内で公表されます。受験する年度の試験案内（一般財団法人行政書士試験研究センター）で必ず確認してください。
+    </p>
+  </section>
+
+  <section class="part-section">
+    <h2>科目一覧</h2>
+    <ol class="topic-list">
+      {
+        SHOSHI_SUBJECTS.map((s) => (
+          <li>
+            <a href={`${SHOSHI_BASE}/${s.slug}/`}>{s.name}</a>
+            <span style="font-size: 0.85rem; margin-left: 0.5rem;">
+              {s.category}／{s.questions}（例年の目安）・{countOf(s.slug)}／{unitTotalOf(s.slug)}単元
+            </span>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</ShoshiLayout>

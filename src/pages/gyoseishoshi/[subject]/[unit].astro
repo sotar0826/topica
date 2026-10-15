@@ -1,0 +1,61 @@
+---
+import { getCollection, render } from "astro:content";
+import ShoshiLayout from "../../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE, findShoshiSubject, shoshiUnitsOf } from "../../../data/gyoseishoshi";
+
+// 記事は src/content/gyoseishoshi/<科目slug>/<単元slug>.md。
+// src/data/gyoseishoshi.ts に定義のない科目・単元のファイルはビルドエラーにする（URLの取りこぼし防止）。
+export async function getStaticPaths() {
+  const entries = await getCollection("gyoseishoshi");
+  return entries.map((entry) => {
+    const [subjectSlug, unitSlug] = entry.id.split("/");
+    const subject = findShoshiSubject(subjectSlug);
+    if (!subject || !shoshiUnitsOf(subjectSlug).some((u) => u.slug === unitSlug)) {
+      throw new Error(`gyoseishoshi: ${entry.id} に対応する単元が src/data/gyoseishoshi.ts にありません`);
+    }
+    return { params: { subject: subjectSlug, unit: unitSlug }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const [subjectSlug, unitSlug] = entry.id.split("/");
+const subject = findShoshiSubject(subjectSlug)!;
+const units = shoshiUnitsOf(subjectSlug);
+const existing = new Set((await getCollection("gyoseishoshi")).map((e) => e.id));
+const idx = units.findIndex((u) => u.slug === unitSlug);
+const prev = units.slice(0, idx).reverse().find((u) => existing.has(`${subjectSlug}/${u.slug}`));
+const next = units.slice(idx + 1).find((u) => existing.has(`${subjectSlug}/${u.slug}`));
+const ymd = (d: Date) => d.toISOString().slice(0, 10);
+---
+
+<ShoshiLayout title={`${entry.data.title}（${subject.name}）`} description={entry.data.description}>
+  <div class="breadcrumb">
+    <a href={`${SHOSHI_BASE}/`}>トップ</a> › <a href={`${SHOSHI_BASE}/${subject.slug}/`}>{subject.name}</a> › {entry.data.title}
+  </div>
+
+  <h1>{entry.data.title}</h1>
+
+  <article class="topic-body">
+    <Content />
+  </article>
+
+  {
+    (entry.data.updated || entry.data.lawVersion) && (
+      <p class="page-meta">
+        {entry.data.updated && <span>最終更新: <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time></span>}
+        {entry.data.updated && entry.data.lawVersion && " ・ "}
+        {entry.data.lawVersion && <span>{entry.data.lawVersion}</span>}
+      </p>
+    )
+  }
+
+  <nav class="related-box" aria-label="前後の単元">
+    <ul>
+      {prev && <li>← <a href={`${SHOSHI_BASE}/${subject.slug}/${prev.slug}/`}>{prev.title}</a></li>}
+      {next && <li><a href={`${SHOSHI_BASE}/${subject.slug}/${next.slug}/`}>{next.title}</a> →</li>}
+      <li><a href={`${SHOSHI_BASE}/${subject.slug}/`}>{subject.name}の単元一覧へ</a></li>
+    </ul>
+  </nav>
+</ShoshiLayout>
