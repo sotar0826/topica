@@ -74,6 +74,13 @@ function selfHanreiSlug(file) {
   return m ? m[1] : null;
 }
 
+// 行政書士サイト（src/content/gyoseishoshi/）はトピカとは別サイト扱いのため、
+// トピカの判例ページへの自動リンクを作らない。
+function isGyoseishoshiFile(file) {
+  const p = String(file?.path ?? file?.history?.[0] ?? "").replace(/\\/g, "/");
+  return p.includes("/src/content/gyoseishoshi/");
+}
+
 export default function remarkHanreiLink() {
   const titleKeys = Object.keys(byTitle);
   const hasTitles = titleKeys.length > 0;
@@ -81,6 +88,7 @@ export default function remarkHanreiLink() {
 
   return (tree, file) => {
     if (!hasTitles && !hasDates) return;
+    if (isGyoseishoshiFile(file)) return;
 
     const selfSlug = selfHanreiSlug(file);
     const linked = new Set();
