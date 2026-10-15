@@ -74,11 +74,11 @@ function selfHanreiSlug(file) {
   return m ? m[1] : null;
 }
 
-// 行政書士サイト（src/content/gyoseishoshi/）はトピカとは別サイト扱いのため、
+// 行政書士サイト（src/content/gyoseishoshi/ と gyoseishoshi-mogi/）はトピカとは別サイト扱いのため、
 // トピカの判例ページへの自動リンクを作らない。
 function isGyoseishoshiFile(file) {
   const p = String(file?.path ?? file?.history?.[0] ?? "").replace(/\\/g, "/");
-  return p.includes("/src/content/gyoseishoshi/");
+  return p.includes("/src/content/gyoseishoshi/") || p.includes("/src/content/gyoseishoshi-mogi/");
 }
 
 export default function remarkHanreiLink() {

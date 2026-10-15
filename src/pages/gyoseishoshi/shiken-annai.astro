@@ -1,0 +1,114 @@
+---
+import ShoshiLayout from "../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE } from "../../data/gyoseishoshi";
+
+// 令和8年度（2026年度）の試験案内。公表情報は予備校各社・都道府県の案内で照合した（出典は下部）。
+// 毎年度、7月の公示後にこのページを更新する。
+const CHECKED_AT = "2026-10-15";
+---
+
+<ShoshiLayout
+  title="令和8年度 試験案内"
+  description="令和8年度（2026年度）行政書士試験の日程、受験手数料、試験科目と出題形式、合格基準、出題の基準となる法令の施行日をまとめた試験案内です。"
+>
+  <div class="breadcrumb"><a href={`${SHOSHI_BASE}/`}>トップ</a> › 試験案内</div>
+
+  <h1>令和8年度 行政書士試験 試験案内</h1>
+  <p>
+    令和8年度（2026年度）の行政書士試験の要点をまとめています。受験申込みの受付はすでに終了しています。
+    最終的な情報は、必ず一般財団法人行政書士試験研究センターの公式発表で確認してください。
+  </p>
+
+  <div class="topic-body">
+    <h2>日程</h2>
+    <table>
+      <thead><tr><th>項目</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td>試験の公示</td><td>令和8年7月6日（月）</td></tr>
+        <tr><td>受験願書・試験案内の配布</td><td>令和8年7月21日（火）〜8月17日（月）</td></tr>
+        <tr><td>受験申込み（インターネット）</td><td>令和8年7月21日（火）午前9時〜8月24日（月）午後5時</td></tr>
+        <tr><td>受験申込み（郵送）</td><td>令和8年7月21日（火）〜8月17日（月）消印有効</td></tr>
+        <tr><td>受験票の発送</td><td>例年10月中旬〜下旬</td></tr>
+        <tr><td><strong>試験日時</strong></td><td><strong>令和8年11月8日（日）午後1時〜午後4時（3時間）</strong></td></tr>
+        <tr><td>合格発表</td><td>令和9年1月27日（水）予定</td></tr>
+      </tbody>
+    </table>
+
+    <h2>受験資格・受験手数料</h2>
+    <ul>
+      <li>年齢、学歴、国籍等に関係なく、どなたでも受験できます。</li>
+      <li>受験手数料は10,400円です（インターネット申込みの場合は、別途決済手数料がかかります）。</li>
+      <li>試験は全国の試験場で実施され、受験者は申込み時に試験地を選択します。</li>
+    </ul>
+
+    <h2>出題の基準となる法令</h2>
+    <p>
+      法令等科目・基礎知識科目のいずれも、<strong>令和8年4月1日現在</strong>施行されている法令に関して出題されます。
+      このサイトの記事も、この基準日以降の法令（2026年4月施行の家族法改正、2026年1月施行の行政書士法改正を含む）を前提に書いています。
+    </p>
+
+    <h2>試験科目と出題形式</h2>
+    <table>
+      <thead><tr><th>試験科目</th><th>内容</th><th>出題形式</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>行政書士の業務に関し必要な法令等（出題数46題）</td>
+          <td>憲法、行政法（行政法の一般的な法理論、行政手続法、行政不服審査法、行政事件訴訟法、国家賠償法及び地方自治法を中心とする）、民法、商法及び基礎法学</td>
+          <td>択一式（5肢択一式・多肢選択式）及び記述式（40字程度）</td>
+        </tr>
+        <tr>
+          <td>行政書士の業務に関し必要な基礎知識（出題数14題）</td>
+          <td>一般知識、行政書士法等行政書士業務と密接に関連する諸法令、情報通信・個人情報保護、文章理解</td>
+          <td>択一式（5肢択一式）</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>配点と合格基準</h2>
+    <table>
+      <thead><tr><th>区分</th><th>出題形式</th><th>配点</th><th>基準点</th></tr></thead>
+      <tbody>
+        <tr><td>法令等</td><td>5肢択一式 40問（各4点）<br />多肢選択式 3問（各8点）<br />記述式 3問（各20点）</td><td>244点</td><td>122点以上（50％）</td></tr>
+        <tr><td>基礎知識</td><td>5肢択一式 14問（各4点）</td><td>56点</td><td>24点以上（40％）</td></tr>
+        <tr><td>合計</td><td>60問</td><td>300点</td><td>180点以上（60％）</td></tr>
+      </tbody>
+    </table>
+    <p>
+      合格には、3つの基準（法令等122点以上・基礎知識24点以上・全体180点以上）を<strong>すべて</strong>満たす必要があります。
+      なお、試験問題の難易度を評価し、補正的措置が加えられることがあります。上の基準は令和7年度に公表された合否判定基準によるもので、令和8年度の基準は試験研究センターの公表で確認してください。
+    </p>
+
+    <h2>科目別の出題数の目安</h2>
+    <table>
+      <thead><tr><th>科目</th><th>5肢択一</th><th>多肢選択</th><th>記述式</th><th>配点の目安</th></tr></thead>
+      <tbody>
+        <tr><td><a href={`${SHOSHI_BASE}/kiso-hogaku/`}>基礎法学</a></td><td>2問</td><td>—</td><td>—</td><td>8点</td></tr>
+        <tr><td><a href={`${SHOSHI_BASE}/kenpo/`}>憲法</a></td><td>5問</td><td>1問</td><td>—</td><td>28点</td></tr>
+        <tr><td><a href={`${SHOSHI_BASE}/gyoseiho/`}>行政法</a></td><td>19問</td><td>2問</td><td>1問</td><td>112点</td></tr>
+        <tr><td><a href={`${SHOSHI_BASE}/minpo/`}>民法</a></td><td>9問</td><td>—</td><td>2問</td><td>76点</td></tr>
+        <tr><td><a href={`${SHOSHI_BASE}/shoho/`}>商法・会社法</a></td><td>5問</td><td>—</td><td>—</td><td>20点</td></tr>
+        <tr><td><a href={`${SHOSHI_BASE}/kiso-chishiki/`}>基礎知識</a></td><td>14問</td><td>—</td><td>—</td><td>56点</td></tr>
+      </tbody>
+    </table>
+    <p>科目別の出題数は、例年の傾向に基づく目安です。年度によって変わることがあります。</p>
+
+    <h2>このサイトでの対策の進め方</h2>
+    <ol>
+      <li>配点の大きい<a href={`${SHOSHI_BASE}/gyoseiho/`}>行政法</a>と<a href={`${SHOSHI_BASE}/minpo/`}>民法</a>を中心に、各単元の記事と確認問題で知識を固める</li>
+      <li>基礎知識の基準点対策として、<a href={`${SHOSHI_BASE}/kiso-chishiki/bunsho-rikai/`}>文章理解</a>と<a href={`${SHOSHI_BASE}/kiso-chishiki/gyomu-kanren-horei/`}>業務関連法令</a>・<a href={`${SHOSHI_BASE}/kiso-chishiki/joho-tsushin/`}>個人情報保護</a>で確実に得点する</li>
+      <li><a href={`${SHOSHI_BASE}/mogi/`}>模擬試験</a>を3時間で解き、時間配分と弱点を確認する</li>
+    </ol>
+
+    <h2>出典</h2>
+    <p style="font-size: 0.85rem;">
+      以下の公表情報を照合して作成しました（{CHECKED_AT} 確認）。試験研究センターの公式サイトの情報が最優先です。
+    </p>
+    <ul style="font-size: 0.85rem;">
+      <li>一般財団法人行政書士試験研究センター（公式サイト：gyosei-shiken.or.jp）</li>
+      <li>広島県「令和8年度行政書士試験のご案内」</li>
+      <li>資格の学校TAC「2026年度（令和8年度）行政書士試験は11月8日（日）」</li>
+      <li>STUDYing「令和8年度(2026年度)行政書士試験の試験日程・申込期間と手続きの流れ」</li>
+      <li>伊藤塾「2026年度 行政書士試験日はいつ？申込期間・受験料・持ち物を徹底解説」</li>
+    </ul>
+  </div>
+</ShoshiLayout>

@@ -71,6 +71,11 @@ const CF_ANALYTICS_TOKEN = "c7cd2df2924841e28234f03cdd033f9e";
             <div class="nav-group nav-subjects">
               {SHOSHI_SUBJECTS.map((s) => <a href={`${SHOSHI_BASE}/${s.slug}/`}>{s.name}</a>)}
             </div>
+            <div class="nav-divider" aria-hidden="true"></div>
+            <div class="nav-group nav-content">
+              <a href={`${SHOSHI_BASE}/shiken-annai/`}>試験案内</a>
+              <a href={`${SHOSHI_BASE}/mogi/`}>模擬試験</a>
+            </div>
           </nav>
           <button id="theme-toggle" type="button" class="icon-btn theme-toggle" aria-label="ダークモードに切り替える">
             🌙

@@ -255,4 +255,20 @@ const gyoseishoshi = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo, gyoseishoshi };
+// 行政書士サイトの模擬試験（本試験形式のオリジナル問題）。1ファイル=1パート（問題の範囲）。
+const gyoseishoshiMogi = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/gyoseishoshi-mogi" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    /** 一覧での表示順 */
+    order: z.number(),
+    /** 例：「問1〜問20」 */
+    range: z.string(),
+    /** 目安の解答時間（分） */
+    minutes: z.number(),
+    updated: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo, gyoseishoshi, gyoseishoshiMogi };

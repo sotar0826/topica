@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from "astro:content";
+import ShoshiLayout from "../../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE } from "../../../data/gyoseishoshi";
+
+export async function getStaticPaths() {
+  const parts = (await getCollection("gyoseishoshiMogi")).sort((a, b) => a.data.order - b.data.order);
+  return parts.map((entry, i) => ({
+    params: { part: entry.id },
+    props: { entry, prev: parts[i - 1], next: parts[i + 1] },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ShoshiLayout title={`模擬試験 ${entry.data.title}`} description={entry.data.description}>
+  <div class="breadcrumb">
+    <a href={`${SHOSHI_BASE}/`}>トップ</a> › <a href={`${SHOSHI_BASE}/mogi/`}>模擬試験</a> › {entry.data.title}
+  </div>
+
+  <h1>第1回 模擬試験：{entry.data.title}</h1>
+  <p style="font-size: 0.9rem;">{entry.data.range}・目安時間 {entry.data.minutes}分</p>
+
+  <article class="topic-body">
+    <Content />
+  </article>
+
+  <nav class="related-box" aria-label="前後のパート">
+    <ul>
+      {prev && <li>← <a href={`${SHOSHI_BASE}/mogi/${prev.id}/`}>{prev.data.title}（{prev.data.range}）</a></li>}
+      {next && <li><a href={`${SHOSHI_BASE}/mogi/${next.id}/`}>{next.data.title}（{next.data.range}）</a> →</li>}
+      <li><a href={`${SHOSHI_BASE}/mogi/`}>模擬試験の目次・採点表へ</a></li>
+    </ul>
+  </nav>
+</ShoshiLayout>

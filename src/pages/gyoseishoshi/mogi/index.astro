@@ -1,0 +1,93 @@
+---
+import { getCollection } from "astro:content";
+import ShoshiLayout from "../../../layouts/ShoshiLayout.astro";
+import { SHOSHI_BASE } from "../../../data/gyoseishoshi";
+
+const parts = (await getCollection("gyoseishoshiMogi")).sort((a, b) => a.data.order - b.data.order);
+---
+
+<ShoshiLayout
+  title="模擬試験"
+  description="本試験と同じ出題形式・問題数（5肢択一式・多肢選択式・記述式の計60問）で構成したオリジナルの模擬試験です。解説付きで、各単元の記事にもどれます。"
+>
+  <div class="breadcrumb"><a href={`${SHOSHI_BASE}/`}>トップ</a> › 模擬試験</div>
+
+  <h1>模擬試験</h1>
+  <p>
+    本試験と同じ出題形式・問題数・配点で構成した、このサイトオリジナルの模擬試験です（過去の本試験問題の転載ではありません）。
+    出題範囲は、このサイトの全76単元です。各問題の下にある「正解と解説」を開くと、解説と関連する単元へのリンクが表示されます。
+  </p>
+
+  <div class="topic-body">
+    <h2>第1回 模擬試験の構成</h2>
+    <table>
+      <thead><tr><th>パート</th><th>問題</th><th>目安時間</th></tr></thead>
+      <tbody>
+        {
+          parts.map((p) => (
+            <tr>
+              <td><a href={`${SHOSHI_BASE}/mogi/${p.id}/`}>{p.data.title}</a></td>
+              <td>{p.data.range}</td>
+              <td>{p.data.minutes}分</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <h2>解き方</h2>
+    <ol>
+      <li>本試験と同じく、全体を<strong>3時間（180分）</strong>で解くことを目標にします</li>
+      <li>解答はメモ用紙に書き出し、各パートを解き終えてから「正解と解説」を開いて採点します</li>
+      <li>記述式は、解答例と採点のポイントを見て、要素ごとに部分点をつけます（1問20点）</li>
+    </ol>
+
+    <h2>採点表</h2>
+    <table>
+      <thead><tr><th>区分</th><th>問題</th><th>配点</th><th>基準点</th></tr></thead>
+      <tbody>
+        <tr><td>法令等・5肢択一式</td><td>問1〜問40</td><td>各4点（160点）</td><td rowspan="3">法令等の合計で122点以上</td></tr>
+        <tr><td>法令等・多肢選択式</td><td>問41〜問43</td><td>空欄1つ2点・各8点（24点）</td></tr>
+        <tr><td>法令等・記述式</td><td>問44〜問46</td><td>各20点（60点）</td></tr>
+        <tr><td>基礎知識・5肢択一式</td><td>問47〜問60</td><td>各4点（56点）</td><td>24点以上</td></tr>
+        <tr><td>合計</td><td>60問</td><td>300点</td><td>180点以上</td></tr>
+      </tbody>
+    </table>
+
+
+    <h2>正解一覧</h2>
+    <details>
+      <summary>正解一覧を表示する（解き終えてから開いてください）</summary>
+      <p><strong>5肢択一式（法令等）</strong></p>
+      <table style="font-size: 0.8rem;">
+        <tbody>
+          <tr><td>問1</td><td>2</td><td>問2</td><td>3</td><td>問3</td><td>4</td><td>問4</td><td>1</td><td>問5</td><td>5</td></tr>
+          <tr><td>問6</td><td>3</td><td>問7</td><td>5</td><td>問8</td><td>1</td><td>問9</td><td>3</td><td>問10</td><td>2</td></tr>
+          <tr><td>問11</td><td>5</td><td>問12</td><td>1</td><td>問13</td><td>3</td><td>問14</td><td>4</td><td>問15</td><td>5</td></tr>
+          <tr><td>問16</td><td>1</td><td>問17</td><td>4</td><td>問18</td><td>3</td><td>問19</td><td>2</td><td>問20</td><td>5</td></tr>
+          <tr><td>問21</td><td>4</td><td>問22</td><td>1</td><td>問23</td><td>3</td><td>問24</td><td>5</td><td>問25</td><td>2</td></tr>
+          <tr><td>問26</td><td>1</td><td>問27</td><td>4</td><td>問28</td><td>3</td><td>問29</td><td>5</td><td>問30</td><td>2</td></tr>
+          <tr><td>問31</td><td>4</td><td>問32</td><td>1</td><td>問33</td><td>5</td><td>問34</td><td>4</td><td>問35</td><td>2</td></tr>
+          <tr><td>問36</td><td>3</td><td>問37</td><td>1</td><td>問38</td><td>5</td><td>問39</td><td>2</td><td>問40</td><td>4</td></tr>
+        </tbody>
+      </table>
+      <p><strong>多肢選択式</strong>：問41 ア2・イ5・ウ8・エ10／問42 ア1・イ3・ウ7・エ11／問43 ア1・イ4・ウ7・エ10</p>
+      <p><strong>記述式</strong>：問44〜問46は、各パートの解答例と採点のポイントを参照してください。</p>
+      <p><strong>5肢択一式（基礎知識）</strong></p>
+      <table style="font-size: 0.8rem;">
+        <tbody>
+          <tr><td>問47</td><td>1</td><td>問48</td><td>2</td><td>問49</td><td>4</td><td>問50</td><td>5</td><td>問51</td><td>3</td></tr>
+          <tr><td>問52</td><td>4</td><td>問53</td><td>1</td><td>問54</td><td>3</td><td>問55</td><td>5</td><td>問56</td><td>1</td></tr>
+          <tr><td>問57</td><td>2</td><td>問58</td><td>4</td><td>問59</td><td>5</td><td>問60</td><td>3</td></tr>
+        </tbody>
+      </table>
+    </details>
+
+    <h2>時間配分の目安</h2>
+    <ul>
+      <li>基礎知識（問47〜問60）を先に解いて基準点を確保し、その後に法令等に取り組む方法もあります</li>
+      <li>記述式は1問あたり10分程度を目安にし、考え込みすぎないようにします</li>
+      <li>最後の10〜15分は、マークの見直しにあてる時間として残しておきます</li>
+    </ul>
+  </div>
+</ShoshiLayout>
