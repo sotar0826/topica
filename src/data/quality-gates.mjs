@@ -130,9 +130,10 @@ export const INDEXABLE_YOUGO_SET = new Set(INDEXABLE_YOUGO_SLUGS);
  * 行政書士サイト（/gyoseishoshi/ 以下）を検索エンジンに公開するか。
  * 骨組みだけの段階で薄いページをインデックスさせると、同じドメインのトピカの評価
  * （AdSense審査を含む）に影響しうるため、記事がそろうまでは false（全ページ noindex・sitemap除外）。
- * 公開時に true にする。src/data/gyoseishoshi.ts から再エクスポートしてレイアウトでも使う。
+ * 2026-10-15 に全76単元と模擬試験の条文を e-Gov で照合し、true にして公開した。
+ * src/data/gyoseishoshi.ts から再エクスポートしてレイアウトでも使う。
  */
-export const SHOSHI_INDEXABLE = false;
+export const SHOSHI_INDEXABLE = true;
 
 /** @param {string} page */
 export function shouldIncludeInSitemap(page) {
