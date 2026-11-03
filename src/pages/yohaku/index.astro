@@ -1,10 +1,12 @@
 ---
 import { getCollection } from "astro:content";
 import YohakuLayout from "../../layouts/YohakuLayout.astro";
-import { YOHAKU_BASE, YOHAKU_SITE_NAME, YOHAKU_CATEGORIES, findYohakuCategory, readingMinutes } from "../../data/yohaku";
+import { YOHAKU_BASE, YOHAKU_SITE_NAME, YOHAKU_CATEGORIES, readingMinutes } from "../../data/yohaku";
 
-const entries = (await getCollection("yohaku")).sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
-const ymd = (d: Date) => d.toISOString().slice(0, 10);
+const entries = (await getCollection("yohaku")).sort(
+  (a, b) => b.data.published.getTime() - a.data.published.getTime() || a.data.title.localeCompare(b.data.title, "ja"),
+);
+const totalMinutes = entries.reduce((n, e) => n + readingMinutes(e.body ?? ""), 0);
 ---
 
 <YohakuLayout
@@ -16,38 +18,28 @@ const ymd = (d: Date) => d.toISOString().slice(0, 10);
     要点だけを並べるのではなく、「なぜそう言えるのか」「どこで意見が分かれているのか」まで追いかけます。
     一本あたり、ゆっくり読んで二、三十分の分量です。
   </p>
+  <p class="y-meta">いま{entries.length}本・全部読むとおよそ{Math.round(totalMinutes / 60)}時間</p>
 
-  <h2 class="y-section-title">新しい順</h2>
-  <ul class="y-list">
-    {
-      entries.map((e) => {
-        const cat = findYohakuCategory(e.data.category);
-        return (
-          <li>
-            <a class="t" href={`${YOHAKU_BASE}/${e.id}/`}>{e.data.title}</a>
-            {e.data.question && <p class="q">{e.data.question}</p>}
-            <p class="d">{e.data.description}</p>
-            <span class="y-meta">
-              {cat && <a href={`${YOHAKU_BASE}/category/${cat.slug}/`}>{cat.name}</a>} ・ <time datetime={ymd(e.data.published)}>{ymd(e.data.published)}</time> ・ 約{readingMinutes(e.body ?? "")}分
-            </span>
-          </li>
-        );
-      })
-    }
-  </ul>
-
-  <h2 class="y-section-title">カテゴリ</h2>
-  <ul class="y-list">
-    {
-      YOHAKU_CATEGORIES.map((c) => {
-        const n = entries.filter((e) => e.data.category === c.slug).length;
-        return (
-          <li>
-            <a class="t" href={`${YOHAKU_BASE}/category/${c.slug}/`}>{c.name}</a>
-            <p class="d">{c.description}（{n}本）</p>
-          </li>
-        );
-      })
-    }
-  </ul>
+  {
+    YOHAKU_CATEGORIES.map((c) => {
+      const list = entries.filter((e) => e.data.category === c.slug);
+      if (list.length === 0) return null;
+      return (
+        <section>
+          <h2 class="y-section-title">
+            <a href={`${YOHAKU_BASE}/category/${c.slug}/`} style="color: inherit; text-decoration: none;">{c.name}</a>
+          </h2>
+          <ul class="y-list">
+            {list.map((e) => (
+              <li>
+                <a class="t" href={`${YOHAKU_BASE}/${e.id}/`}>{e.data.title}</a>
+                {e.data.question && <p class="q">{e.data.question}</p>}
+                <span class="y-meta">約{readingMinutes(e.body ?? "")}分</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })
+  }
 </YohakuLayout>
