@@ -1,0 +1,39 @@
+---
+import { getCollection } from "astro:content";
+import YohakuLayout from "../../../layouts/YohakuLayout.astro";
+import { YOHAKU_BASE, YOHAKU_CATEGORIES, type YohakuCategory, readingMinutes } from "../../../data/yohaku";
+
+export function getStaticPaths() {
+  return YOHAKU_CATEGORIES.map((c) => ({ params: { cat: c.slug }, props: { cat: c } }));
+}
+
+const { cat } = Astro.props as { cat: YohakuCategory };
+const entries = (await getCollection("yohaku"))
+  .filter((e) => e.data.category === cat.slug)
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime());
+const ymd = (d: Date) => d.toISOString().slice(0, 10);
+---
+
+<YohakuLayout title={cat.name} description={`読みものノート「余白」の${cat.name}の記事一覧。${cat.description}`}>
+  <div class="y-crumb"><a href={`${YOHAKU_BASE}/`}>トップ</a> › {cat.name}</div>
+  <h1>{cat.name}</h1>
+  <p class="y-intro">{cat.description}</p>
+  {
+    entries.length === 0 ? (
+      <p class="y-intro">このカテゴリの記事はまだありません。</p>
+    ) : (
+      <ul class="y-list">
+        {entries.map((e) => (
+          <li>
+            <a class="t" href={`${YOHAKU_BASE}/${e.id}/`}>{e.data.title}</a>
+            {e.data.question && <p class="q">{e.data.question}</p>}
+            <p class="d">{e.data.description}</p>
+            <span class="y-meta">
+              <time datetime={ymd(e.data.published)}>{ymd(e.data.published)}</time> ・ 約{readingMinutes(e.body ?? "")}分
+            </span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</YohakuLayout>

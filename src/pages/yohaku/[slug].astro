@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from "astro:content";
+import YohakuLayout from "../../layouts/YohakuLayout.astro";
+import { YOHAKU_BASE, findYohakuCategory, readingMinutes } from "../../data/yohaku";
+
+// 記事は src/content/yohaku/<slug>.md。カテゴリが src/data/yohaku.ts にない記事はビルドエラーにする。
+export async function getStaticPaths() {
+  const entries = await getCollection("yohaku");
+  return entries.map((entry) => {
+    if (!findYohakuCategory(entry.data.category)) {
+      throw new Error(`yohaku: ${entry.id} のカテゴリ「${entry.data.category}」が src/data/yohaku.ts にありません`);
+    }
+    return { params: { slug: entry.id }, props: { entry } };
+  });
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const cat = findYohakuCategory(entry.data.category)!;
+const toc = headings.filter((h) => h.depth === 2);
+const ymd = (d: Date) => d.toISOString().slice(0, 10);
+
+const sameCat = (await getCollection("yohaku"))
+  .filter((e) => e.data.category === entry.data.category && e.id !== entry.id)
+  .sort((a, b) => b.data.published.getTime() - a.data.published.getTime())
+  .slice(0, 5);
+---
+
+<YohakuLayout title={entry.data.title} description={entry.data.description}>
+  <div class="y-crumb">
+    <a href={`${YOHAKU_BASE}/`}>トップ</a> › <a href={`${YOHAKU_BASE}/category/${cat.slug}/`}>{cat.name}</a>
+  </div>
+
+  <h1>{entry.data.title}</h1>
+  <span class="y-meta">
+    <time datetime={ymd(entry.data.published)}>{ymd(entry.data.published)}</time>
+    {entry.data.updated && <> ・ 更新 <time datetime={ymd(entry.data.updated)}>{ymd(entry.data.updated)}</time></>} ・ 約{readingMinutes(entry.body ?? "")}分で読めます
+  </span>
+  {entry.data.question && <p class="y-question">{entry.data.question}</p>}
+
+  {
+    toc.length > 2 && (
+      <details class="y-toc" open>
+        <summary>目次</summary>
+        <ol>
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ol>
+      </details>
+    )
+  }
+
+  <article class="y-body">
+    <Content />
+  </article>
+
+  {
+    sameCat.length > 0 && (
+      <nav class="y-end" aria-label={`${cat.name}の記事`}>
+        <h2>{cat.name}の記事</h2>
+        <ul class="y-list">
+          {sameCat.map((e) => (
+            <li>
+              <a class="t" href={`${YOHAKU_BASE}/${e.id}/`}>{e.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
+</YohakuLayout>
