@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import YohakuLayout from "../../layouts/YohakuLayout.astro";
+import { YOHAKU_BASE, YOHAKU_SITE_NAME, YOHAKU_CATEGORIES, readingMinutes } from "../../data/yohaku";
+
+const entries = (await getCollection("yohaku")).sort(
+  (a, b) => b.data.published.getTime() - a.data.published.getTime() || a.data.title.localeCompare(b.data.title, "ja"),
+);
+const totalMinutes = entries.reduce((n, e) => n + readingMinutes(e.body ?? ""), 0);
+---
+
+<YohakuLayout
+  title={YOHAKU_SITE_NAME}
+  description="前から気になっていたけれど、ちゃんと調べたことのなかった問いを一つずつ取り上げ、通説と論争、仕組みと歴史まで掘り下げて書く読みもののノート。"
+>
+  <p class="y-intro">
+    前から気になっていたけれど、ちゃんと調べたことのなかった問いを、一つずつ腰を据えて調べて書くノートです。
+    要点だけを並べるのではなく、「なぜそう言えるのか」「どこで意見が分かれているのか」まで追いかけます。
+    一本あたり、ゆっくり読んで二、三十分の分量です。
+  </p>
+  <p class="y-meta">いま{entries.length}本・全部読むとおよそ{Math.round(totalMinutes / 60)}時間</p>
+
+  {
+    YOHAKU_CATEGORIES.map((c) => {
+      const list = entries.filter((e) => e.data.category === c.slug);
+      if (list.length === 0) return null;
+      return (
+        <section>
+          <h2 class="y-section-title">
+            <a href={`${YOHAKU_BASE}/category/${c.slug}/`} style="color: inherit; text-decoration: none;">{c.name}</a>
+          </h2>
+          <ul class="y-list">
+            {list.map((e) => (
+              <li>
+                <a class="t" href={`${YOHAKU_BASE}/${e.id}/`}>{e.data.title}</a>
+                {e.data.question && <p class="q">{e.data.question}</p>}
+                <span class="y-meta">約{readingMinutes(e.body ?? "")}分</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })
+  }
+</YohakuLayout>

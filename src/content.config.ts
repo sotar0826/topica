@@ -271,4 +271,21 @@ const gyoseishoshiMogi = defineCollection({
   }),
 });
 
-export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo, gyoseishoshi, gyoseishoshiMogi };
+// 教養の読みものサイト「余白」（/yohaku/ 以下・トピカとは別サイト扱い）。
+// 1記事 = 1ファイル。ファイル名がURLスラッグ。category は src/data/yohaku.ts の YOHAKU_CATEGORIES と対応させる。
+const yohaku = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/yohaku" }),
+  schema: z.object({
+    title: z.string(),
+    /** 一覧・meta description に使う要約 */
+    description: z.string(),
+    /** カテゴリslug（src/data/yohaku.ts） */
+    category: z.string(),
+    /** 記事冒頭に出す「問い」 */
+    question: z.string().optional(),
+    published: z.coerce.date(),
+    updated: z.coerce.date().optional(),
+  }),
+});
+
+export const collections = { minpo, hasan, shoho, minso, kenpo, keiho, keiso, gyosei, hanrei, zenbun, column, devlog, yougo, gyoseishoshi, gyoseishoshiMogi, yohaku };

@@ -23,6 +23,7 @@ Node.js は `C:\Program Files\nodejs` にあるが、セッションのPATHに�
 - `src/content/column/<slug>.md` — コラム（単元横断の発展的読み物）。frontmatter に `order`（一覧の表示順）。ページは `src/pages/column/`
 - `src/content/hasan/` — 破産法。**2026-07-05 お蔵入り**：`curriculum.ts` の `archived: true` によりトップ・ナビ・sitemapから除外、全ページ noindex。ページは削除せず、管理ダッシュボードの「保管庫」からのみ導線あり
 - `src/pages/gyoseishoshi/` — **行政書士サイト「行政書士ノート」（2026-10-15〜）。トピカとは別サイト扱い**：トピカのナビ・トップ・検索・RSS・記事からリンクしない。専用レイアウト `ShoshiLayout.astro`、単元定義は `src/data/gyoseishoshi.ts`、記事は `src/content/gyoseishoshi/<科目>/<単元>.md`。公開可否は `quality-gates.mjs` の `SHOSHI_INDEXABLE`。このサイト内に限り試験名（行政書士）を出してよい
+- `src/pages/yohaku/` — **教養の読みものサイト「余白」（2026-11-03〜）。法律とは無関係のトピカとは別サイト扱い**：トピカのナビ・トップ・検索・RSS・記事からリンクしない。専用レイアウト `YohakuLayout.astro`（トピカのCSSも使わない独自デザイン）、カテゴリ定義は `src/data/yohaku.ts`、記事は `src/content/yohaku/<slug>.md`（frontmatter: title / description / category / question / published）。1本あたり約1万字の掘り下げた読みもの。公開可否は `quality-gates.mjs` の `YOHAKU_INDEXABLE`（当面 false＝全ページ noindex・sitemap除外。AdSense審査中のトピカのテーマ評価に影響させないため）。トピカの執筆規約（論述調・試験名の制限など）は適用しないが、事実の捏造をしない・不確かなことは断定しない原則は同じ
 - `src/pages/yougo.astro` — 法律用語集（用語はページ内の `TERMS` 配列で管理）
 - 一覧での応用編は基礎編の枝として「10-1.」形式のナンバリングで表示（`topic-branch` クラス）
 

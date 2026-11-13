@@ -135,6 +135,13 @@ export const INDEXABLE_YOUGO_SET = new Set(INDEXABLE_YOUGO_SLUGS);
  */
 export const SHOSHI_INDEXABLE = true;
 
+/**
+ * 教養の読みものサイト「余白」（/yohaku/ 以下）を検索エンジンに公開するか。
+ * 法律と無関係のページが同じドメインに増えると、トピカのテーマ評価（AdSense審査を含む）に
+ * 影響しうるため、当面は false（全ページ noindex・sitemap除外・広告なし）。
+ */
+export const YOHAKU_INDEXABLE = false;
+
 /** @param {string} page */
 export function shouldIncludeInSitemap(page) {
   const pathname = new URL(page).pathname;
@@ -150,6 +157,7 @@ export function shouldIncludeInSitemap(page) {
   }
 
   if (pathname.startsWith("/gyoseishoshi/")) return SHOSHI_INDEXABLE;
+  if (pathname.startsWith("/yohaku/")) return YOHAKU_INDEXABLE;
 
   const yougoMatch = pathname.match(/^\/yougo\/([^/]+)\/$/);
   if (yougoMatch) return INDEXABLE_YOUGO_SET.has(yougoMatch[1]);

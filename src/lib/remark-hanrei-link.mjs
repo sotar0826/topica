@@ -78,7 +78,12 @@ function selfHanreiSlug(file) {
 // トピカの判例ページへの自動リンクを作らない。
 function isGyoseishoshiFile(file) {
   const p = String(file?.path ?? file?.history?.[0] ?? "").replace(/\\/g, "/");
-  return p.includes("/src/content/gyoseishoshi/") || p.includes("/src/content/gyoseishoshi-mogi/");
+  return (
+    p.includes("/src/content/gyoseishoshi/") ||
+    p.includes("/src/content/gyoseishoshi-mogi/") ||
+    // 教養の読みものサイト「余白」も別サイト扱い
+    p.includes("/src/content/yohaku/")
+  );
 }
 
 export default function remarkHanreiLink() {

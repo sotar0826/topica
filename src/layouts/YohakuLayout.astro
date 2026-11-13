@@ -1,0 +1,196 @@
+---
+// 教養の読みものサイト「余白」（/yohaku/ 以下）専用のレイアウト。
+// トピカ本体とは別サイトとして見せるため、トピカのCSS・ナビ・フッターを使わず、リンクも置かない。
+// 長文を読むことに絞った、明朝体ベースの落ち着いた組版にしている。
+import { YOHAKU_BASE, YOHAKU_INDEXABLE, YOHAKU_SITE_NAME, YOHAKU_TAGLINE, YOHAKU_CATEGORIES } from "../data/yohaku";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const fullTitle = title === YOHAKU_SITE_NAME ? `${YOHAKU_SITE_NAME}｜${YOHAKU_TAGLINE}` : `${title}｜${YOHAKU_SITE_NAME}`;
+
+const site = Astro.site ?? new URL("https://topica-law.com");
+const canonical = new URL(Astro.url.pathname, site).href;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem("yohaku:theme");
+          var theme =
+            stored === "dark" || stored === "light"
+              ? stored
+              : window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (e) {}
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    {!YOHAKU_INDEXABLE && <meta name="robots" content="noindex,follow" />}
+    <link rel="canonical" href={canonical} />
+    <title>{fullTitle}</title>
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={YOHAKU_SITE_NAME} />
+    <meta property="og:locale" content="ja_JP" />
+    <link rel="icon" href={`data:image/svg+xml,${encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="#f4efe6"/><text x="16" y="23" font-size="19" text-anchor="middle" font-family="serif" fill="#7a3b2e">余</text></svg>')}`} />
+  </head>
+  <body>
+    <a class="skip" href="#main">本文へ移動</a>
+    <header class="y-header">
+      <div class="y-inner">
+        <a href={`${YOHAKU_BASE}/`} class="y-logo">
+          <span class="y-logo-mark">{YOHAKU_SITE_NAME}</span>
+          <span class="y-logo-sub">{YOHAKU_TAGLINE}</span>
+        </a>
+        <button id="y-theme" type="button" class="y-theme" aria-label="表示の明暗を切り替える">◐</button>
+      </div>
+      <nav class="y-inner y-cats" aria-label="カテゴリ">
+        {YOHAKU_CATEGORIES.map((c) => <a href={`${YOHAKU_BASE}/category/${c.slug}/`}>{c.name}</a>)}
+      </nav>
+    </header>
+    <main id="main" class="y-inner">
+      <slot />
+    </main>
+    <footer class="y-footer">
+      <div class="y-inner">
+        <p>© 2026 {YOHAKU_SITE_NAME}</p>
+      </div>
+    </footer>
+    <script is:inline>
+      (function () {
+        var btn = document.getElementById("y-theme");
+        if (!btn) return;
+        btn.addEventListener("click", function () {
+          var next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          try { localStorage.setItem("yohaku:theme", next); } catch (e) {}
+        });
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --y-bg: #f7f3ec;
+    --y-paper: #fffdf9;
+    --y-text: #2a2622;
+    --y-muted: #6f675d;
+    --y-line: #e2d9cb;
+    --y-accent: #7a3b2e;
+    --y-accent-soft: #f1e4dc;
+    --y-note: #f3eee4;
+    --y-serif: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "Source Han Serif JP", serif;
+    --y-sans: "Hiragino Sans", "Yu Gothic UI", "Noto Sans JP", system-ui, sans-serif;
+  }
+  :root[data-theme="dark"] {
+    --y-bg: #1b1916;
+    --y-paper: #23201c;
+    --y-text: #e8e1d6;
+    --y-muted: #a59c8f;
+    --y-line: #3a352e;
+    --y-accent: #e0a08c;
+    --y-accent-soft: #3a2a24;
+    --y-note: #2b2722;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --y-bg: #1b1916;
+      --y-paper: #23201c;
+      --y-text: #e8e1d6;
+      --y-muted: #a59c8f;
+      --y-line: #3a352e;
+      --y-accent: #e0a08c;
+      --y-accent-soft: #3a2a24;
+      --y-note: #2b2722;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--y-bg);
+    color: var(--y-text);
+    font-family: var(--y-serif);
+    font-size: 17px;
+    line-height: 1.95;
+    font-feature-settings: "palt" 0;
+    overflow-wrap: anywhere;
+  }
+  a { color: var(--y-accent); text-underline-offset: 0.2em; }
+  .skip { position: absolute; left: -9999px; }
+  .skip:focus { left: 1rem; top: 1rem; background: var(--y-paper); padding: 0.5rem 1rem; z-index: 10; }
+  .y-inner { max-width: 44rem; margin: 0 auto; padding: 0 16px; }
+  .y-header { border-bottom: 1px solid var(--y-line); background: var(--y-bg); }
+  .y-header > .y-inner:first-child { display: flex; align-items: center; justify-content: space-between; padding-top: 1.4rem; padding-bottom: 0.6rem; }
+  .y-logo { text-decoration: none; color: var(--y-text); display: flex; align-items: baseline; gap: 0.8rem; flex-wrap: wrap; }
+  .y-logo-mark { font-size: 1.7rem; letter-spacing: 0.3em; font-weight: 600; }
+  .y-logo-sub { font-size: 0.78rem; color: var(--y-muted); font-family: var(--y-sans); }
+  .y-theme { background: none; border: 1px solid var(--y-line); color: var(--y-text); border-radius: 999px; width: 2.2rem; height: 2.2rem; cursor: pointer; font-size: 1rem; flex-shrink: 0; }
+  .y-cats { display: flex; gap: 1.2rem; flex-wrap: wrap; padding-bottom: 0.9rem; font-family: var(--y-sans); font-size: 0.85rem; line-height: 1.6; row-gap: 0.3rem; }
+  .y-cats a { color: var(--y-muted); text-decoration: none; }
+  .y-cats a:hover { color: var(--y-accent); }
+  main.y-inner { padding-top: 2.2rem; padding-bottom: 4rem; }
+  .y-footer { border-top: 1px solid var(--y-line); color: var(--y-muted); font-family: var(--y-sans); font-size: 0.8rem; padding: 1.5rem 0 2.5rem; }
+
+  /* 一覧 */
+  .y-intro { color: var(--y-muted); margin: 0 0 2.5rem; }
+  .y-section-title { font-size: 0.85rem; font-family: var(--y-sans); letter-spacing: 0.15em; color: var(--y-muted); border-bottom: 1px solid var(--y-line); padding-bottom: 0.4rem; margin: 2.8rem 0 0.5rem; }
+  .y-list { list-style: none; margin: 0; padding: 0; }
+  .y-list li { padding: 1.2rem 0; border-bottom: 1px dashed var(--y-line); }
+  .y-list a.t { font-size: 1.2rem; font-weight: 600; color: var(--y-text); text-decoration: none; line-height: 1.6; display: block; }
+  .y-list a.t:hover { color: var(--y-accent); }
+  .y-list .q { color: var(--y-accent); font-size: 0.92rem; margin: 0.2rem 0 0; }
+  .y-list .d { color: var(--y-muted); font-size: 0.92rem; margin: 0.3rem 0 0; line-height: 1.8; }
+  .y-meta { font-family: var(--y-sans); font-size: 0.78rem; color: var(--y-muted); }
+  .y-meta a { color: var(--y-muted); }
+
+  /* 記事 */
+  .y-crumb { font-family: var(--y-sans); font-size: 0.8rem; color: var(--y-muted); margin-bottom: 1.5rem; }
+  .y-crumb a { color: var(--y-muted); }
+  h1 { font-size: 1.85rem; line-height: 1.5; margin: 0 0 0.8rem; font-weight: 600; letter-spacing: 0.02em; }
+  .y-question { font-size: 1.05rem; color: var(--y-accent); border-left: 3px solid var(--y-accent); padding-left: 0.9rem; margin: 1.2rem 0 1.6rem; }
+  .y-toc { background: var(--y-note); border-radius: 6px; padding: 1rem 1.3rem; margin: 2rem 0 2.5rem; font-family: var(--y-sans); font-size: 0.88rem; line-height: 1.8; }
+  .y-toc summary { cursor: pointer; color: var(--y-muted); letter-spacing: 0.1em; }
+  .y-toc ol { margin: 0.6rem 0 0; padding-left: 1.4rem; }
+  .y-toc a { color: var(--y-text); text-decoration: none; }
+  .y-toc a:hover { color: var(--y-accent); }
+  .y-body h2 { font-size: 1.35rem; line-height: 1.6; margin: 3.4rem 0 1rem; padding-top: 0.8rem; border-top: 1px solid var(--y-line); font-weight: 600; }
+  .y-body h3 { font-size: 1.1rem; margin: 2.2rem 0 0.6rem; font-weight: 600; }
+  .y-body p { margin: 0 0 1.3em; text-align: justify; }
+  .y-body ul, .y-body ol { padding-left: 1.5em; margin: 0 0 1.3em; }
+  .y-body li { margin: 0.25em 0; }
+  .y-body blockquote { margin: 1.6em 0; padding: 0.9em 1.2em; background: var(--y-note); border-left: 3px solid var(--y-line); color: var(--y-text); border-radius: 0 6px 6px 0; }
+  .y-body blockquote p:last-child { margin-bottom: 0; }
+  .y-body strong { font-weight: 600; background: linear-gradient(transparent 62%, var(--y-accent-soft) 62%); }
+  .y-body table { width: 100%; border-collapse: collapse; margin: 1.6em 0; font-size: 0.9rem; line-height: 1.7; font-family: var(--y-sans); display: block; overflow-x: auto; }
+  .y-body th, .y-body td { border: 1px solid var(--y-line); padding: 0.5em 0.7em; vertical-align: top; text-align: left; }
+  .y-body th { background: var(--y-note); font-weight: 600; white-space: nowrap; }
+  .y-body hr { border: none; text-align: center; margin: 2.8em 0; }
+  .y-body hr::after { content: "＊　＊　＊"; color: var(--y-muted); letter-spacing: 0.4em; }
+  .y-body code { font-size: 0.88em; background: var(--y-note); padding: 0.1em 0.35em; border-radius: 3px; }
+  .y-body details { background: var(--y-note); border-radius: 6px; padding: 0.7em 1.1em; margin: 1.5em 0; }
+  .y-body details summary { cursor: pointer; font-family: var(--y-sans); font-size: 0.9rem; color: var(--y-muted); }
+  .y-body sup { font-size: 0.7em; }
+  .y-end { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--y-line); }
+  .y-end h2 { font-size: 0.85rem; font-family: var(--y-sans); letter-spacing: 0.15em; color: var(--y-muted); margin: 0 0 0.5rem; font-weight: 400; border: none; padding: 0; }
+  @media (max-width: 480px) {
+    body { font-size: 16px; line-height: 1.9; }
+    h1 { font-size: 1.5rem; }
+    .y-body h2 { font-size: 1.2rem; }
+    .y-logo-mark { font-size: 1.45rem; }
+  }
+</style>
